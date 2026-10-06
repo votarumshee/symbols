@@ -1,0 +1,23 @@
+{
+  "players": 50,
+  "seconds": 15.812600499999999,
+  "httpRequests": 1390,
+  "httpRps": 87.90457964203928,
+  "httpPayloadBytes": 4863660,
+  "wsMessages": 0,
+  "wsPayloadBytes": 0,
+  "databaseRowWrites": 4442,
+  "technicalErrors": 0,
+  "p95HttpMs": 49.200199999999995,
+  "cpuPercentOneCore": 4.743052858383414,
+  "peakRssBytes": 176082944,
+  "hardware": {
+    "platform": "win32",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400 @ 2.60GHz",
+    "node": "v24.16.0"
+  },
+  "notes": [
+    "Original v45 bundled Worker, SQLite in-memory D1 adapter, loopback HTTP. Not production Cloudflare timing.",
+    "Same small-board mode mix and placement rule as load.mjs; baseline advances bots on polls. Payload excludes headers/TLS."
+  ]
+}

@@ -1,0 +1,8 @@
+[Unit]
+Description=Symbols encrypted off-server PostgreSQL backup
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/symbols-backup.env
+ExecStart=/opt/symbols-backup/backup.sh
+User=symbols-backup
+NoNewPrivileges=true

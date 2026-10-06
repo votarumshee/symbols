@@ -1,0 +1,10 @@
+{
+ email {$ACME_EMAIL}
+}
+{$DOMAIN} {
+ encode zstd gzip
+ @private path /metrics
+ respond @private 404
+ reverse_proxy server:3000
+ header Strict-Transport-Security "max-age=31536000"
+}
