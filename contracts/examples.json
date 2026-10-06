@@ -1,0 +1,35 @@
+{
+  "registration": {
+    "request": {
+      "nick": "Игрок"
+    },
+    "response": {
+      "id": "example-player",
+      "token": "EXAMPLE_NOT_A_REAL_TOKEN",
+      "expiresIn": 2592000
+    }
+  },
+  "start": {
+    "headers": {
+      "Idempotency-Key": "example-command-1"
+    },
+    "body": {
+      "mode": "trial",
+      "small": true
+    }
+  },
+  "action": {
+    "matchId": "example-game",
+    "revision": "1",
+    "action": {
+      "type": "king",
+      "index": 56
+    }
+  },
+  "revisionConflict": {
+    "error": {
+      "code": "REVISION_CONFLICT",
+      "message": "Данные изменились. Получи новый снимок."
+    }
+  }
+}

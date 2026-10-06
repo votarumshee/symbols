@@ -1,6 +1,6 @@
-import {records} from "./catalog.mjs";
-export const DIRS=[[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1]];
-export const BOOSTERS={point:1,inspect:3,powerful:6};
+import {records,settings} from "./catalog.mjs";
+export const DIRS=settings.directions;
+export const BOOSTERS=Object.fromEntries(records('symbol').filter(r=>r.payload.boost>0).map(r=>[r.key,r.payload.boost]));
 export const ATTACKS=['arrow','arrowx2','laser','tank','sword'];
 export const DIRECTED=[...ATTACKS,...Object.keys(BOOSTERS)];
 export const TYPES=Object.fromEntries(records('symbol').filter(r=>r.key!=='king').map(r=>[r.key,{name:r.payload.name,stock:r.payload.unlimited?Infinity:r.payload.stock}]));

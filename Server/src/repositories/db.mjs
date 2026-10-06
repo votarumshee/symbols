@@ -1,5 +1,5 @@
 import pg from 'pg';
-export const createPool=cfg=>new pg.Pool({connectionString:cfg.databaseUrl,max:cfg.poolMax??10,connectionTimeoutMillis:5000,idleTimeoutMillis:30000,statement_timeout:10000,application_name:'symbols-v3'});
+export function createPool(cfg){const pool=new pg.Pool({connectionString:cfg.databaseUrl,max:cfg.poolMax??10,connectionTimeoutMillis:5000,idleTimeoutMillis:30000,statement_timeout:10000,application_name:'symbols-v3'});pool.errorCount=0;pool.on('error',e=>{pool.errorCount++;pool.lastErrorCode=e.code??'POOL_ERROR';});return pool;}
 export async function transaction(pool,fn,{readOnly=false}={}){
  const c=await pool.connect();
  try{await c.query(readOnly?'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY':'BEGIN');await c.query("SET LOCAL lock_timeout='5s'");const value=await fn(c);await c.query('COMMIT');return value;}

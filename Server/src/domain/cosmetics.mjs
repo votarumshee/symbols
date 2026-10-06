@@ -1,3 +1,4 @@
+import {records} from "./catalog.mjs";
 import {hasSymbol,upgradeInfo,maxUpgrade} from './upgrades.mjs';
 import {SKINS,SKIN_SYMBOLS,ownsSkin,skinsFor} from './skins.mjs';
 import {syncEntitlements} from './entitlements.mjs';
@@ -16,7 +17,7 @@ export function cosmetic(d,route,b,now){const v={d}; if(route==='upgrade'){if(b.
  if(route==='skin'||route==='buy-skin'){const skin=skinsFor(b.symbol).find(s=>s.id===b.skin);if(!hasSymbol(v.d,b.symbol))throw Error('Сначала получи этот символ');if(!SKIN_SYMBOLS.includes(b.symbol)||!skin)throw Error('Расцветка недоступна');if(!ownsSkin(v.d,b.symbol,b.skin)){if(route!=='buy-skin')throw Error('Сначала купи скин');if(v.d.balanceCents<skin.price*100)throw Error('Не хватает рубинов');addMoney(v.d,-skin.price*100);v.d.ownedSkins[b.symbol]??=[];v.d.ownedSkins[b.symbol].push(b.skin);}v.d.skins??={};v.d.skins[b.symbol]=b.skin;return {};}
  if(route==='nickname'){v.d.nick=cleanNick(b.nick);return {};}
  if(route==='avatar'){if(!['lion','eagle'].includes(b.avatar)&&!(['thunderlion','firec'].includes(b.avatar)&&v.d.ownedAvatars?.includes(b.avatar)))throw Error('Эта аватарка недоступна');v.d.avatar=b.avatar;return {};}
- if(route==='buy-avatar'){const offers={thunderlion:{price:50000,symbol:'arrowx2',quantity:5},firec:{price:100000,symbol:'inspect',quantity:1}},offer=Object.hasOwn(offers,b.avatar)?offers[b.avatar]:null;if(!offer)throw Error('Товар не найден');if(v.d.ownedAvatars?.includes(b.avatar))return {};if(v.d.balanceCents<offer.price)throw Error('Не хватает рубинов');addMoney(v.d,-offer.price);v.d.ownedAvatars??=[];v.d.ownedAvatars.push(b.avatar);v.d.inventory[offer.symbol]=(v.d.inventory[offer.symbol]??0)+offer.quantity;v.d.avatar=b.avatar;return {};}
+ if(route==='buy-avatar'){const offers=Object.fromEntries(records('avatarBundle').map(r=>[r.key,{...r.payload,price:r.payload.priceCents}])),offer=Object.hasOwn(offers,b.avatar)?offers[b.avatar]:null;if(!offer)throw Error('Товар не найден');if(v.d.ownedAvatars?.includes(b.avatar))return {};if(v.d.balanceCents<offer.price)throw Error('Не хватает рубинов');addMoney(v.d,-offer.price);v.d.ownedAvatars??=[];v.d.ownedAvatars.push(b.avatar);v.d.inventory[offer.symbol]=(v.d.inventory[offer.symbol]??0)+offer.quantity;v.d.avatar=b.avatar;return {};}
 
  throw Error("Неизвестная команда");
 }
