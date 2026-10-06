@@ -122,7 +122,7 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
                     if (e is ApiFailure && e.status == 401) {
                         expire(s); break
                     }
-                    if (e is ApiFailure && e.status == 426) {
+                    if (e is UpdateRequired || e is ApiFailure && e.status == 426) {
                         mutable.update { it.copy(connection = Connection.Incompatible, message = "Нужна новая версия приложения. Обнови «Символы» в магазине.") }; break
                     }
                     snapshotNeeded = snapshotNeeded || e is SnapshotRequired || e is ApiFailure && e.status == 409

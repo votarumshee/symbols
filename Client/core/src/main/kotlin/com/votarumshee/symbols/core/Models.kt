@@ -5,6 +5,7 @@ import kotlinx.serialization.json.*
 import java.math.BigDecimal
 
 val wire = Json { ignoreUnknownKeys = true; encodeDefaults = true }
+class UpdateRequired : Exception("Требуется обновить приложение")
 fun JsonObject.text(key: String, fallback: String = ""): String = (get(key) as? JsonPrimitive)?.contentOrNull ?: fallback
 fun JsonObject.number(key: String, fallback: Long = 0): Long = text(key).toLongOrNull() ?: fallback
 fun JsonObject.flag(key: String): Boolean = (get(key) as? JsonPrimitive)?.booleanOrNull ?: false
@@ -62,7 +63,7 @@ data class GameState(
 ) {
     companion object {
         fun from(account: String, snapshot: Bootstrap): GameState {
-            require(snapshot.apiVersion == 3) { "Требуется обновить приложение" }
+            if (snapshot.apiVersion != 3) throw UpdateRequired()
             Cents.wire(snapshot.profile.text("balanceCents"))
             return GameState(account, decimal(snapshot.cursor), decimal(snapshot.revision), snapshot.profile, snapshot.match, snapshot.serverTime)
         }

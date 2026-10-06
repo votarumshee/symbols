@@ -62,9 +62,11 @@ private val directions = listOf("↑", "↗", "→", "↘", "↓", "↙", "←",
         game.text("code").takeIf { it.isNotBlank() }?.let { Text("Код комнаты: $it", style = MaterialTheme.typography.headlineSmall) }
         game.array("players").forEachIndexed { index, value ->
             val player = value.jsonObject
-            ProfileArt(player, catalog)
             val hp = board.array("kingHp").getOrNull(index)?.jsonPrimitive?.content ?: "—"
-            Text("${if (actor == index) "▶ " else ""}${player.text("nick")} ${if (player.flag("bot")) "· бот" else ""} · здоровье $hp")
+            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                ProfileArt(player, catalog, compact = true)
+                Text("${if (actor == index) "▶ " else ""}${player.text("nick")} ${if (player.flag("bot")) "· бот" else ""} · здоровье $hp", Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+            }
             if (!player.flag("bot") && player.text("id") != state.game!!.account) ReportControls(player.text("id"), player.text("nick"), command)
         }
         if (game.text("status") == "waiting") Text("${game.array("players").size} из ${game.number("capacity")} участников")
