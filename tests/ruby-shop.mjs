@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import {DatabaseSync} from 'node:sqlite';import worker from '../dist/server/index.js';import {freshProgress,PRICES} from '../dist/economy.mjs';import {createGame,shot} from '../dist/engine.mjs';import {startArena,arenaAction} from '../server/arena-engine.mjs';import {levelInfo,trialResult} from '../dist/progression.mjs';
+const sql=new DatabaseSync(':memory:');for(const f of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sql.exec(fs.readFileSync('drizzle/'+f,'utf8'));
+class Query{constructor(s){this.s=s;this.args=[];}bind(...args){this.args=args;return this;}async first(){return sql.prepare(this.s).get(...this.args)??null;}async all(){return {results:sql.prepare(this.s).all(...this.args)};}async run(){return {meta:sql.prepare(this.s).run(...this.args)};}}
+const DB={prepare:s=>new Query(s),batch:async qs=>{sql.exec('BEGIN');try{const r=[];for(const q of qs)r.push(await q.run());sql.exec('COMMIT');return r;}catch(e){sql.exec('ROLLBACK');throw e;}}};
+let now=Date.now();Date.now=()=>now;
+async function api(route,body={},user=null){const res=await worker.fetch(new Request('https://game.test/api/'+route,{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://game.test',...(user?{Authorization:'Bearer '+user.token}:{})},body:JSON.stringify(body)}),{DB});const d=await res.json();if(!res.ok)throw Error(d.error);return d;}
+async function user(n){const p=freshProgress();p.human.unlocked.push('circle');const u=await api('register',{nick:'Тест '+n,progress:p});sql.prepare('UPDATE profiles SET data=? WHERE id=?').run(JSON.stringify(p),u.id);await api('v2/profile',{},u);return u;}
+
+
+const {TYPES}=await import('../dist/engine.mjs');assert.equal(TYPES.sword.stock,3);const a=await user('Рубины');for(const code of ['2X','X2','2Х','Х2'])await assert.rejects(()=>api('v2/promo',{code},a),/не действует/);await assert.rejects(()=>api('v2/avatar',{avatar:'thunderlion'},a),/недоступна/);await assert.rejects(()=>api('v2/avatar',{avatar:'fox'},a),/недоступна/);await api('v2/avatar',{avatar:'eagle'},a);await assert.rejects(()=>api('v2/buy-avatar',{avatar:'thunderlion'},a),/рубинов/);await api('v2/promo',{code:'10000B'},a);let before=(await api('v2/profile',{},a)).profile;let r=await api('v2/buy-avatar',{avatar:'thunderlion'},a);assert.equal(r.profile.balanceCents,before.balanceCents-50000);assert.equal(r.profile.inventory.arrowx2,before.inventory.arrowx2+5);assert.equal(r.profile.avatar,'thunderlion');const again=await api('v2/buy-avatar',{avatar:'thunderlion'},a);assert.equal(again.profile.balanceCents,r.profile.balanceCents);assert.equal(again.profile.inventory.arrowx2,r.profile.inventory.arrowx2);await api('v2/avatar',{avatar:'lion'},a);await api('v2/avatar',{avatar:'thunderlion'},a);
+let d=JSON.parse(sql.prepare('SELECT data FROM vaults WHERE profile_id=?').get(a.id).data);d.claims.push('2X');delete d.newSymbolGrants;sql.prepare('UPDATE vaults SET data=? WHERE profile_id=?').run(JSON.stringify(d),a.id);assert.equal((await api('v2/profile',{},a)).profile.inventory.arrowx2,5);await assert.rejects(()=>api('avatar-upload',{image:'data:image/jpeg;base64,/9j/2Q=='},a),/отключена/);console.log('PASS sword 3, X2 disabled including old grants, paid avatar access, 500 rubies, five arrows and replay-safe purchase.');
+
+await api('v2/buy-skin',{symbol:'sword',skin:'neon'},a);assert.equal((await api('v2/profile',{},a)).profile.skins.sword,'neon');await assert.rejects(()=>api('v2/skin',{symbol:'sword',skin:'invalid'},a),/недоступна/);
+for(const type of ['arrow','arrowx2','sword','tank','laser']){const g=createGame(10,14);g.boards[0][14]={type,dir:0};g.boards[1][0]={type:'feedback'};g.boards[1][14]={type:'king'};const r=shot(g,{player:0,index:14},true);const reflect=['arrow','arrowx2'].includes(type);assert.equal(r.reflected,reflect,type);assert.equal(g.boards[1][0]===null,!reflect,type);if(!reflect)assert.ok(r.hits[1]>0,type);}console.log('PASS persisted skins, invalid skin rejected, feedback piercing and arrow reflection.');
+
+const poor=await user('Бедный');await assert.rejects(()=>api('v2/skin',{symbol:'arrow',skin:'neon'},poor),/Сначала купи/);await assert.rejects(()=>api('v2/buy-skin',{symbol:'arrow',skin:'neon'},poor),/Не хватает/);
+for(const [skin,price] of [['frost',80],['ember',100],['neon',120]]){const before=(await api('v2/profile',{},a)).profile.balanceCents;let r=await api('v2/buy-skin',{symbol:'tank',skin},a);assert.equal(r.profile.balanceCents,before-price*100);assert.ok(r.profile.ownedSkins.tank.includes(skin));await api('v2/skin',{symbol:'tank',skin:'classic'},a);r=await api('v2/buy-skin',{symbol:'tank',skin},a);assert.equal(r.profile.balanceCents,before-price*100);}
+console.log('PASS paid skins 80/100/120, permanent ownership, free re-equip, insufficient funds, no unpaid equip.');
+for(const symbol of ['point','inspect','powerful','smile','circle','feedback','electricity']){
+ const r=await api('v2/buy-skin',{symbol,skin:'frost'},a);assert.equal(r.profile.skins[symbol],'frost');
+}
+for(const symbol of ['sword','tank','powerful']){
+ const before=(await api('v2/profile',{},a)).profile.balanceCents;
+ const r=await api('v2/buy-skin',{symbol,skin:'storm'},a);assert.equal(r.profile.balanceCents,before-100000);assert.equal(r.profile.skins[symbol],'storm');
+}
+await api('v2/buy-skin',{symbol:'circle',skin:'storm'},a);
+const {skinIcon}=await import('../dist/skin-icons.mjs');assert.match(skinIcon('sword',2,'storm'),/arcana-blade/);assert.match(skinIcon('tank',0,'storm'),/arcana-particles/);assert.doesNotMatch(skinIcon('sword',0,'classic'),/arcana-aura/);
+console.log('PASS skins for all boosters and shields; Arcana storm purchases, restriction and effects.');
+
+for(const skin of ['cosmos','solar']){const before=(await api('v2/profile',{},a)).profile.balanceCents;const r=await api('v2/buy-skin',{symbol:'point',skin},a);assert.equal(r.profile.balanceCents,before-120000);assert.match(skinIcon('point',0,skin),/premium-sparks/);}
+console.log('PASS universal storm and two 1200-ruby skins.');
+
+const promoBefore=(await api('v2/profile',{},a)).profile.balanceCents;const millionaire=await api('v2/promo',{code:'1000000RE'},a);assert.equal(millionaire.profile.balanceCents,promoBefore+1000000000);await assert.rejects(()=>api('v2/promo',{code:'1000000 re'},a),/уже использован/);assert.equal((await api('v2/profile',{},a)).profile.balanceCents,millionaire.profile.balanceCents);await assert.rejects(()=>api('v2/promo',{code:'1000000B'},a),/не действует/);console.log('PASS 1000000RE awards 10 million rubies exactly once; superseded B code inactive.');

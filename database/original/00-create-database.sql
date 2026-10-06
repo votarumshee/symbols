@@ -1,0 +1,4 @@
+-- SQLite has no CREATE DATABASE statement.
+-- Open a new file: sqlite3 data/symbols.sqlite
+-- Or use: node scripts/init-db.mjs data/symbols.sqlite
+-- For D1 create a separate development DB in your own Cloudflare account.

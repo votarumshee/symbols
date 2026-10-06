@@ -1,0 +1,22 @@
+{
+  "records": 676,
+  "links": 456,
+  "categories": {
+    "avatar": 4,
+    "avatarBundle": 2,
+    "case": 4,
+    "caseDrop": 18,
+    "difficulty": 5,
+    "frame": 30,
+    "legacyQuest": 4,
+    "level": 300,
+    "quest": 2,
+    "rank": 19,
+    "rarity": 5,
+    "settings": 1,
+    "skin": 7,
+    "symbol": 16,
+    "symbolSkin": 112,
+    "upgrade": 147
+  }
+}

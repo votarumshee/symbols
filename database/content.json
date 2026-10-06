@@ -1,0 +1,9572 @@
+{
+  "sourceCommit": "453f22d1cef29bf771fb61906354600aae8179b3",
+  "note": "Export snapshot of code constants; catalog tables are export additions, not runtime inputs.",
+  "records": [
+    {
+      "category": "symbol",
+      "key": "arrowx2",
+      "payload": {
+        "name": "Стрелочка X2",
+        "stock": 30,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 100,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "sword",
+      "payload": {
+        "name": "Меч",
+        "stock": 3,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 750,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "electricity",
+      "payload": {
+        "name": "Электричество",
+        "stock": 5,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 75,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "arrow",
+      "payload": {
+        "name": "Стрелочка",
+        "stock": null,
+        "unlimited": true,
+        "free": true,
+        "referencePriceRubies": null,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "smile",
+      "payload": {
+        "name": "Смайлик",
+        "stock": null,
+        "unlimited": true,
+        "free": true,
+        "referencePriceRubies": null,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "point",
+      "payload": {
+        "name": "Точка",
+        "stock": null,
+        "unlimited": true,
+        "free": true,
+        "referencePriceRubies": null,
+        "boost": 1
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "laser",
+      "payload": {
+        "name": "Лазер",
+        "stock": 15,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 170,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "circle",
+      "payload": {
+        "name": "Круг",
+        "stock": 10,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 20,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "feedback",
+      "payload": {
+        "name": "Обратная связь",
+        "stock": 3,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 156,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "tank",
+      "payload": {
+        "name": "Танк",
+        "stock": 5,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 200,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "inspect",
+      "payload": {
+        "name": "Осмотр",
+        "stock": 20,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 120,
+        "boost": 3
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "powerful",
+      "payload": {
+        "name": "Мощный усилитель",
+        "stock": 15,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 150,
+        "boost": 6
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "angry",
+      "payload": {
+        "name": "Злой",
+        "stock": 5,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 150,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "teleport",
+      "payload": {
+        "name": "Телепортация",
+        "stock": 10,
+        "unlimited": false,
+        "free": false,
+        "referencePriceRubies": 200,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "erase",
+      "payload": {
+        "name": "Удаление",
+        "stock": null,
+        "unlimited": true,
+        "free": true,
+        "referencePriceRubies": null,
+        "boost": 0
+      }
+    },
+    {
+      "category": "symbol",
+      "key": "king",
+      "payload": {
+        "name": "Король",
+        "baseHp": 100,
+        "free": true
+      }
+    },
+    {
+      "category": "rarity",
+      "key": "common",
+      "payload": {
+        "name": "Common",
+        "color": "#919191"
+      }
+    },
+    {
+      "category": "rarity",
+      "key": "uncommon",
+      "payload": {
+        "name": "Uncommon",
+        "color": "#b0c4ce"
+      }
+    },
+    {
+      "category": "rarity",
+      "key": "rare",
+      "payload": {
+        "name": "Rare",
+        "color": "#327ad7"
+      }
+    },
+    {
+      "category": "rarity",
+      "key": "legendary",
+      "payload": {
+        "name": "Легендарное",
+        "color": "#ef82c3"
+      }
+    },
+    {
+      "category": "rarity",
+      "key": "arcana",
+      "payload": {
+        "name": "Аркана",
+        "color": "#e34747"
+      }
+    },
+    {
+      "category": "level",
+      "key": "1",
+      "payload": {
+        "level": 1,
+        "xp": 0,
+        "next": 260
+      }
+    },
+    {
+      "category": "level",
+      "key": "2",
+      "payload": {
+        "level": 2,
+        "xp": 260,
+        "next": 560
+      }
+    },
+    {
+      "category": "level",
+      "key": "3",
+      "payload": {
+        "level": 3,
+        "xp": 560,
+        "next": 660
+      }
+    },
+    {
+      "category": "level",
+      "key": "4",
+      "payload": {
+        "level": 4,
+        "xp": 660,
+        "next": 800
+      }
+    },
+    {
+      "category": "level",
+      "key": "5",
+      "payload": {
+        "level": 5,
+        "xp": 800,
+        "next": 1000
+      }
+    },
+    {
+      "category": "level",
+      "key": "6",
+      "payload": {
+        "level": 6,
+        "xp": 1000,
+        "next": 1100
+      }
+    },
+    {
+      "category": "level",
+      "key": "7",
+      "payload": {
+        "level": 7,
+        "xp": 1100,
+        "next": 1250
+      }
+    },
+    {
+      "category": "level",
+      "key": "8",
+      "payload": {
+        "level": 8,
+        "xp": 1250,
+        "next": 1350
+      }
+    },
+    {
+      "category": "level",
+      "key": "9",
+      "payload": {
+        "level": 9,
+        "xp": 1350,
+        "next": 1500
+      }
+    },
+    {
+      "category": "level",
+      "key": "10",
+      "payload": {
+        "level": 10,
+        "xp": 1500,
+        "next": 1600
+      }
+    },
+    {
+      "category": "level",
+      "key": "11",
+      "payload": {
+        "level": 11,
+        "xp": 1600,
+        "next": 1750
+      }
+    },
+    {
+      "category": "level",
+      "key": "12",
+      "payload": {
+        "level": 12,
+        "xp": 1750,
+        "next": 1850
+      }
+    },
+    {
+      "category": "level",
+      "key": "13",
+      "payload": {
+        "level": 13,
+        "xp": 1850,
+        "next": 2000
+      }
+    },
+    {
+      "category": "level",
+      "key": "14",
+      "payload": {
+        "level": 14,
+        "xp": 2000,
+        "next": 2100
+      }
+    },
+    {
+      "category": "level",
+      "key": "15",
+      "payload": {
+        "level": 15,
+        "xp": 2100,
+        "next": 2250
+      }
+    },
+    {
+      "category": "level",
+      "key": "16",
+      "payload": {
+        "level": 16,
+        "xp": 2250,
+        "next": 2350
+      }
+    },
+    {
+      "category": "level",
+      "key": "17",
+      "payload": {
+        "level": 17,
+        "xp": 2350,
+        "next": 2500
+      }
+    },
+    {
+      "category": "level",
+      "key": "18",
+      "payload": {
+        "level": 18,
+        "xp": 2500,
+        "next": 2600
+      }
+    },
+    {
+      "category": "level",
+      "key": "19",
+      "payload": {
+        "level": 19,
+        "xp": 2600,
+        "next": 2750
+      }
+    },
+    {
+      "category": "level",
+      "key": "20",
+      "payload": {
+        "level": 20,
+        "xp": 2750,
+        "next": 2850
+      }
+    },
+    {
+      "category": "level",
+      "key": "21",
+      "payload": {
+        "level": 21,
+        "xp": 2850,
+        "next": 3000
+      }
+    },
+    {
+      "category": "level",
+      "key": "22",
+      "payload": {
+        "level": 22,
+        "xp": 3000,
+        "next": 3100
+      }
+    },
+    {
+      "category": "level",
+      "key": "23",
+      "payload": {
+        "level": 23,
+        "xp": 3100,
+        "next": 3250
+      }
+    },
+    {
+      "category": "level",
+      "key": "24",
+      "payload": {
+        "level": 24,
+        "xp": 3250,
+        "next": 3350
+      }
+    },
+    {
+      "category": "level",
+      "key": "25",
+      "payload": {
+        "level": 25,
+        "xp": 3350,
+        "next": 3500
+      }
+    },
+    {
+      "category": "level",
+      "key": "26",
+      "payload": {
+        "level": 26,
+        "xp": 3500,
+        "next": 3600
+      }
+    },
+    {
+      "category": "level",
+      "key": "27",
+      "payload": {
+        "level": 27,
+        "xp": 3600,
+        "next": 3750
+      }
+    },
+    {
+      "category": "level",
+      "key": "28",
+      "payload": {
+        "level": 28,
+        "xp": 3750,
+        "next": 3850
+      }
+    },
+    {
+      "category": "level",
+      "key": "29",
+      "payload": {
+        "level": 29,
+        "xp": 3850,
+        "next": 4000
+      }
+    },
+    {
+      "category": "level",
+      "key": "30",
+      "payload": {
+        "level": 30,
+        "xp": 4000,
+        "next": 4100
+      }
+    },
+    {
+      "category": "level",
+      "key": "31",
+      "payload": {
+        "level": 31,
+        "xp": 4100,
+        "next": 4250
+      }
+    },
+    {
+      "category": "level",
+      "key": "32",
+      "payload": {
+        "level": 32,
+        "xp": 4250,
+        "next": 4350
+      }
+    },
+    {
+      "category": "level",
+      "key": "33",
+      "payload": {
+        "level": 33,
+        "xp": 4350,
+        "next": 4500
+      }
+    },
+    {
+      "category": "level",
+      "key": "34",
+      "payload": {
+        "level": 34,
+        "xp": 4500,
+        "next": 4600
+      }
+    },
+    {
+      "category": "level",
+      "key": "35",
+      "payload": {
+        "level": 35,
+        "xp": 4600,
+        "next": 4750
+      }
+    },
+    {
+      "category": "level",
+      "key": "36",
+      "payload": {
+        "level": 36,
+        "xp": 4750,
+        "next": 4850
+      }
+    },
+    {
+      "category": "level",
+      "key": "37",
+      "payload": {
+        "level": 37,
+        "xp": 4850,
+        "next": 5000
+      }
+    },
+    {
+      "category": "level",
+      "key": "38",
+      "payload": {
+        "level": 38,
+        "xp": 5000,
+        "next": 5100
+      }
+    },
+    {
+      "category": "level",
+      "key": "39",
+      "payload": {
+        "level": 39,
+        "xp": 5100,
+        "next": 5250
+      }
+    },
+    {
+      "category": "level",
+      "key": "40",
+      "payload": {
+        "level": 40,
+        "xp": 5250,
+        "next": 5350
+      }
+    },
+    {
+      "category": "level",
+      "key": "41",
+      "payload": {
+        "level": 41,
+        "xp": 5350,
+        "next": 5500
+      }
+    },
+    {
+      "category": "level",
+      "key": "42",
+      "payload": {
+        "level": 42,
+        "xp": 5500,
+        "next": 5600
+      }
+    },
+    {
+      "category": "level",
+      "key": "43",
+      "payload": {
+        "level": 43,
+        "xp": 5600,
+        "next": 5750
+      }
+    },
+    {
+      "category": "level",
+      "key": "44",
+      "payload": {
+        "level": 44,
+        "xp": 5750,
+        "next": 5850
+      }
+    },
+    {
+      "category": "level",
+      "key": "45",
+      "payload": {
+        "level": 45,
+        "xp": 5850,
+        "next": 6000
+      }
+    },
+    {
+      "category": "level",
+      "key": "46",
+      "payload": {
+        "level": 46,
+        "xp": 6000,
+        "next": 6100
+      }
+    },
+    {
+      "category": "level",
+      "key": "47",
+      "payload": {
+        "level": 47,
+        "xp": 6100,
+        "next": 6250
+      }
+    },
+    {
+      "category": "level",
+      "key": "48",
+      "payload": {
+        "level": 48,
+        "xp": 6250,
+        "next": 6350
+      }
+    },
+    {
+      "category": "level",
+      "key": "49",
+      "payload": {
+        "level": 49,
+        "xp": 6350,
+        "next": 6500
+      }
+    },
+    {
+      "category": "level",
+      "key": "50",
+      "payload": {
+        "level": 50,
+        "xp": 6500,
+        "next": 6600
+      }
+    },
+    {
+      "category": "level",
+      "key": "51",
+      "payload": {
+        "level": 51,
+        "xp": 6600,
+        "next": 6750
+      }
+    },
+    {
+      "category": "level",
+      "key": "52",
+      "payload": {
+        "level": 52,
+        "xp": 6750,
+        "next": 6850
+      }
+    },
+    {
+      "category": "level",
+      "key": "53",
+      "payload": {
+        "level": 53,
+        "xp": 6850,
+        "next": 7000
+      }
+    },
+    {
+      "category": "level",
+      "key": "54",
+      "payload": {
+        "level": 54,
+        "xp": 7000,
+        "next": 7100
+      }
+    },
+    {
+      "category": "level",
+      "key": "55",
+      "payload": {
+        "level": 55,
+        "xp": 7100,
+        "next": 7250
+      }
+    },
+    {
+      "category": "level",
+      "key": "56",
+      "payload": {
+        "level": 56,
+        "xp": 7250,
+        "next": 7350
+      }
+    },
+    {
+      "category": "level",
+      "key": "57",
+      "payload": {
+        "level": 57,
+        "xp": 7350,
+        "next": 7500
+      }
+    },
+    {
+      "category": "level",
+      "key": "58",
+      "payload": {
+        "level": 58,
+        "xp": 7500,
+        "next": 7600
+      }
+    },
+    {
+      "category": "level",
+      "key": "59",
+      "payload": {
+        "level": 59,
+        "xp": 7600,
+        "next": 7750
+      }
+    },
+    {
+      "category": "level",
+      "key": "60",
+      "payload": {
+        "level": 60,
+        "xp": 7750,
+        "next": 7850
+      }
+    },
+    {
+      "category": "level",
+      "key": "61",
+      "payload": {
+        "level": 61,
+        "xp": 7850,
+        "next": 8000
+      }
+    },
+    {
+      "category": "level",
+      "key": "62",
+      "payload": {
+        "level": 62,
+        "xp": 8000,
+        "next": 8100
+      }
+    },
+    {
+      "category": "level",
+      "key": "63",
+      "payload": {
+        "level": 63,
+        "xp": 8100,
+        "next": 8250
+      }
+    },
+    {
+      "category": "level",
+      "key": "64",
+      "payload": {
+        "level": 64,
+        "xp": 8250,
+        "next": 8350
+      }
+    },
+    {
+      "category": "level",
+      "key": "65",
+      "payload": {
+        "level": 65,
+        "xp": 8350,
+        "next": 8500
+      }
+    },
+    {
+      "category": "level",
+      "key": "66",
+      "payload": {
+        "level": 66,
+        "xp": 8500,
+        "next": 8600
+      }
+    },
+    {
+      "category": "level",
+      "key": "67",
+      "payload": {
+        "level": 67,
+        "xp": 8600,
+        "next": 8750
+      }
+    },
+    {
+      "category": "level",
+      "key": "68",
+      "payload": {
+        "level": 68,
+        "xp": 8750,
+        "next": 8850
+      }
+    },
+    {
+      "category": "level",
+      "key": "69",
+      "payload": {
+        "level": 69,
+        "xp": 8850,
+        "next": 9000
+      }
+    },
+    {
+      "category": "level",
+      "key": "70",
+      "payload": {
+        "level": 70,
+        "xp": 9000,
+        "next": 9100
+      }
+    },
+    {
+      "category": "level",
+      "key": "71",
+      "payload": {
+        "level": 71,
+        "xp": 9100,
+        "next": 9250
+      }
+    },
+    {
+      "category": "level",
+      "key": "72",
+      "payload": {
+        "level": 72,
+        "xp": 9250,
+        "next": 9350
+      }
+    },
+    {
+      "category": "level",
+      "key": "73",
+      "payload": {
+        "level": 73,
+        "xp": 9350,
+        "next": 9500
+      }
+    },
+    {
+      "category": "level",
+      "key": "74",
+      "payload": {
+        "level": 74,
+        "xp": 9500,
+        "next": 9600
+      }
+    },
+    {
+      "category": "level",
+      "key": "75",
+      "payload": {
+        "level": 75,
+        "xp": 9600,
+        "next": 9750
+      }
+    },
+    {
+      "category": "level",
+      "key": "76",
+      "payload": {
+        "level": 76,
+        "xp": 9750,
+        "next": 9850
+      }
+    },
+    {
+      "category": "level",
+      "key": "77",
+      "payload": {
+        "level": 77,
+        "xp": 9850,
+        "next": 10000
+      }
+    },
+    {
+      "category": "level",
+      "key": "78",
+      "payload": {
+        "level": 78,
+        "xp": 10000,
+        "next": 10100
+      }
+    },
+    {
+      "category": "level",
+      "key": "79",
+      "payload": {
+        "level": 79,
+        "xp": 10100,
+        "next": 10250
+      }
+    },
+    {
+      "category": "level",
+      "key": "80",
+      "payload": {
+        "level": 80,
+        "xp": 10250,
+        "next": 10350
+      }
+    },
+    {
+      "category": "level",
+      "key": "81",
+      "payload": {
+        "level": 81,
+        "xp": 10350,
+        "next": 10500
+      }
+    },
+    {
+      "category": "level",
+      "key": "82",
+      "payload": {
+        "level": 82,
+        "xp": 10500,
+        "next": 10600
+      }
+    },
+    {
+      "category": "level",
+      "key": "83",
+      "payload": {
+        "level": 83,
+        "xp": 10600,
+        "next": 10750
+      }
+    },
+    {
+      "category": "level",
+      "key": "84",
+      "payload": {
+        "level": 84,
+        "xp": 10750,
+        "next": 10850
+      }
+    },
+    {
+      "category": "level",
+      "key": "85",
+      "payload": {
+        "level": 85,
+        "xp": 10850,
+        "next": 11000
+      }
+    },
+    {
+      "category": "level",
+      "key": "86",
+      "payload": {
+        "level": 86,
+        "xp": 11000,
+        "next": 11100
+      }
+    },
+    {
+      "category": "level",
+      "key": "87",
+      "payload": {
+        "level": 87,
+        "xp": 11100,
+        "next": 11250
+      }
+    },
+    {
+      "category": "level",
+      "key": "88",
+      "payload": {
+        "level": 88,
+        "xp": 11250,
+        "next": 11350
+      }
+    },
+    {
+      "category": "level",
+      "key": "89",
+      "payload": {
+        "level": 89,
+        "xp": 11350,
+        "next": 11500
+      }
+    },
+    {
+      "category": "level",
+      "key": "90",
+      "payload": {
+        "level": 90,
+        "xp": 11500,
+        "next": 11600
+      }
+    },
+    {
+      "category": "level",
+      "key": "91",
+      "payload": {
+        "level": 91,
+        "xp": 11600,
+        "next": 11750
+      }
+    },
+    {
+      "category": "level",
+      "key": "92",
+      "payload": {
+        "level": 92,
+        "xp": 11750,
+        "next": 11850
+      }
+    },
+    {
+      "category": "level",
+      "key": "93",
+      "payload": {
+        "level": 93,
+        "xp": 11850,
+        "next": 12000
+      }
+    },
+    {
+      "category": "level",
+      "key": "94",
+      "payload": {
+        "level": 94,
+        "xp": 12000,
+        "next": 12100
+      }
+    },
+    {
+      "category": "level",
+      "key": "95",
+      "payload": {
+        "level": 95,
+        "xp": 12100,
+        "next": 12250
+      }
+    },
+    {
+      "category": "level",
+      "key": "96",
+      "payload": {
+        "level": 96,
+        "xp": 12250,
+        "next": 12350
+      }
+    },
+    {
+      "category": "level",
+      "key": "97",
+      "payload": {
+        "level": 97,
+        "xp": 12350,
+        "next": 12500
+      }
+    },
+    {
+      "category": "level",
+      "key": "98",
+      "payload": {
+        "level": 98,
+        "xp": 12500,
+        "next": 12600
+      }
+    },
+    {
+      "category": "level",
+      "key": "99",
+      "payload": {
+        "level": 99,
+        "xp": 12600,
+        "next": 12750
+      }
+    },
+    {
+      "category": "level",
+      "key": "100",
+      "payload": {
+        "level": 100,
+        "xp": 12750,
+        "next": 12850
+      }
+    },
+    {
+      "category": "level",
+      "key": "101",
+      "payload": {
+        "level": 101,
+        "xp": 12850,
+        "next": 13000
+      }
+    },
+    {
+      "category": "level",
+      "key": "102",
+      "payload": {
+        "level": 102,
+        "xp": 13000,
+        "next": 13100
+      }
+    },
+    {
+      "category": "level",
+      "key": "103",
+      "payload": {
+        "level": 103,
+        "xp": 13100,
+        "next": 13250
+      }
+    },
+    {
+      "category": "level",
+      "key": "104",
+      "payload": {
+        "level": 104,
+        "xp": 13250,
+        "next": 13350
+      }
+    },
+    {
+      "category": "level",
+      "key": "105",
+      "payload": {
+        "level": 105,
+        "xp": 13350,
+        "next": 13500
+      }
+    },
+    {
+      "category": "level",
+      "key": "106",
+      "payload": {
+        "level": 106,
+        "xp": 13500,
+        "next": 13600
+      }
+    },
+    {
+      "category": "level",
+      "key": "107",
+      "payload": {
+        "level": 107,
+        "xp": 13600,
+        "next": 13750
+      }
+    },
+    {
+      "category": "level",
+      "key": "108",
+      "payload": {
+        "level": 108,
+        "xp": 13750,
+        "next": 13850
+      }
+    },
+    {
+      "category": "level",
+      "key": "109",
+      "payload": {
+        "level": 109,
+        "xp": 13850,
+        "next": 14000
+      }
+    },
+    {
+      "category": "level",
+      "key": "110",
+      "payload": {
+        "level": 110,
+        "xp": 14000,
+        "next": 14100
+      }
+    },
+    {
+      "category": "level",
+      "key": "111",
+      "payload": {
+        "level": 111,
+        "xp": 14100,
+        "next": 14250
+      }
+    },
+    {
+      "category": "level",
+      "key": "112",
+      "payload": {
+        "level": 112,
+        "xp": 14250,
+        "next": 14350
+      }
+    },
+    {
+      "category": "level",
+      "key": "113",
+      "payload": {
+        "level": 113,
+        "xp": 14350,
+        "next": 14500
+      }
+    },
+    {
+      "category": "level",
+      "key": "114",
+      "payload": {
+        "level": 114,
+        "xp": 14500,
+        "next": 14600
+      }
+    },
+    {
+      "category": "level",
+      "key": "115",
+      "payload": {
+        "level": 115,
+        "xp": 14600,
+        "next": 14750
+      }
+    },
+    {
+      "category": "level",
+      "key": "116",
+      "payload": {
+        "level": 116,
+        "xp": 14750,
+        "next": 14850
+      }
+    },
+    {
+      "category": "level",
+      "key": "117",
+      "payload": {
+        "level": 117,
+        "xp": 14850,
+        "next": 15000
+      }
+    },
+    {
+      "category": "level",
+      "key": "118",
+      "payload": {
+        "level": 118,
+        "xp": 15000,
+        "next": 15100
+      }
+    },
+    {
+      "category": "level",
+      "key": "119",
+      "payload": {
+        "level": 119,
+        "xp": 15100,
+        "next": 15250
+      }
+    },
+    {
+      "category": "level",
+      "key": "120",
+      "payload": {
+        "level": 120,
+        "xp": 15250,
+        "next": 15350
+      }
+    },
+    {
+      "category": "level",
+      "key": "121",
+      "payload": {
+        "level": 121,
+        "xp": 15350,
+        "next": 15500
+      }
+    },
+    {
+      "category": "level",
+      "key": "122",
+      "payload": {
+        "level": 122,
+        "xp": 15500,
+        "next": 15600
+      }
+    },
+    {
+      "category": "level",
+      "key": "123",
+      "payload": {
+        "level": 123,
+        "xp": 15600,
+        "next": 15750
+      }
+    },
+    {
+      "category": "level",
+      "key": "124",
+      "payload": {
+        "level": 124,
+        "xp": 15750,
+        "next": 15850
+      }
+    },
+    {
+      "category": "level",
+      "key": "125",
+      "payload": {
+        "level": 125,
+        "xp": 15850,
+        "next": 16000
+      }
+    },
+    {
+      "category": "level",
+      "key": "126",
+      "payload": {
+        "level": 126,
+        "xp": 16000,
+        "next": 16100
+      }
+    },
+    {
+      "category": "level",
+      "key": "127",
+      "payload": {
+        "level": 127,
+        "xp": 16100,
+        "next": 16250
+      }
+    },
+    {
+      "category": "level",
+      "key": "128",
+      "payload": {
+        "level": 128,
+        "xp": 16250,
+        "next": 16350
+      }
+    },
+    {
+      "category": "level",
+      "key": "129",
+      "payload": {
+        "level": 129,
+        "xp": 16350,
+        "next": 16500
+      }
+    },
+    {
+      "category": "level",
+      "key": "130",
+      "payload": {
+        "level": 130,
+        "xp": 16500,
+        "next": 16600
+      }
+    },
+    {
+      "category": "level",
+      "key": "131",
+      "payload": {
+        "level": 131,
+        "xp": 16600,
+        "next": 16750
+      }
+    },
+    {
+      "category": "level",
+      "key": "132",
+      "payload": {
+        "level": 132,
+        "xp": 16750,
+        "next": 16850
+      }
+    },
+    {
+      "category": "level",
+      "key": "133",
+      "payload": {
+        "level": 133,
+        "xp": 16850,
+        "next": 17000
+      }
+    },
+    {
+      "category": "level",
+      "key": "134",
+      "payload": {
+        "level": 134,
+        "xp": 17000,
+        "next": 17100
+      }
+    },
+    {
+      "category": "level",
+      "key": "135",
+      "payload": {
+        "level": 135,
+        "xp": 17100,
+        "next": 17250
+      }
+    },
+    {
+      "category": "level",
+      "key": "136",
+      "payload": {
+        "level": 136,
+        "xp": 17250,
+        "next": 17350
+      }
+    },
+    {
+      "category": "level",
+      "key": "137",
+      "payload": {
+        "level": 137,
+        "xp": 17350,
+        "next": 17500
+      }
+    },
+    {
+      "category": "level",
+      "key": "138",
+      "payload": {
+        "level": 138,
+        "xp": 17500,
+        "next": 17600
+      }
+    },
+    {
+      "category": "level",
+      "key": "139",
+      "payload": {
+        "level": 139,
+        "xp": 17600,
+        "next": 17750
+      }
+    },
+    {
+      "category": "level",
+      "key": "140",
+      "payload": {
+        "level": 140,
+        "xp": 17750,
+        "next": 17850
+      }
+    },
+    {
+      "category": "level",
+      "key": "141",
+      "payload": {
+        "level": 141,
+        "xp": 17850,
+        "next": 18000
+      }
+    },
+    {
+      "category": "level",
+      "key": "142",
+      "payload": {
+        "level": 142,
+        "xp": 18000,
+        "next": 18100
+      }
+    },
+    {
+      "category": "level",
+      "key": "143",
+      "payload": {
+        "level": 143,
+        "xp": 18100,
+        "next": 18250
+      }
+    },
+    {
+      "category": "level",
+      "key": "144",
+      "payload": {
+        "level": 144,
+        "xp": 18250,
+        "next": 18350
+      }
+    },
+    {
+      "category": "level",
+      "key": "145",
+      "payload": {
+        "level": 145,
+        "xp": 18350,
+        "next": 18500
+      }
+    },
+    {
+      "category": "level",
+      "key": "146",
+      "payload": {
+        "level": 146,
+        "xp": 18500,
+        "next": 18600
+      }
+    },
+    {
+      "category": "level",
+      "key": "147",
+      "payload": {
+        "level": 147,
+        "xp": 18600,
+        "next": 18750
+      }
+    },
+    {
+      "category": "level",
+      "key": "148",
+      "payload": {
+        "level": 148,
+        "xp": 18750,
+        "next": 18850
+      }
+    },
+    {
+      "category": "level",
+      "key": "149",
+      "payload": {
+        "level": 149,
+        "xp": 18850,
+        "next": 19000
+      }
+    },
+    {
+      "category": "level",
+      "key": "150",
+      "payload": {
+        "level": 150,
+        "xp": 19000,
+        "next": 19100
+      }
+    },
+    {
+      "category": "level",
+      "key": "151",
+      "payload": {
+        "level": 151,
+        "xp": 19100,
+        "next": 19250
+      }
+    },
+    {
+      "category": "level",
+      "key": "152",
+      "payload": {
+        "level": 152,
+        "xp": 19250,
+        "next": 19350
+      }
+    },
+    {
+      "category": "level",
+      "key": "153",
+      "payload": {
+        "level": 153,
+        "xp": 19350,
+        "next": 19500
+      }
+    },
+    {
+      "category": "level",
+      "key": "154",
+      "payload": {
+        "level": 154,
+        "xp": 19500,
+        "next": 19600
+      }
+    },
+    {
+      "category": "level",
+      "key": "155",
+      "payload": {
+        "level": 155,
+        "xp": 19600,
+        "next": 19750
+      }
+    },
+    {
+      "category": "level",
+      "key": "156",
+      "payload": {
+        "level": 156,
+        "xp": 19750,
+        "next": 19850
+      }
+    },
+    {
+      "category": "level",
+      "key": "157",
+      "payload": {
+        "level": 157,
+        "xp": 19850,
+        "next": 20000
+      }
+    },
+    {
+      "category": "level",
+      "key": "158",
+      "payload": {
+        "level": 158,
+        "xp": 20000,
+        "next": 20100
+      }
+    },
+    {
+      "category": "level",
+      "key": "159",
+      "payload": {
+        "level": 159,
+        "xp": 20100,
+        "next": 20250
+      }
+    },
+    {
+      "category": "level",
+      "key": "160",
+      "payload": {
+        "level": 160,
+        "xp": 20250,
+        "next": 20350
+      }
+    },
+    {
+      "category": "level",
+      "key": "161",
+      "payload": {
+        "level": 161,
+        "xp": 20350,
+        "next": 20500
+      }
+    },
+    {
+      "category": "level",
+      "key": "162",
+      "payload": {
+        "level": 162,
+        "xp": 20500,
+        "next": 20600
+      }
+    },
+    {
+      "category": "level",
+      "key": "163",
+      "payload": {
+        "level": 163,
+        "xp": 20600,
+        "next": 20750
+      }
+    },
+    {
+      "category": "level",
+      "key": "164",
+      "payload": {
+        "level": 164,
+        "xp": 20750,
+        "next": 20850
+      }
+    },
+    {
+      "category": "level",
+      "key": "165",
+      "payload": {
+        "level": 165,
+        "xp": 20850,
+        "next": 21000
+      }
+    },
+    {
+      "category": "level",
+      "key": "166",
+      "payload": {
+        "level": 166,
+        "xp": 21000,
+        "next": 21100
+      }
+    },
+    {
+      "category": "level",
+      "key": "167",
+      "payload": {
+        "level": 167,
+        "xp": 21100,
+        "next": 21250
+      }
+    },
+    {
+      "category": "level",
+      "key": "168",
+      "payload": {
+        "level": 168,
+        "xp": 21250,
+        "next": 21350
+      }
+    },
+    {
+      "category": "level",
+      "key": "169",
+      "payload": {
+        "level": 169,
+        "xp": 21350,
+        "next": 21500
+      }
+    },
+    {
+      "category": "level",
+      "key": "170",
+      "payload": {
+        "level": 170,
+        "xp": 21500,
+        "next": 21600
+      }
+    },
+    {
+      "category": "level",
+      "key": "171",
+      "payload": {
+        "level": 171,
+        "xp": 21600,
+        "next": 21750
+      }
+    },
+    {
+      "category": "level",
+      "key": "172",
+      "payload": {
+        "level": 172,
+        "xp": 21750,
+        "next": 21850
+      }
+    },
+    {
+      "category": "level",
+      "key": "173",
+      "payload": {
+        "level": 173,
+        "xp": 21850,
+        "next": 22000
+      }
+    },
+    {
+      "category": "level",
+      "key": "174",
+      "payload": {
+        "level": 174,
+        "xp": 22000,
+        "next": 22100
+      }
+    },
+    {
+      "category": "level",
+      "key": "175",
+      "payload": {
+        "level": 175,
+        "xp": 22100,
+        "next": 22250
+      }
+    },
+    {
+      "category": "level",
+      "key": "176",
+      "payload": {
+        "level": 176,
+        "xp": 22250,
+        "next": 22350
+      }
+    },
+    {
+      "category": "level",
+      "key": "177",
+      "payload": {
+        "level": 177,
+        "xp": 22350,
+        "next": 22500
+      }
+    },
+    {
+      "category": "level",
+      "key": "178",
+      "payload": {
+        "level": 178,
+        "xp": 22500,
+        "next": 22600
+      }
+    },
+    {
+      "category": "level",
+      "key": "179",
+      "payload": {
+        "level": 179,
+        "xp": 22600,
+        "next": 22750
+      }
+    },
+    {
+      "category": "level",
+      "key": "180",
+      "payload": {
+        "level": 180,
+        "xp": 22750,
+        "next": 22850
+      }
+    },
+    {
+      "category": "level",
+      "key": "181",
+      "payload": {
+        "level": 181,
+        "xp": 22850,
+        "next": 23000
+      }
+    },
+    {
+      "category": "level",
+      "key": "182",
+      "payload": {
+        "level": 182,
+        "xp": 23000,
+        "next": 23100
+      }
+    },
+    {
+      "category": "level",
+      "key": "183",
+      "payload": {
+        "level": 183,
+        "xp": 23100,
+        "next": 23250
+      }
+    },
+    {
+      "category": "level",
+      "key": "184",
+      "payload": {
+        "level": 184,
+        "xp": 23250,
+        "next": 23350
+      }
+    },
+    {
+      "category": "level",
+      "key": "185",
+      "payload": {
+        "level": 185,
+        "xp": 23350,
+        "next": 23500
+      }
+    },
+    {
+      "category": "level",
+      "key": "186",
+      "payload": {
+        "level": 186,
+        "xp": 23500,
+        "next": 23600
+      }
+    },
+    {
+      "category": "level",
+      "key": "187",
+      "payload": {
+        "level": 187,
+        "xp": 23600,
+        "next": 23750
+      }
+    },
+    {
+      "category": "level",
+      "key": "188",
+      "payload": {
+        "level": 188,
+        "xp": 23750,
+        "next": 23850
+      }
+    },
+    {
+      "category": "level",
+      "key": "189",
+      "payload": {
+        "level": 189,
+        "xp": 23850,
+        "next": 24000
+      }
+    },
+    {
+      "category": "level",
+      "key": "190",
+      "payload": {
+        "level": 190,
+        "xp": 24000,
+        "next": 24100
+      }
+    },
+    {
+      "category": "level",
+      "key": "191",
+      "payload": {
+        "level": 191,
+        "xp": 24100,
+        "next": 24250
+      }
+    },
+    {
+      "category": "level",
+      "key": "192",
+      "payload": {
+        "level": 192,
+        "xp": 24250,
+        "next": 24350
+      }
+    },
+    {
+      "category": "level",
+      "key": "193",
+      "payload": {
+        "level": 193,
+        "xp": 24350,
+        "next": 24500
+      }
+    },
+    {
+      "category": "level",
+      "key": "194",
+      "payload": {
+        "level": 194,
+        "xp": 24500,
+        "next": 24600
+      }
+    },
+    {
+      "category": "level",
+      "key": "195",
+      "payload": {
+        "level": 195,
+        "xp": 24600,
+        "next": 24750
+      }
+    },
+    {
+      "category": "level",
+      "key": "196",
+      "payload": {
+        "level": 196,
+        "xp": 24750,
+        "next": 24850
+      }
+    },
+    {
+      "category": "level",
+      "key": "197",
+      "payload": {
+        "level": 197,
+        "xp": 24850,
+        "next": 25000
+      }
+    },
+    {
+      "category": "level",
+      "key": "198",
+      "payload": {
+        "level": 198,
+        "xp": 25000,
+        "next": 25100
+      }
+    },
+    {
+      "category": "level",
+      "key": "199",
+      "payload": {
+        "level": 199,
+        "xp": 25100,
+        "next": 25250
+      }
+    },
+    {
+      "category": "level",
+      "key": "200",
+      "payload": {
+        "level": 200,
+        "xp": 25250,
+        "next": 25350
+      }
+    },
+    {
+      "category": "level",
+      "key": "201",
+      "payload": {
+        "level": 201,
+        "xp": 25350,
+        "next": 25500
+      }
+    },
+    {
+      "category": "level",
+      "key": "202",
+      "payload": {
+        "level": 202,
+        "xp": 25500,
+        "next": 25600
+      }
+    },
+    {
+      "category": "level",
+      "key": "203",
+      "payload": {
+        "level": 203,
+        "xp": 25600,
+        "next": 25750
+      }
+    },
+    {
+      "category": "level",
+      "key": "204",
+      "payload": {
+        "level": 204,
+        "xp": 25750,
+        "next": 25850
+      }
+    },
+    {
+      "category": "level",
+      "key": "205",
+      "payload": {
+        "level": 205,
+        "xp": 25850,
+        "next": 26000
+      }
+    },
+    {
+      "category": "level",
+      "key": "206",
+      "payload": {
+        "level": 206,
+        "xp": 26000,
+        "next": 26100
+      }
+    },
+    {
+      "category": "level",
+      "key": "207",
+      "payload": {
+        "level": 207,
+        "xp": 26100,
+        "next": 26250
+      }
+    },
+    {
+      "category": "level",
+      "key": "208",
+      "payload": {
+        "level": 208,
+        "xp": 26250,
+        "next": 26350
+      }
+    },
+    {
+      "category": "level",
+      "key": "209",
+      "payload": {
+        "level": 209,
+        "xp": 26350,
+        "next": 26500
+      }
+    },
+    {
+      "category": "level",
+      "key": "210",
+      "payload": {
+        "level": 210,
+        "xp": 26500,
+        "next": 26600
+      }
+    },
+    {
+      "category": "level",
+      "key": "211",
+      "payload": {
+        "level": 211,
+        "xp": 26600,
+        "next": 26750
+      }
+    },
+    {
+      "category": "level",
+      "key": "212",
+      "payload": {
+        "level": 212,
+        "xp": 26750,
+        "next": 26850
+      }
+    },
+    {
+      "category": "level",
+      "key": "213",
+      "payload": {
+        "level": 213,
+        "xp": 26850,
+        "next": 27000
+      }
+    },
+    {
+      "category": "level",
+      "key": "214",
+      "payload": {
+        "level": 214,
+        "xp": 27000,
+        "next": 27100
+      }
+    },
+    {
+      "category": "level",
+      "key": "215",
+      "payload": {
+        "level": 215,
+        "xp": 27100,
+        "next": 27250
+      }
+    },
+    {
+      "category": "level",
+      "key": "216",
+      "payload": {
+        "level": 216,
+        "xp": 27250,
+        "next": 27350
+      }
+    },
+    {
+      "category": "level",
+      "key": "217",
+      "payload": {
+        "level": 217,
+        "xp": 27350,
+        "next": 27500
+      }
+    },
+    {
+      "category": "level",
+      "key": "218",
+      "payload": {
+        "level": 218,
+        "xp": 27500,
+        "next": 27600
+      }
+    },
+    {
+      "category": "level",
+      "key": "219",
+      "payload": {
+        "level": 219,
+        "xp": 27600,
+        "next": 27750
+      }
+    },
+    {
+      "category": "level",
+      "key": "220",
+      "payload": {
+        "level": 220,
+        "xp": 27750,
+        "next": 27850
+      }
+    },
+    {
+      "category": "level",
+      "key": "221",
+      "payload": {
+        "level": 221,
+        "xp": 27850,
+        "next": 28000
+      }
+    },
+    {
+      "category": "level",
+      "key": "222",
+      "payload": {
+        "level": 222,
+        "xp": 28000,
+        "next": 28100
+      }
+    },
+    {
+      "category": "level",
+      "key": "223",
+      "payload": {
+        "level": 223,
+        "xp": 28100,
+        "next": 28250
+      }
+    },
+    {
+      "category": "level",
+      "key": "224",
+      "payload": {
+        "level": 224,
+        "xp": 28250,
+        "next": 28350
+      }
+    },
+    {
+      "category": "level",
+      "key": "225",
+      "payload": {
+        "level": 225,
+        "xp": 28350,
+        "next": 28500
+      }
+    },
+    {
+      "category": "level",
+      "key": "226",
+      "payload": {
+        "level": 226,
+        "xp": 28500,
+        "next": 28600
+      }
+    },
+    {
+      "category": "level",
+      "key": "227",
+      "payload": {
+        "level": 227,
+        "xp": 28600,
+        "next": 28750
+      }
+    },
+    {
+      "category": "level",
+      "key": "228",
+      "payload": {
+        "level": 228,
+        "xp": 28750,
+        "next": 28850
+      }
+    },
+    {
+      "category": "level",
+      "key": "229",
+      "payload": {
+        "level": 229,
+        "xp": 28850,
+        "next": 29000
+      }
+    },
+    {
+      "category": "level",
+      "key": "230",
+      "payload": {
+        "level": 230,
+        "xp": 29000,
+        "next": 29100
+      }
+    },
+    {
+      "category": "level",
+      "key": "231",
+      "payload": {
+        "level": 231,
+        "xp": 29100,
+        "next": 29250
+      }
+    },
+    {
+      "category": "level",
+      "key": "232",
+      "payload": {
+        "level": 232,
+        "xp": 29250,
+        "next": 29350
+      }
+    },
+    {
+      "category": "level",
+      "key": "233",
+      "payload": {
+        "level": 233,
+        "xp": 29350,
+        "next": 29500
+      }
+    },
+    {
+      "category": "level",
+      "key": "234",
+      "payload": {
+        "level": 234,
+        "xp": 29500,
+        "next": 29600
+      }
+    },
+    {
+      "category": "level",
+      "key": "235",
+      "payload": {
+        "level": 235,
+        "xp": 29600,
+        "next": 29750
+      }
+    },
+    {
+      "category": "level",
+      "key": "236",
+      "payload": {
+        "level": 236,
+        "xp": 29750,
+        "next": 29850
+      }
+    },
+    {
+      "category": "level",
+      "key": "237",
+      "payload": {
+        "level": 237,
+        "xp": 29850,
+        "next": 30000
+      }
+    },
+    {
+      "category": "level",
+      "key": "238",
+      "payload": {
+        "level": 238,
+        "xp": 30000,
+        "next": 30100
+      }
+    },
+    {
+      "category": "level",
+      "key": "239",
+      "payload": {
+        "level": 239,
+        "xp": 30100,
+        "next": 30250
+      }
+    },
+    {
+      "category": "level",
+      "key": "240",
+      "payload": {
+        "level": 240,
+        "xp": 30250,
+        "next": 30350
+      }
+    },
+    {
+      "category": "level",
+      "key": "241",
+      "payload": {
+        "level": 241,
+        "xp": 30350,
+        "next": 30500
+      }
+    },
+    {
+      "category": "level",
+      "key": "242",
+      "payload": {
+        "level": 242,
+        "xp": 30500,
+        "next": 30600
+      }
+    },
+    {
+      "category": "level",
+      "key": "243",
+      "payload": {
+        "level": 243,
+        "xp": 30600,
+        "next": 30750
+      }
+    },
+    {
+      "category": "level",
+      "key": "244",
+      "payload": {
+        "level": 244,
+        "xp": 30750,
+        "next": 30850
+      }
+    },
+    {
+      "category": "level",
+      "key": "245",
+      "payload": {
+        "level": 245,
+        "xp": 30850,
+        "next": 31000
+      }
+    },
+    {
+      "category": "level",
+      "key": "246",
+      "payload": {
+        "level": 246,
+        "xp": 31000,
+        "next": 31100
+      }
+    },
+    {
+      "category": "level",
+      "key": "247",
+      "payload": {
+        "level": 247,
+        "xp": 31100,
+        "next": 31250
+      }
+    },
+    {
+      "category": "level",
+      "key": "248",
+      "payload": {
+        "level": 248,
+        "xp": 31250,
+        "next": 31350
+      }
+    },
+    {
+      "category": "level",
+      "key": "249",
+      "payload": {
+        "level": 249,
+        "xp": 31350,
+        "next": 31500
+      }
+    },
+    {
+      "category": "level",
+      "key": "250",
+      "payload": {
+        "level": 250,
+        "xp": 31500,
+        "next": 31600
+      }
+    },
+    {
+      "category": "level",
+      "key": "251",
+      "payload": {
+        "level": 251,
+        "xp": 31600,
+        "next": 31750
+      }
+    },
+    {
+      "category": "level",
+      "key": "252",
+      "payload": {
+        "level": 252,
+        "xp": 31750,
+        "next": 31850
+      }
+    },
+    {
+      "category": "level",
+      "key": "253",
+      "payload": {
+        "level": 253,
+        "xp": 31850,
+        "next": 32000
+      }
+    },
+    {
+      "category": "level",
+      "key": "254",
+      "payload": {
+        "level": 254,
+        "xp": 32000,
+        "next": 32100
+      }
+    },
+    {
+      "category": "level",
+      "key": "255",
+      "payload": {
+        "level": 255,
+        "xp": 32100,
+        "next": 32250
+      }
+    },
+    {
+      "category": "level",
+      "key": "256",
+      "payload": {
+        "level": 256,
+        "xp": 32250,
+        "next": 32350
+      }
+    },
+    {
+      "category": "level",
+      "key": "257",
+      "payload": {
+        "level": 257,
+        "xp": 32350,
+        "next": 32500
+      }
+    },
+    {
+      "category": "level",
+      "key": "258",
+      "payload": {
+        "level": 258,
+        "xp": 32500,
+        "next": 32600
+      }
+    },
+    {
+      "category": "level",
+      "key": "259",
+      "payload": {
+        "level": 259,
+        "xp": 32600,
+        "next": 32750
+      }
+    },
+    {
+      "category": "level",
+      "key": "260",
+      "payload": {
+        "level": 260,
+        "xp": 32750,
+        "next": 32850
+      }
+    },
+    {
+      "category": "level",
+      "key": "261",
+      "payload": {
+        "level": 261,
+        "xp": 32850,
+        "next": 33000
+      }
+    },
+    {
+      "category": "level",
+      "key": "262",
+      "payload": {
+        "level": 262,
+        "xp": 33000,
+        "next": 33100
+      }
+    },
+    {
+      "category": "level",
+      "key": "263",
+      "payload": {
+        "level": 263,
+        "xp": 33100,
+        "next": 33250
+      }
+    },
+    {
+      "category": "level",
+      "key": "264",
+      "payload": {
+        "level": 264,
+        "xp": 33250,
+        "next": 33350
+      }
+    },
+    {
+      "category": "level",
+      "key": "265",
+      "payload": {
+        "level": 265,
+        "xp": 33350,
+        "next": 33500
+      }
+    },
+    {
+      "category": "level",
+      "key": "266",
+      "payload": {
+        "level": 266,
+        "xp": 33500,
+        "next": 33600
+      }
+    },
+    {
+      "category": "level",
+      "key": "267",
+      "payload": {
+        "level": 267,
+        "xp": 33600,
+        "next": 33750
+      }
+    },
+    {
+      "category": "level",
+      "key": "268",
+      "payload": {
+        "level": 268,
+        "xp": 33750,
+        "next": 33850
+      }
+    },
+    {
+      "category": "level",
+      "key": "269",
+      "payload": {
+        "level": 269,
+        "xp": 33850,
+        "next": 34000
+      }
+    },
+    {
+      "category": "level",
+      "key": "270",
+      "payload": {
+        "level": 270,
+        "xp": 34000,
+        "next": 34100
+      }
+    },
+    {
+      "category": "level",
+      "key": "271",
+      "payload": {
+        "level": 271,
+        "xp": 34100,
+        "next": 34250
+      }
+    },
+    {
+      "category": "level",
+      "key": "272",
+      "payload": {
+        "level": 272,
+        "xp": 34250,
+        "next": 34350
+      }
+    },
+    {
+      "category": "level",
+      "key": "273",
+      "payload": {
+        "level": 273,
+        "xp": 34350,
+        "next": 34500
+      }
+    },
+    {
+      "category": "level",
+      "key": "274",
+      "payload": {
+        "level": 274,
+        "xp": 34500,
+        "next": 34600
+      }
+    },
+    {
+      "category": "level",
+      "key": "275",
+      "payload": {
+        "level": 275,
+        "xp": 34600,
+        "next": 34750
+      }
+    },
+    {
+      "category": "level",
+      "key": "276",
+      "payload": {
+        "level": 276,
+        "xp": 34750,
+        "next": 34850
+      }
+    },
+    {
+      "category": "level",
+      "key": "277",
+      "payload": {
+        "level": 277,
+        "xp": 34850,
+        "next": 35000
+      }
+    },
+    {
+      "category": "level",
+      "key": "278",
+      "payload": {
+        "level": 278,
+        "xp": 35000,
+        "next": 35100
+      }
+    },
+    {
+      "category": "level",
+      "key": "279",
+      "payload": {
+        "level": 279,
+        "xp": 35100,
+        "next": 35250
+      }
+    },
+    {
+      "category": "level",
+      "key": "280",
+      "payload": {
+        "level": 280,
+        "xp": 35250,
+        "next": 35350
+      }
+    },
+    {
+      "category": "level",
+      "key": "281",
+      "payload": {
+        "level": 281,
+        "xp": 35350,
+        "next": 35500
+      }
+    },
+    {
+      "category": "level",
+      "key": "282",
+      "payload": {
+        "level": 282,
+        "xp": 35500,
+        "next": 35600
+      }
+    },
+    {
+      "category": "level",
+      "key": "283",
+      "payload": {
+        "level": 283,
+        "xp": 35600,
+        "next": 35750
+      }
+    },
+    {
+      "category": "level",
+      "key": "284",
+      "payload": {
+        "level": 284,
+        "xp": 35750,
+        "next": 35850
+      }
+    },
+    {
+      "category": "level",
+      "key": "285",
+      "payload": {
+        "level": 285,
+        "xp": 35850,
+        "next": 36000
+      }
+    },
+    {
+      "category": "level",
+      "key": "286",
+      "payload": {
+        "level": 286,
+        "xp": 36000,
+        "next": 36100
+      }
+    },
+    {
+      "category": "level",
+      "key": "287",
+      "payload": {
+        "level": 287,
+        "xp": 36100,
+        "next": 36250
+      }
+    },
+    {
+      "category": "level",
+      "key": "288",
+      "payload": {
+        "level": 288,
+        "xp": 36250,
+        "next": 36350
+      }
+    },
+    {
+      "category": "level",
+      "key": "289",
+      "payload": {
+        "level": 289,
+        "xp": 36350,
+        "next": 36500
+      }
+    },
+    {
+      "category": "level",
+      "key": "290",
+      "payload": {
+        "level": 290,
+        "xp": 36500,
+        "next": 36600
+      }
+    },
+    {
+      "category": "level",
+      "key": "291",
+      "payload": {
+        "level": 291,
+        "xp": 36600,
+        "next": 36750
+      }
+    },
+    {
+      "category": "level",
+      "key": "292",
+      "payload": {
+        "level": 292,
+        "xp": 36750,
+        "next": 36850
+      }
+    },
+    {
+      "category": "level",
+      "key": "293",
+      "payload": {
+        "level": 293,
+        "xp": 36850,
+        "next": 37000
+      }
+    },
+    {
+      "category": "level",
+      "key": "294",
+      "payload": {
+        "level": 294,
+        "xp": 37000,
+        "next": 37100
+      }
+    },
+    {
+      "category": "level",
+      "key": "295",
+      "payload": {
+        "level": 295,
+        "xp": 37100,
+        "next": 37250
+      }
+    },
+    {
+      "category": "level",
+      "key": "296",
+      "payload": {
+        "level": 296,
+        "xp": 37250,
+        "next": 37350
+      }
+    },
+    {
+      "category": "level",
+      "key": "297",
+      "payload": {
+        "level": 297,
+        "xp": 37350,
+        "next": 37500
+      }
+    },
+    {
+      "category": "level",
+      "key": "298",
+      "payload": {
+        "level": 298,
+        "xp": 37500,
+        "next": 37600
+      }
+    },
+    {
+      "category": "level",
+      "key": "299",
+      "payload": {
+        "level": 299,
+        "xp": 37600,
+        "next": 37750
+      }
+    },
+    {
+      "category": "level",
+      "key": "300",
+      "payload": {
+        "level": 300,
+        "xp": 37750,
+        "next": 37850
+      }
+    },
+    {
+      "category": "quest",
+      "key": "clean",
+      "payload": {
+        "id": "clean",
+        "title": "Чистая победа",
+        "text": "Победи без полученного урона. Против бота — на средней сложности или выше.",
+        "reward": 2
+      }
+    },
+    {
+      "category": "quest",
+      "key": "blocks",
+      "payload": {
+        "id": "blocks",
+        "title": "Три преграды",
+        "text": "Уничтожь три вражеских блока за одну партию.",
+        "reward": 1
+      }
+    },
+    {
+      "category": "legacyQuest",
+      "key": "breach",
+      "payload": {
+        "id": "breach",
+        "title": "Разрушить щит",
+        "text": "Уничтожь круг противника в игре с ботом. За каждый круг — 1 бакс.",
+        "reward": 1,
+        "activeInV2": false
+      }
+    },
+    {
+      "category": "legacyQuest",
+      "key": "arrow",
+      "payload": {
+        "id": "arrow",
+        "title": "Точный выстрел",
+        "text": "Попади стрелочкой во вражеского короля.",
+        "reward": 5,
+        "activeInV2": false
+      }
+    },
+    {
+      "category": "legacyQuest",
+      "key": "smile",
+      "payload": {
+        "id": "smile",
+        "title": "Пробить защиту",
+        "text": "Уничтожь вражеский смайлик.",
+        "reward": 10,
+        "activeInV2": false
+      }
+    },
+    {
+      "category": "legacyQuest",
+      "key": "streak",
+      "payload": {
+        "id": "streak",
+        "title": "Пять побед подряд",
+        "text": "Победи бота 5 раз подряд. Можно на одной сложности. Поражение сбрасывает серию.",
+        "reward": 50,
+        "activeInV2": false
+      }
+    },
+    {
+      "category": "case",
+      "key": "assault",
+      "payload": {
+        "id": "assault",
+        "name": "Штурм",
+        "mark": "⚔️",
+        "tone": "red",
+        "drops": [
+          [
+            "circle",
+            6500
+          ],
+          [
+            "feedback",
+            1500
+          ],
+          [
+            "arrowx2",
+            1500
+          ],
+          [
+            "laser",
+            480
+          ],
+          [
+            "tank",
+            20
+          ]
+        ],
+        "priceCents": 2000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:circle",
+      "payload": {
+        "case": "assault",
+        "symbol": "circle",
+        "weight": 6500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:feedback",
+      "payload": {
+        "case": "assault",
+        "symbol": "feedback",
+        "weight": 1500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:arrowx2",
+      "payload": {
+        "case": "assault",
+        "symbol": "arrowx2",
+        "weight": 1500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:laser",
+      "payload": {
+        "case": "assault",
+        "symbol": "laser",
+        "weight": 480,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:tank",
+      "payload": {
+        "case": "assault",
+        "symbol": "tank",
+        "weight": 20,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "case",
+      "key": "energy",
+      "payload": {
+        "id": "energy",
+        "name": "Энергия",
+        "mark": "⚡",
+        "tone": "purple",
+        "drops": [
+          [
+            "circle",
+            6500
+          ],
+          [
+            "angry",
+            3000
+          ],
+          [
+            "inspect",
+            480
+          ],
+          [
+            "powerful",
+            20
+          ]
+        ],
+        "priceCents": 2000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:circle",
+      "payload": {
+        "case": "energy",
+        "symbol": "circle",
+        "weight": 6500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:angry",
+      "payload": {
+        "case": "energy",
+        "symbol": "angry",
+        "weight": 3000,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:inspect",
+      "payload": {
+        "case": "energy",
+        "symbol": "inspect",
+        "weight": 480,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:powerful",
+      "payload": {
+        "case": "energy",
+        "symbol": "powerful",
+        "weight": 20,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "case",
+      "key": "guard",
+      "payload": {
+        "id": "guard",
+        "name": "Страж",
+        "mark": "🛡️",
+        "tone": "green",
+        "drops": [
+          [
+            "circle",
+            6500
+          ],
+          [
+            "feedback",
+            3000
+          ],
+          [
+            "electricity",
+            480
+          ],
+          [
+            "sword",
+            20
+          ]
+        ],
+        "priceCents": 2000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:circle",
+      "payload": {
+        "case": "guard",
+        "symbol": "circle",
+        "weight": 6500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:feedback",
+      "payload": {
+        "case": "guard",
+        "symbol": "feedback",
+        "weight": 3000,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:electricity",
+      "payload": {
+        "case": "guard",
+        "symbol": "electricity",
+        "weight": 480,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:sword",
+      "payload": {
+        "case": "guard",
+        "symbol": "sword",
+        "weight": 20,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "case",
+      "key": "rift",
+      "payload": {
+        "id": "rift",
+        "price": 7500,
+        "name": "Разлом",
+        "mark": "🌀",
+        "tone": "blue",
+        "drops": [
+          [
+            "circle",
+            6500
+          ],
+          [
+            "angry",
+            3000
+          ],
+          [
+            "teleport",
+            480
+          ],
+          [
+            "sword",
+            10
+          ],
+          [
+            "tank",
+            10
+          ]
+        ],
+        "priceCents": 7500
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:circle",
+      "payload": {
+        "case": "rift",
+        "symbol": "circle",
+        "weight": 6500,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:angry",
+      "payload": {
+        "case": "rift",
+        "symbol": "angry",
+        "weight": 3000,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:teleport",
+      "payload": {
+        "case": "rift",
+        "symbol": "teleport",
+        "weight": 480,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:sword",
+      "payload": {
+        "case": "rift",
+        "symbol": "sword",
+        "weight": 10,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:tank",
+      "payload": {
+        "case": "rift",
+        "symbol": "tank",
+        "weight": 10,
+        "denominator": 10000
+      }
+    },
+    {
+      "category": "frame",
+      "key": "1",
+      "payload": {
+        "id": 1,
+        "type": "bronze",
+        "name": "Бронза 1",
+        "stage": 1,
+        "level": 10
+      }
+    },
+    {
+      "category": "frame",
+      "key": "2",
+      "payload": {
+        "id": 2,
+        "type": "bronze",
+        "name": "Бронза 2",
+        "stage": 2,
+        "level": 20
+      }
+    },
+    {
+      "category": "frame",
+      "key": "3",
+      "payload": {
+        "id": 3,
+        "type": "bronze",
+        "name": "Бронза 3",
+        "stage": 3,
+        "level": 30
+      }
+    },
+    {
+      "category": "frame",
+      "key": "4",
+      "payload": {
+        "id": 4,
+        "type": "bronze",
+        "name": "Бронза 4",
+        "stage": 4,
+        "level": 40
+      }
+    },
+    {
+      "category": "frame",
+      "key": "5",
+      "payload": {
+        "id": 5,
+        "type": "silver",
+        "name": "Серебро 1",
+        "stage": 1,
+        "level": 50
+      }
+    },
+    {
+      "category": "frame",
+      "key": "6",
+      "payload": {
+        "id": 6,
+        "type": "silver",
+        "name": "Серебро 2",
+        "stage": 2,
+        "level": 60
+      }
+    },
+    {
+      "category": "frame",
+      "key": "7",
+      "payload": {
+        "id": 7,
+        "type": "silver",
+        "name": "Серебро 3",
+        "stage": 3,
+        "level": 70
+      }
+    },
+    {
+      "category": "frame",
+      "key": "8",
+      "payload": {
+        "id": 8,
+        "type": "silver",
+        "name": "Серебро 4",
+        "stage": 4,
+        "level": 80
+      }
+    },
+    {
+      "category": "frame",
+      "key": "9",
+      "payload": {
+        "id": 9,
+        "type": "gold",
+        "name": "Золото 1",
+        "stage": 1,
+        "level": 90
+      }
+    },
+    {
+      "category": "frame",
+      "key": "10",
+      "payload": {
+        "id": 10,
+        "type": "gold",
+        "name": "Золото 2",
+        "stage": 2,
+        "level": 100
+      }
+    },
+    {
+      "category": "frame",
+      "key": "11",
+      "payload": {
+        "id": 11,
+        "type": "gold",
+        "name": "Золото 3",
+        "stage": 3,
+        "level": 110
+      }
+    },
+    {
+      "category": "frame",
+      "key": "12",
+      "payload": {
+        "id": 12,
+        "type": "gold",
+        "name": "Золото 4",
+        "stage": 4,
+        "level": 120
+      }
+    },
+    {
+      "category": "frame",
+      "key": "13",
+      "payload": {
+        "id": 13,
+        "type": "emerald",
+        "name": "Изумруд 1",
+        "stage": 1,
+        "level": 130
+      }
+    },
+    {
+      "category": "frame",
+      "key": "14",
+      "payload": {
+        "id": 14,
+        "type": "emerald",
+        "name": "Изумруд 2",
+        "stage": 2,
+        "level": 140
+      }
+    },
+    {
+      "category": "frame",
+      "key": "15",
+      "payload": {
+        "id": 15,
+        "type": "emerald",
+        "name": "Изумруд 3",
+        "stage": 3,
+        "level": 150
+      }
+    },
+    {
+      "category": "frame",
+      "key": "16",
+      "payload": {
+        "id": 16,
+        "type": "emerald",
+        "name": "Изумруд 4",
+        "stage": 4,
+        "level": 160
+      }
+    },
+    {
+      "category": "frame",
+      "key": "17",
+      "payload": {
+        "id": 17,
+        "type": "diamond",
+        "name": "Алмаз 1",
+        "stage": 1,
+        "level": 170
+      }
+    },
+    {
+      "category": "frame",
+      "key": "18",
+      "payload": {
+        "id": 18,
+        "type": "diamond",
+        "name": "Алмаз 2",
+        "stage": 2,
+        "level": 180
+      }
+    },
+    {
+      "category": "frame",
+      "key": "19",
+      "payload": {
+        "id": 19,
+        "type": "diamond",
+        "name": "Алмаз 3",
+        "stage": 3,
+        "level": 190
+      }
+    },
+    {
+      "category": "frame",
+      "key": "20",
+      "payload": {
+        "id": 20,
+        "type": "diamond",
+        "name": "Алмаз 4",
+        "stage": 4,
+        "level": 200
+      }
+    },
+    {
+      "category": "frame",
+      "key": "21",
+      "payload": {
+        "id": 21,
+        "type": "puregold",
+        "name": "Чистое золото 1",
+        "stage": 1,
+        "level": 210
+      }
+    },
+    {
+      "category": "frame",
+      "key": "22",
+      "payload": {
+        "id": 22,
+        "type": "puregold",
+        "name": "Чистое золото 2",
+        "stage": 2,
+        "level": 220
+      }
+    },
+    {
+      "category": "frame",
+      "key": "23",
+      "payload": {
+        "id": 23,
+        "type": "puregold",
+        "name": "Чистое золото 3",
+        "stage": 3,
+        "level": 230
+      }
+    },
+    {
+      "category": "frame",
+      "key": "24",
+      "payload": {
+        "id": 24,
+        "type": "puregold",
+        "name": "Чистое золото 4",
+        "stage": 4,
+        "level": 240
+      }
+    },
+    {
+      "category": "frame",
+      "key": "25",
+      "payload": {
+        "id": 25,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 1",
+        "stage": 1,
+        "level": 250
+      }
+    },
+    {
+      "category": "frame",
+      "key": "26",
+      "payload": {
+        "id": 26,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 2",
+        "stage": 2,
+        "level": 260
+      }
+    },
+    {
+      "category": "frame",
+      "key": "27",
+      "payload": {
+        "id": 27,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 3",
+        "stage": 3,
+        "level": 270
+      }
+    },
+    {
+      "category": "frame",
+      "key": "28",
+      "payload": {
+        "id": 28,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 4",
+        "stage": 4,
+        "level": 280
+      }
+    },
+    {
+      "category": "frame",
+      "key": "29",
+      "payload": {
+        "id": 29,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 5",
+        "stage": 5,
+        "level": 290
+      }
+    },
+    {
+      "category": "frame",
+      "key": "30",
+      "payload": {
+        "id": 30,
+        "type": "violetdiamond",
+        "name": "Фиолетовый алмаз 6",
+        "stage": 6,
+        "level": 300
+      }
+    },
+    {
+      "category": "skin",
+      "key": "classic",
+      "payload": {
+        "id": "classic",
+        "name": "Обычный",
+        "price": 0
+      }
+    },
+    {
+      "category": "skin",
+      "key": "neon",
+      "payload": {
+        "id": "neon",
+        "name": "Фиолетовый неон",
+        "price": 120
+      }
+    },
+    {
+      "category": "skin",
+      "key": "frost",
+      "payload": {
+        "id": "frost",
+        "name": "Ледяной",
+        "price": 80
+      }
+    },
+    {
+      "category": "skin",
+      "key": "ember",
+      "payload": {
+        "id": "ember",
+        "name": "Огненный",
+        "price": 100
+      }
+    },
+    {
+      "category": "skin",
+      "key": "storm",
+      "payload": {
+        "id": "storm",
+        "name": "Гроза",
+        "price": 1000,
+        "effect": "Молнии и частицы"
+      }
+    },
+    {
+      "category": "skin",
+      "key": "cosmos",
+      "payload": {
+        "id": "cosmos",
+        "name": "Космос",
+        "price": 1200,
+        "effect": "Звёзды и орбиты"
+      }
+    },
+    {
+      "category": "skin",
+      "key": "solar",
+      "payload": {
+        "id": "solar",
+        "name": "Солнечный феникс",
+        "price": 1200,
+        "effect": "Пламя и золотые искры"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:classic",
+      "payload": {
+        "symbol": "king",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:neon",
+      "payload": {
+        "symbol": "king",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:frost",
+      "payload": {
+        "symbol": "king",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:ember",
+      "payload": {
+        "symbol": "king",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:storm",
+      "payload": {
+        "symbol": "king",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:cosmos",
+      "payload": {
+        "symbol": "king",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:solar",
+      "payload": {
+        "symbol": "king",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:classic",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:neon",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:frost",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:ember",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:storm",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:cosmos",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:solar",
+      "payload": {
+        "symbol": "arrow",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:classic",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:neon",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:frost",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:ember",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:storm",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:cosmos",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:solar",
+      "payload": {
+        "symbol": "arrowx2",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:classic",
+      "payload": {
+        "symbol": "laser",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:neon",
+      "payload": {
+        "symbol": "laser",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:frost",
+      "payload": {
+        "symbol": "laser",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:ember",
+      "payload": {
+        "symbol": "laser",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:storm",
+      "payload": {
+        "symbol": "laser",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:cosmos",
+      "payload": {
+        "symbol": "laser",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:solar",
+      "payload": {
+        "symbol": "laser",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:classic",
+      "payload": {
+        "symbol": "tank",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:neon",
+      "payload": {
+        "symbol": "tank",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:frost",
+      "payload": {
+        "symbol": "tank",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:ember",
+      "payload": {
+        "symbol": "tank",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:storm",
+      "payload": {
+        "symbol": "tank",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:cosmos",
+      "payload": {
+        "symbol": "tank",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:solar",
+      "payload": {
+        "symbol": "tank",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:classic",
+      "payload": {
+        "symbol": "sword",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:neon",
+      "payload": {
+        "symbol": "sword",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:frost",
+      "payload": {
+        "symbol": "sword",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:ember",
+      "payload": {
+        "symbol": "sword",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:storm",
+      "payload": {
+        "symbol": "sword",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:cosmos",
+      "payload": {
+        "symbol": "sword",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:solar",
+      "payload": {
+        "symbol": "sword",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:classic",
+      "payload": {
+        "symbol": "point",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:neon",
+      "payload": {
+        "symbol": "point",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:frost",
+      "payload": {
+        "symbol": "point",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:ember",
+      "payload": {
+        "symbol": "point",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:storm",
+      "payload": {
+        "symbol": "point",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:cosmos",
+      "payload": {
+        "symbol": "point",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:solar",
+      "payload": {
+        "symbol": "point",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:classic",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:neon",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:frost",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:ember",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:storm",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:cosmos",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:solar",
+      "payload": {
+        "symbol": "inspect",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:classic",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:neon",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:frost",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:ember",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:storm",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:cosmos",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:solar",
+      "payload": {
+        "symbol": "powerful",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:classic",
+      "payload": {
+        "symbol": "smile",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:neon",
+      "payload": {
+        "symbol": "smile",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:frost",
+      "payload": {
+        "symbol": "smile",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:ember",
+      "payload": {
+        "symbol": "smile",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:storm",
+      "payload": {
+        "symbol": "smile",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:cosmos",
+      "payload": {
+        "symbol": "smile",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:solar",
+      "payload": {
+        "symbol": "smile",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:classic",
+      "payload": {
+        "symbol": "circle",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:neon",
+      "payload": {
+        "symbol": "circle",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:frost",
+      "payload": {
+        "symbol": "circle",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:ember",
+      "payload": {
+        "symbol": "circle",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:storm",
+      "payload": {
+        "symbol": "circle",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:cosmos",
+      "payload": {
+        "symbol": "circle",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:solar",
+      "payload": {
+        "symbol": "circle",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:classic",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:neon",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:frost",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:ember",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:storm",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:cosmos",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:solar",
+      "payload": {
+        "symbol": "feedback",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:classic",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:neon",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:frost",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:ember",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:storm",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:cosmos",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:solar",
+      "payload": {
+        "symbol": "electricity",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:classic",
+      "payload": {
+        "symbol": "angry",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:neon",
+      "payload": {
+        "symbol": "angry",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:frost",
+      "payload": {
+        "symbol": "angry",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:ember",
+      "payload": {
+        "symbol": "angry",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:storm",
+      "payload": {
+        "symbol": "angry",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:cosmos",
+      "payload": {
+        "symbol": "angry",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:solar",
+      "payload": {
+        "symbol": "angry",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:classic",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:neon",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:frost",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:ember",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:storm",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:cosmos",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:solar",
+      "payload": {
+        "symbol": "teleport",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:classic",
+      "payload": {
+        "symbol": "erase",
+        "skin": "classic"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:neon",
+      "payload": {
+        "symbol": "erase",
+        "skin": "neon"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:frost",
+      "payload": {
+        "symbol": "erase",
+        "skin": "frost"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:ember",
+      "payload": {
+        "symbol": "erase",
+        "skin": "ember"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:storm",
+      "payload": {
+        "symbol": "erase",
+        "skin": "storm"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:cosmos",
+      "payload": {
+        "symbol": "erase",
+        "skin": "cosmos"
+      }
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:solar",
+      "payload": {
+        "symbol": "erase",
+        "skin": "solar"
+      }
+    },
+    {
+      "category": "avatar",
+      "key": "lion",
+      "payload": {
+        "id": "lion",
+        "emoji": "🦁",
+        "name": "Лев"
+      }
+    },
+    {
+      "category": "avatar",
+      "key": "eagle",
+      "payload": {
+        "id": "eagle",
+        "emoji": "🦅",
+        "name": "Орёл"
+      }
+    },
+    {
+      "category": "avatar",
+      "key": "thunderlion",
+      "payload": {
+        "id": "thunderlion",
+        "emoji": "🦁",
+        "name": "Лев с молнией"
+      }
+    },
+    {
+      "category": "avatar",
+      "key": "firec",
+      "payload": {
+        "id": "firec",
+        "emoji": "C",
+        "name": "Огненная C"
+      }
+    },
+    {
+      "category": "avatarBundle",
+      "key": "thunderlion",
+      "payload": {
+        "priceCents": 50000,
+        "symbol": "arrowx2",
+        "quantity": 5
+      }
+    },
+    {
+      "category": "avatarBundle",
+      "key": "firec",
+      "payload": {
+        "priceCents": 100000,
+        "symbol": "inspect",
+        "quantity": 1
+      }
+    },
+    {
+      "category": "rank",
+      "key": "0",
+      "payload": {
+        "index": 0,
+        "name": "Бронза I"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "1",
+      "payload": {
+        "index": 1,
+        "name": "Бронза II"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "2",
+      "payload": {
+        "index": 2,
+        "name": "Бронза III"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "3",
+      "payload": {
+        "index": 3,
+        "name": "Бронза IV"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "4",
+      "payload": {
+        "index": 4,
+        "name": "Силвер I"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "5",
+      "payload": {
+        "index": 5,
+        "name": "Силвер II"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "6",
+      "payload": {
+        "index": 6,
+        "name": "Силвер III"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "7",
+      "payload": {
+        "index": 7,
+        "name": "Силвер IV"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "8",
+      "payload": {
+        "index": 8,
+        "name": "Голд I"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "9",
+      "payload": {
+        "index": 9,
+        "name": "Голд II"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "10",
+      "payload": {
+        "index": 10,
+        "name": "Голд III"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "11",
+      "payload": {
+        "index": 11,
+        "name": "Голд IV"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "12",
+      "payload": {
+        "index": 12,
+        "name": "Феникс"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "13",
+      "payload": {
+        "index": 13,
+        "name": "Чемпион"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "14",
+      "payload": {
+        "index": 14,
+        "name": "Элита"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "15",
+      "payload": {
+        "index": 15,
+        "name": "Легенда"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "16",
+      "payload": {
+        "index": 16,
+        "name": "Ты класс"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "17",
+      "payload": {
+        "index": 17,
+        "name": "Сокол"
+      }
+    },
+    {
+      "category": "rank",
+      "key": "18",
+      "payload": {
+        "index": 18,
+        "name": "Мега крутой"
+      }
+    },
+    {
+      "category": "difficulty",
+      "key": "0",
+      "payload": {
+        "index": 0,
+        "name": "Очень лёгкий"
+      }
+    },
+    {
+      "category": "difficulty",
+      "key": "1",
+      "payload": {
+        "index": 1,
+        "name": "Лёгкий"
+      }
+    },
+    {
+      "category": "difficulty",
+      "key": "2",
+      "payload": {
+        "index": 2,
+        "name": "Средний"
+      }
+    },
+    {
+      "category": "difficulty",
+      "key": "3",
+      "payload": {
+        "index": 3,
+        "name": "Сложный"
+      }
+    },
+    {
+      "category": "difficulty",
+      "key": "4",
+      "payload": {
+        "index": 4,
+        "name": "Безумно сложный"
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:1",
+      "payload": {
+        "symbol": "king",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:2",
+      "payload": {
+        "symbol": "king",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:3",
+      "payload": {
+        "symbol": "king",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:4",
+      "payload": {
+        "symbol": "king",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:5",
+      "payload": {
+        "symbol": "king",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:6",
+      "payload": {
+        "symbol": "king",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:7",
+      "payload": {
+        "symbol": "king",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:8",
+      "payload": {
+        "symbol": "king",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:9",
+      "payload": {
+        "symbol": "king",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:10",
+      "payload": {
+        "symbol": "king",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:11",
+      "payload": {
+        "symbol": "king",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:12",
+      "payload": {
+        "symbol": "king",
+        "level": 12,
+        "priceRubies": 102400,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:13",
+      "payload": {
+        "symbol": "king",
+        "level": 13,
+        "priceRubies": 204800,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:14",
+      "payload": {
+        "symbol": "king",
+        "level": 14,
+        "priceRubies": 409600,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "king:15",
+      "payload": {
+        "symbol": "king",
+        "level": 15,
+        "priceRubies": 500000,
+        "increment": 10
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:1",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:2",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:3",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:4",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:5",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:6",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:7",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:8",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:9",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:10",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:11",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:12",
+      "payload": {
+        "symbol": "arrowx2",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:1",
+      "payload": {
+        "symbol": "sword",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:2",
+      "payload": {
+        "symbol": "sword",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:3",
+      "payload": {
+        "symbol": "sword",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:4",
+      "payload": {
+        "symbol": "sword",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:5",
+      "payload": {
+        "symbol": "sword",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:6",
+      "payload": {
+        "symbol": "sword",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:7",
+      "payload": {
+        "symbol": "sword",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:8",
+      "payload": {
+        "symbol": "sword",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:9",
+      "payload": {
+        "symbol": "sword",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:10",
+      "payload": {
+        "symbol": "sword",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:11",
+      "payload": {
+        "symbol": "sword",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:12",
+      "payload": {
+        "symbol": "sword",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:1",
+      "payload": {
+        "symbol": "electricity",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:2",
+      "payload": {
+        "symbol": "electricity",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:3",
+      "payload": {
+        "symbol": "electricity",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:4",
+      "payload": {
+        "symbol": "electricity",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:5",
+      "payload": {
+        "symbol": "electricity",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:6",
+      "payload": {
+        "symbol": "electricity",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:7",
+      "payload": {
+        "symbol": "electricity",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:8",
+      "payload": {
+        "symbol": "electricity",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:9",
+      "payload": {
+        "symbol": "electricity",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:10",
+      "payload": {
+        "symbol": "electricity",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:11",
+      "payload": {
+        "symbol": "electricity",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:12",
+      "payload": {
+        "symbol": "electricity",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:1",
+      "payload": {
+        "symbol": "laser",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:2",
+      "payload": {
+        "symbol": "laser",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:3",
+      "payload": {
+        "symbol": "laser",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:4",
+      "payload": {
+        "symbol": "laser",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:5",
+      "payload": {
+        "symbol": "laser",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:6",
+      "payload": {
+        "symbol": "laser",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:7",
+      "payload": {
+        "symbol": "laser",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:8",
+      "payload": {
+        "symbol": "laser",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:9",
+      "payload": {
+        "symbol": "laser",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:10",
+      "payload": {
+        "symbol": "laser",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:11",
+      "payload": {
+        "symbol": "laser",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:12",
+      "payload": {
+        "symbol": "laser",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:1",
+      "payload": {
+        "symbol": "circle",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:2",
+      "payload": {
+        "symbol": "circle",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:3",
+      "payload": {
+        "symbol": "circle",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:4",
+      "payload": {
+        "symbol": "circle",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:5",
+      "payload": {
+        "symbol": "circle",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:6",
+      "payload": {
+        "symbol": "circle",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:7",
+      "payload": {
+        "symbol": "circle",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:8",
+      "payload": {
+        "symbol": "circle",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:9",
+      "payload": {
+        "symbol": "circle",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:10",
+      "payload": {
+        "symbol": "circle",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:11",
+      "payload": {
+        "symbol": "circle",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:12",
+      "payload": {
+        "symbol": "circle",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:1",
+      "payload": {
+        "symbol": "feedback",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:2",
+      "payload": {
+        "symbol": "feedback",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:3",
+      "payload": {
+        "symbol": "feedback",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:4",
+      "payload": {
+        "symbol": "feedback",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:5",
+      "payload": {
+        "symbol": "feedback",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:6",
+      "payload": {
+        "symbol": "feedback",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:7",
+      "payload": {
+        "symbol": "feedback",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:8",
+      "payload": {
+        "symbol": "feedback",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:9",
+      "payload": {
+        "symbol": "feedback",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:10",
+      "payload": {
+        "symbol": "feedback",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:11",
+      "payload": {
+        "symbol": "feedback",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:12",
+      "payload": {
+        "symbol": "feedback",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:1",
+      "payload": {
+        "symbol": "tank",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:2",
+      "payload": {
+        "symbol": "tank",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:3",
+      "payload": {
+        "symbol": "tank",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:4",
+      "payload": {
+        "symbol": "tank",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:5",
+      "payload": {
+        "symbol": "tank",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:6",
+      "payload": {
+        "symbol": "tank",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:7",
+      "payload": {
+        "symbol": "tank",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:8",
+      "payload": {
+        "symbol": "tank",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:9",
+      "payload": {
+        "symbol": "tank",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:10",
+      "payload": {
+        "symbol": "tank",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:11",
+      "payload": {
+        "symbol": "tank",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:12",
+      "payload": {
+        "symbol": "tank",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:1",
+      "payload": {
+        "symbol": "inspect",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:2",
+      "payload": {
+        "symbol": "inspect",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:3",
+      "payload": {
+        "symbol": "inspect",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:4",
+      "payload": {
+        "symbol": "inspect",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:5",
+      "payload": {
+        "symbol": "inspect",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:6",
+      "payload": {
+        "symbol": "inspect",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:7",
+      "payload": {
+        "symbol": "inspect",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:8",
+      "payload": {
+        "symbol": "inspect",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:9",
+      "payload": {
+        "symbol": "inspect",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:10",
+      "payload": {
+        "symbol": "inspect",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:11",
+      "payload": {
+        "symbol": "inspect",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:12",
+      "payload": {
+        "symbol": "inspect",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:1",
+      "payload": {
+        "symbol": "powerful",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:2",
+      "payload": {
+        "symbol": "powerful",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:3",
+      "payload": {
+        "symbol": "powerful",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:4",
+      "payload": {
+        "symbol": "powerful",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:5",
+      "payload": {
+        "symbol": "powerful",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:6",
+      "payload": {
+        "symbol": "powerful",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:7",
+      "payload": {
+        "symbol": "powerful",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:8",
+      "payload": {
+        "symbol": "powerful",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:9",
+      "payload": {
+        "symbol": "powerful",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:10",
+      "payload": {
+        "symbol": "powerful",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:11",
+      "payload": {
+        "symbol": "powerful",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:12",
+      "payload": {
+        "symbol": "powerful",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:1",
+      "payload": {
+        "symbol": "angry",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:2",
+      "payload": {
+        "symbol": "angry",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:3",
+      "payload": {
+        "symbol": "angry",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:4",
+      "payload": {
+        "symbol": "angry",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:5",
+      "payload": {
+        "symbol": "angry",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:6",
+      "payload": {
+        "symbol": "angry",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:7",
+      "payload": {
+        "symbol": "angry",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:8",
+      "payload": {
+        "symbol": "angry",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:9",
+      "payload": {
+        "symbol": "angry",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:10",
+      "payload": {
+        "symbol": "angry",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:11",
+      "payload": {
+        "symbol": "angry",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:12",
+      "payload": {
+        "symbol": "angry",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:1",
+      "payload": {
+        "symbol": "teleport",
+        "level": 1,
+        "priceRubies": 50,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:2",
+      "payload": {
+        "symbol": "teleport",
+        "level": 2,
+        "priceRubies": 100,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:3",
+      "payload": {
+        "symbol": "teleport",
+        "level": 3,
+        "priceRubies": 200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:4",
+      "payload": {
+        "symbol": "teleport",
+        "level": 4,
+        "priceRubies": 400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:5",
+      "payload": {
+        "symbol": "teleport",
+        "level": 5,
+        "priceRubies": 800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:6",
+      "payload": {
+        "symbol": "teleport",
+        "level": 6,
+        "priceRubies": 1600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:7",
+      "payload": {
+        "symbol": "teleport",
+        "level": 7,
+        "priceRubies": 3200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:8",
+      "payload": {
+        "symbol": "teleport",
+        "level": 8,
+        "priceRubies": 6400,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:9",
+      "payload": {
+        "symbol": "teleport",
+        "level": 9,
+        "priceRubies": 12800,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:10",
+      "payload": {
+        "symbol": "teleport",
+        "level": 10,
+        "priceRubies": 25600,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:11",
+      "payload": {
+        "symbol": "teleport",
+        "level": 11,
+        "priceRubies": 51200,
+        "increment": 1
+      }
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:12",
+      "payload": {
+        "symbol": "teleport",
+        "level": 12,
+        "priceRubies": 100000,
+        "increment": 1
+      }
+    },
+    {
+      "category": "settings",
+      "key": "runtime",
+      "payload": {
+        "currency": "rubies",
+        "moneyScale": 100,
+        "boardSizes": [
+          [
+            28,
+            20
+          ],
+          [
+            10,
+            14
+          ]
+        ],
+        "directions": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            -1,
+            -1
+          ]
+        ],
+        "queueTimeoutMs": 8000,
+        "turnTimeoutMs": 90000,
+        "skinSurchargePercent": 90,
+        "activePromoCodes": [],
+        "xpWin": 100,
+        "xpLoss": 25,
+        "xpQuest": 50,
+        "perfectDuelXp": 1200,
+        "perfectDuelMaxMs": 15000,
+        "levelCasesEvery": 10,
+        "initialRubies": 1,
+        "trialGames": 5,
+        "levelsAfter300": "dist/progression.mjs: levelThreshold",
+        "source": "server/v2.mjs"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "category": "symbol",
+      "key": "arrowx2",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "rare"
+    },
+    {
+      "category": "symbol",
+      "key": "sword",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "arcana"
+    },
+    {
+      "category": "symbol",
+      "key": "electricity",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "legendary"
+    },
+    {
+      "category": "symbol",
+      "key": "arrow",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "common"
+    },
+    {
+      "category": "symbol",
+      "key": "smile",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "common"
+    },
+    {
+      "category": "symbol",
+      "key": "point",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "common"
+    },
+    {
+      "category": "symbol",
+      "key": "laser",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "legendary"
+    },
+    {
+      "category": "symbol",
+      "key": "circle",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "uncommon"
+    },
+    {
+      "category": "symbol",
+      "key": "feedback",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "rare"
+    },
+    {
+      "category": "symbol",
+      "key": "tank",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "arcana"
+    },
+    {
+      "category": "symbol",
+      "key": "inspect",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "legendary"
+    },
+    {
+      "category": "symbol",
+      "key": "powerful",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "arcana"
+    },
+    {
+      "category": "symbol",
+      "key": "angry",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "rare"
+    },
+    {
+      "category": "symbol",
+      "key": "teleport",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "legendary"
+    },
+    {
+      "category": "symbol",
+      "key": "erase",
+      "relation": "rarity",
+      "targetCategory": "rarity",
+      "targetKey": "common"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:circle",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "assault"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:circle",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:feedback",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "assault"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:feedback",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:arrowx2",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "assault"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:arrowx2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:laser",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "assault"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:laser",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:tank",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "assault"
+    },
+    {
+      "category": "caseDrop",
+      "key": "assault:tank",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:circle",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "energy"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:circle",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:angry",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "energy"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:angry",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:inspect",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "energy"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:inspect",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:powerful",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "energy"
+    },
+    {
+      "category": "caseDrop",
+      "key": "energy:powerful",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:circle",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "guard"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:circle",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:feedback",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "guard"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:feedback",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:electricity",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "guard"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:electricity",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:sword",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "guard"
+    },
+    {
+      "category": "caseDrop",
+      "key": "guard:sword",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:circle",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "rift"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:circle",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:angry",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "rift"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:angry",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:teleport",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "rift"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:teleport",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:sword",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "rift"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:sword",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:tank",
+      "relation": "case",
+      "targetCategory": "case",
+      "targetKey": "rift"
+    },
+    {
+      "category": "caseDrop",
+      "key": "rift:tank",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "frame",
+      "key": "1",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "10"
+    },
+    {
+      "category": "frame",
+      "key": "2",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "20"
+    },
+    {
+      "category": "frame",
+      "key": "3",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "30"
+    },
+    {
+      "category": "frame",
+      "key": "4",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "40"
+    },
+    {
+      "category": "frame",
+      "key": "5",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "50"
+    },
+    {
+      "category": "frame",
+      "key": "6",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "60"
+    },
+    {
+      "category": "frame",
+      "key": "7",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "70"
+    },
+    {
+      "category": "frame",
+      "key": "8",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "80"
+    },
+    {
+      "category": "frame",
+      "key": "9",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "90"
+    },
+    {
+      "category": "frame",
+      "key": "10",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "100"
+    },
+    {
+      "category": "frame",
+      "key": "11",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "110"
+    },
+    {
+      "category": "frame",
+      "key": "12",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "120"
+    },
+    {
+      "category": "frame",
+      "key": "13",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "130"
+    },
+    {
+      "category": "frame",
+      "key": "14",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "140"
+    },
+    {
+      "category": "frame",
+      "key": "15",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "150"
+    },
+    {
+      "category": "frame",
+      "key": "16",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "160"
+    },
+    {
+      "category": "frame",
+      "key": "17",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "170"
+    },
+    {
+      "category": "frame",
+      "key": "18",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "180"
+    },
+    {
+      "category": "frame",
+      "key": "19",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "190"
+    },
+    {
+      "category": "frame",
+      "key": "20",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "200"
+    },
+    {
+      "category": "frame",
+      "key": "21",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "210"
+    },
+    {
+      "category": "frame",
+      "key": "22",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "220"
+    },
+    {
+      "category": "frame",
+      "key": "23",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "230"
+    },
+    {
+      "category": "frame",
+      "key": "24",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "240"
+    },
+    {
+      "category": "frame",
+      "key": "25",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "250"
+    },
+    {
+      "category": "frame",
+      "key": "26",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "260"
+    },
+    {
+      "category": "frame",
+      "key": "27",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "270"
+    },
+    {
+      "category": "frame",
+      "key": "28",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "280"
+    },
+    {
+      "category": "frame",
+      "key": "29",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "290"
+    },
+    {
+      "category": "frame",
+      "key": "30",
+      "relation": "level",
+      "targetCategory": "level",
+      "targetKey": "300"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "king:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrow"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrow:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "arrowx2:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "laser:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "tank:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "sword:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "point"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "point:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "inspect:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "powerful:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "smile"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "smile:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "circle:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "feedback:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "electricity:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "angry:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "teleport:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:classic",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:classic",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "classic"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:neon",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:neon",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "neon"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:frost",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:frost",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "frost"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:ember",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:ember",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "ember"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:storm",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:storm",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "storm"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:cosmos",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:cosmos",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "cosmos"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:solar",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "erase"
+    },
+    {
+      "category": "symbolSkin",
+      "key": "erase:solar",
+      "relation": "skin",
+      "targetCategory": "skin",
+      "targetKey": "solar"
+    },
+    {
+      "category": "avatarBundle",
+      "key": "thunderlion",
+      "relation": "avatar",
+      "targetCategory": "avatar",
+      "targetKey": "thunderlion"
+    },
+    {
+      "category": "avatarBundle",
+      "key": "thunderlion",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "avatarBundle",
+      "key": "firec",
+      "relation": "avatar",
+      "targetCategory": "avatar",
+      "targetKey": "firec"
+    },
+    {
+      "category": "avatarBundle",
+      "key": "firec",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:13",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:14",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "king:15",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "king"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "arrowx2:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "arrowx2"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "sword:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "sword"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "electricity:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "electricity"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "laser:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "laser"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "circle:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "circle"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "feedback:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "feedback"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "tank:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "tank"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "inspect:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "inspect"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "powerful:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "powerful"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "angry:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "angry"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:1",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:2",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:3",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:4",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:5",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:6",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:7",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:8",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:9",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:10",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:11",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    },
+    {
+      "category": "upgrade",
+      "key": "teleport:12",
+      "relation": "symbol",
+      "targetCategory": "symbol",
+      "targetKey": "teleport"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+export const RARITIES={common:{name:'Common',color:'#919191'},uncommon:{name:'Uncommon',color:'#b0c4ce'},rare:{name:'Rare',color:'#327ad7'},legendary:{name:'Легендарное',color:'#ef82c3'},arcana:{name:'Аркана',color:'#e34747'}};
+export const SYMBOL_RARITY={arrowx2:'rare',arrow:'common',smile:'common',point:'common',erase:'common',circle:'uncommon',inspect:'legendary',angry:'rare',laser:'legendary',feedback:'rare',electricity:'legendary',tank:'arcana',powerful:'arcana',teleport:'legendary',sword:'arcana'};
+export function rarityStrip(t){const key=SYMBOL_RARITY[t],r=RARITIES[key];return `<span class="rarity-strip rarity-${key}">${r.name}</span>`;}

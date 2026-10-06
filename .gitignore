@@ -1,0 +1,17 @@
+.sites-runtime/
+node_modules/
+server/assets.mjs
+dist/server/
+dist/.openai/
+.env
+.env.*
+!.env.example
+data/
+outputs/
+*.sqlite
+*.sqlite-*
+*.db
+.wrangler/
+coverage/
+*.log
+.DS_Store

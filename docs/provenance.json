@@ -1,0 +1,14 @@
+{
+  "project": "appgprj_6aaadd23f9808191b63bdaeb2b62eb3b",
+  "version": 45,
+  "sourceCommit": "453f22d1cef29bf771fb61906354600aae8179b3",
+  "originalFileCount": 76,
+  "deployment": "appgdep_6ac3e0eba0a8819182fced6e971b41a5",
+  "deploymentStatus": "succeeded",
+  "archiveSha256": "97e3ef45cad541cbb7934d170df90492bf2126a920a376f0ad30d8332823207a",
+  "archiveFileCount": 46,
+  "archiveBytes": 8540160,
+  "verifiedDate": "2026-10-06",
+  "githubBase": "f93a9ebe43b3ad2bb7884012fe854e5ac5831982",
+  "excluded": "No player DB, R2 private objects, tokens, sessions, .git, node_modules or local test DB included."
+}

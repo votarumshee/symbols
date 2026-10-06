@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789668148318,
+      "tag": "0000_lean_ben_urich",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789965420246,
+      "tag": "0001_complex_black_widow",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790794285047,
+      "tag": "0002_keen_thanos",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790828481386,
+      "tag": "0003_mute_the_anarchist",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791012289877,
+      "tag": "0004_dry_machine_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1791221811960,
+      "tag": "0005_listing_skin",
+      "breakpoints": true
+    }
+  ]
+}
