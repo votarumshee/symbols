@@ -1,0 +1,14 @@
+{
+  "scenario": "active-local",
+  "seconds": 600.0146759,
+  "httpRequests": 732,
+  "sentPayloadBytes": 4736,
+  "receivedHttpPayloadBytes": 3284391,
+  "wsMessages": 0,
+  "wsPayloadBytes": 0,
+  "p95CommandResponseMs": 29.259699999936856,
+  "notes": [
+    "Original unchanged exported Worker + SQLite, Node HTTP driver uses next.mjs cadence: game 900ms, home profile 10000ms.",
+    "Same 10x14 local match, smile every 9s, initialization excluded. Payload bytes exclude HTTP headers/TLS. Not browser render timing."
+  ]
+}

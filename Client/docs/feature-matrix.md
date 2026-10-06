@@ -15,10 +15,10 @@
 | chooseCell / direction-picker | Выбор клетки + подтверждение | Направления 0–7, перенос с source, удаление, два хода |
 | очередь, боты, 90 секунд | MatchScreen | События без polling; сервер продолжает в фоне |
 | resultPanel | MatchScreen | Победа/поражение, опыт, задания, следующее испытание |
-| coach / tutorialAdvice | Подсказки первой партии | Точные контекстные рекомендации ещё требуют переноса |
-| animateShots / skins / rank-art | Canvas, каталог косметики | Покадровые траектории и исходный рисунок скинов ещё требуют переноса |
+| coach / tutorialAdvice | Подсказки первой партии | Оригинальный tutorialAdvice исполняется Server, Client показывает текст и выделяет рекомендуемый ход |
+| animateShots / skins / rank-art | Canvas, каталог косметики | 112 SVG, исходные PNG званий/аватарок; траектории из Server; нативные рамки. Полный визуальный прогон остаётся |
 | showRules | RulesScreen | Тексты из актуального next.mjs, лимиты из каталога |
-| quests / showLevels | QuestScreen / ProfileScreen | Каталог заданий/уровней, история, уровни >300 проверить отдельно |
+| quests / showLevels | QuestScreen / ProfileScreen | Каталог, история и награды; уровень >300 — серверная проекция, проверенная тестом |
 | inventory, showItem | CollectionScreen | Счётчики, кейсы, продажа, скин и точная цена |
 | upgrades | CollectionScreen | Текущий уровень, цена каталога, max |
 | shop, showCase | CollectionScreen | Цена/вероятности, купить/открыть, серверный результат |

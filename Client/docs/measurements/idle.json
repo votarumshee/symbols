@@ -1,0 +1,1 @@
+{"scenario":"idle","seconds":600.002,"httpRequests":0,"sentPayloadBytes":0,"receivedHttpPayloadBytes":0,"wsMessages":0,"wsPayloadBytes":0,"connections":1,"reconnects":0,"p95CommandToEventMs":null,"notes":"Real Kotlin Ktor/OkHttp on JVM, not Android UI. Payload bytes exclude HTTP/TLS/WS framing. Ping/pong every 20s per server protocol; control frame bytes not instrumented."}

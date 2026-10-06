@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.votarumshee.symbols.core.ProtocolTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-06T19:46:28.432Z" hostname="VOLOGODSKIJ" time="0.047">
+  <properties/>
+  <testcase name="moneyNeverUsesFloatingPoint" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.005"/>
+  <testcase name="retryWindowExcludesMovesAndExpiredReceipts" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.0"/>
+  <testcase name="staleEventsDoNotRollBackState" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.001"/>
+  <testcase name="duplicateEventDoesNotApplyTwice" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.001"/>
+  <testcase name="releaseRejectsInsecureEndpointAndCredentials" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.0"/>
+  <testcase name="backoffIsBoundedAndNeverBusyLoops" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.008"/>
+  <testcase name="gapsAndWrongBaseRequireAtomicSnapshot" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.001"/>
+  <testcase name="sharedContractFixtureParsesWithoutUuidAssumption" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.03"/>
+  <testcase name="sparseBoardPatchesPreserveOtherCellsAndAcceptNull" classname="com.votarumshee.symbols.core.ProtocolTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.votarumshee.symbols.MultiplayerTest" tests="3" failures="0" errors="0" skipped="1" time="31.614" timestamp="2026-10-06T19:47:17" hostname="localhost">
+  <properties>
+    <property name="device" value="symbols-api36(AVD) - 16" />
+    <property name="flavor" value="dev" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="pairedDevicesPlayAndSwitchAccounts" classname="com.votarumshee.symbols.MultiplayerTest" time="3.905">
+    <skipped />
+  </testcase>
+  <testcase name="restoreImportedAccountBuyCaseAndDeleteAccount" classname="com.votarumshee.symbols.SmokeTest" time="13.067" />
+  <testcase name="createAccountOpenInventoryAndSurviveRecreation" classname="com.votarumshee.symbols.SmokeTest" time="13.704" />
+</testsuite>

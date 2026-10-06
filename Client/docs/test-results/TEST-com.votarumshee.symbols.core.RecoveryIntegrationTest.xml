@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.votarumshee.symbols.core.RecoveryIntegrationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-06T19:46:28.481Z" hostname="VOLOGODSKIJ" time="9.222">
+  <properties/>
+  <testcase name="unknownOutcomeRetryRateLimitPauseAndSessionRevocation" classname="com.votarumshee.symbols.core.RecoveryIntegrationTest" time="9.222"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
