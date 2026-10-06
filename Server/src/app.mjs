@@ -27,7 +27,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
   reply.code(status).send({error:{code:e.validation?'INVALID_REQUEST':database?'UNAVAILABLE':e.code??(status>=500?'INTERNAL':'INVALID_COMMAND'),message:status>=500?'Сервер временно недоступен':e.validation?'Проверь параметры запроса':e.message,requestId:req.id}});
  });
  await app.register(websocket,{options:{maxPayload:1024,perMessageDeflate:false}});
- app.addHook('onRequest',async(req,reply)=>{if(req.url.startsWith('/avatars/')){const owner=req.url.split('/')[2];if(!/^[a-f0-9-]{36}$/.test(owner)||!(await pool.query('SELECT 1 FROM profiles WHERE id=$1',[owner])).rowCount)return reply.code(404).send();}});
+ app.addHook('onRequest',async(req,reply)=>{let pathname;try{pathname=path.posix.normalize(decodeURIComponent(new URL(req.url,'http://local').pathname));}catch{throw new ApiError(400,'INVALID_PATH','Некорректный путь');}if(pathname.startsWith('/avatars/')){const owner=pathname.split('/')[2];if(!/^[a-f0-9-]{36}$/.test(owner)||!(await pool.query('SELECT 1 FROM profiles WHERE id=$1',[owner])).rowCount)return reply.code(404).send();}});
  await app.register(staticFiles,{root:fileURLToPath(new URL('../public',import.meta.url)),prefix:'/',maxAge:'1h',index:false});
  if(process.env.AVATAR_ROOT&&fs.existsSync(process.env.AVATAR_ROOT))await app.register(staticFiles,{root:path.resolve(process.env.AVATAR_ROOT),prefix:'/avatars/',decorateReply:false,index:false,maxAge:0});
  app.get('/health',async()=>({ok:true}));
@@ -51,7 +51,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
   let timer;try{let page=await changes(pool,req.user.profile_id,req.query.cursor);if(page.events.length)return page;await Promise.race([pending,new Promise(resolve=>{timer=setTimeout(resolve,25000);req.raw.once('close',resolve);})]);await authenticate(pool,req.headers.authorization.slice(7));return changes(pool,req.user.profile_id,req.query.cursor);}finally{clearTimeout(timer);hub.off('change',wake);}
  });
  const connections=new Map();
- app.get('/api/v3/events',{websocket:true,preValidation:async req=>{await auth(req);await limit(pool,'ws:'+req.user.profile_id,30,60);if((connections.get(req.user.profile_id)??0)>=3||metrics.connections>=1000)throw new ApiError(429,'CONNECTION_LIMIT','Лимит соединений');},schema:{querystring:cursorQuery}},(socket,req)=>{const id=req.user.profile_id;connections.set(id,(connections.get(id)??0)+1);socket.once('close',()=>connections.set(id,Math.max(0,(connections.get(id)??1)-1)));stream(socket,req,pool,hub,metrics);});
+ app.get('/api/v3/events',{websocket:true,preValidation:async req=>{await auth(req);await limit(pool,'ws:'+req.user.profile_id,30,60);if((connections.get(req.user.profile_id)??0)>=3||metrics.connections>=1000)throw new ApiError(429,'CONNECTION_LIMIT','Лимит соединений');},schema:{querystring:cursorQuery}},(socket,req)=>{const id=req.user.profile_id;connections.set(id,(connections.get(id)??0)+1);socket.once('close',()=>{const remaining=(connections.get(id)??1)-1;if(remaining>0)connections.set(id,remaining);else connections.delete(id);});stream(socket,req,pool,hub,metrics);});
  app.addHook('onReady',async()=>{if(cfg.scheduler!==false)stopScheduler=scheduler(pool,app.log);});
  app.addHook('preClose',async()=>{for(const socket of app.websocketServer.clients)socket.close(1001,'Server shutdown');});
  app.addHook('onClose',async()=>{if(stopScheduler)await stopScheduler();await closeHub();if(!externalPool)await pool.end();});
