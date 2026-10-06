@@ -1,4 +1,7 @@
 name: Client
+concurrency:
+  group: client-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 on:
   push:
     paths: ['Client/**', 'contracts/**', 'Server/**', '.github/workflows/client.yml']
@@ -35,6 +38,8 @@ jobs:
         with:
           node-version: '24'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - uses: gradle/actions/setup-gradle@v4
       - run: npm ci --ignore-scripts && npm run build
         working-directory: .reference
