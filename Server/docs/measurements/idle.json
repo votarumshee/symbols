@@ -1,0 +1,8 @@
+{
+  "players": 200,
+  "seconds": 23,
+  "httpRequests": 0,
+  "applicationWsFrames": 0,
+  "databaseRowWrites": 0,
+  "note": "Includes a real 20s ping/pong cycle. Exact test-only row triggers avoid asynchronous pg_stat initialization counters. No matches or commands."
+}

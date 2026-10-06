@@ -19,7 +19,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
  app.decorate('pool',pool);const metrics={requests:0,errors:0,httpBytes:0,wsMessages:0,wsBytes:0,connections:0,latencyMs:0};app.decorate('metrics',metrics);
  const {hub,close:closeHub}=await eventHub(pool,app.log);let stopScheduler;
  app.addHook('onResponse',async(req,reply)=>{metrics.requests++;metrics.latencyMs+=reply.elapsedTime;if(reply.statusCode>=500)metrics.errors++;metrics.httpBytes+=Number(reply.getHeader('content-length')??0);});
- app.addHook('onSend',async(req,reply,payload)=>{reply.header('X-Content-Type-Options','nosniff');if(req.url.startsWith('/api/')||req.url.startsWith('/avatars/'))reply.header('Cache-Control','no-store');return payload;});
+ app.addHook('onSend',async(req,reply,payload)=>{reply.header('X-Content-Type-Options','nosniff');if((req.url.startsWith('/api/')&&!req.url.startsWith('/api/v3/catalog'))||req.url.startsWith('/avatars/'))reply.header('Cache-Control','no-store');return payload;});
  app.setErrorHandler((e,req,reply)=>{
   const database=e.code&&/^[0-9A-Z]{5}$/.test(e.code);const status=e.validation?400:database?503:e.statusCode??(e.message?.match(/[А-Яа-я]/)?400:500);
   if(status>=500)app.log.error({code:e.code??'INTERNAL',requestId:req.id},'Request failed');
@@ -40,7 +40,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
  app.get('/api/v3/bootstrap',{preHandler:auth},req=>snapshot(pool,req.user.profile_id));
  app.get('/api/v3/profile',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);return {profile:s.profile,revision:s.revision};});
  app.get('/api/v3/matches/:id',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);if(s.match?.id!==req.params.id)throw new ApiError(404,'NOT_FOUND','Партия недоступна');return {match:s.match,cursor:s.cursor};});
- app.get('/api/v3/catalog',{preHandler:auth},async(req,reply)=>{reply.header('ETag','"'+contentVersion+'"');if(req.headers['if-none-match']==='"'+contentVersion+'"')return reply.code(304).send();return {version:contentVersion,...catalog};});
+ app.get('/api/v3/catalog',{preHandler:auth},async(req,reply)=>{reply.header('Cache-Control','private,max-age=3600');reply.header('ETag','"'+contentVersion+'"');if(req.headers['if-none-match']==='"'+contentVersion+'"')return reply.code(304).send();return {version:contentVersion,...catalog};});
  app.get('/api/v3/market',{preHandler:auth,schema:{querystring:{type:'object',additionalProperties:false,properties:{symbol:{type:'string',maxLength:20},offset:{type:'integer',minimum:0,maximum:10000},desc:{type:'boolean'}}}}},req=>marketPage(pool,req.user.profile_id,req.query));
  for(const [kind,body] of Object.entries(commandSchemas))app.post('/api/v3/commands/'+kind,{preHandler:auth,schema:{body}},async req=>{await limit(pool,'commands:'+req.user.profile_id,120,60);if(['report','recovery-code'].includes(kind))await limit(pool,kind+':'+req.user.profile_id,5,900);return command(pool,req.user,kind,req.body,req.headers['idempotency-key']);});
  const cursorQuery={type:'object',required:['cursor'],additionalProperties:false,properties:{cursor:{type:'string',pattern:'^[0-9]{1,19}$'}}};
