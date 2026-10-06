@@ -15,3 +15,10 @@ outputs/
 coverage/
 *.log
 .DS_Store
+
+.reference/
+Server/private/
+Server/reports/
+Server/assets.mjs
+*.dump
+
