@@ -1,0 +1,33 @@
+{
+  "created": "2026-10-06",
+  "sourceCommit": "deebb17b9611cdb65231deb76479fa0c19a61ee9",
+  "applicationId": "com.votarumshee.symbols.dev.qa",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "minSdk": 26,
+  "targetSdk": 36,
+  "variant": "devQa",
+  "debuggable": false,
+  "r8": true,
+  "production": false,
+  "certificateSha256": "d4396412112c01c3400b4d61896faff00d5933496bc950cb7d776d4866ab333e",
+  "signature": "Android Debug, internal testing only",
+  "apiUrl": "http://10.0.2.2:8080",
+  "files": [
+    {
+      "name": "r8-mapping.txt",
+      "bytes": 33283061,
+      "sha256": "94ac170374128b55b513cc140d1e0cfa95a840af18904bf612a30273ee35c302"
+    },
+    {
+      "name": "symbols-1.0.0-dev-qa.aab",
+      "bytes": 7547480,
+      "sha256": "0b7e9d1b7acd0dd22a62c0412aecbf0932094f8d3fb1113c7ed32084169826a3"
+    },
+    {
+      "name": "symbols-1.0.0-dev-qa.apk",
+      "bytes": 5170857,
+      "sha256": "b8650198414e5af9efb7685b9a3b33239920ebc6201832729ab96f595f1d673f"
+    }
+  ]
+}

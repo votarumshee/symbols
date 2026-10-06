@@ -367,6 +367,28 @@
                         "xp": {
                           "type": "integer"
                         },
+                        "level": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "xp": {
+                              "type": "integer"
+                            },
+                            "start": {
+                              "type": "integer"
+                            },
+                            "next": {
+                              "type": "integer"
+                            },
+                            "frame": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [],
+                          "additionalProperties": false
+                        },
                         "rank": {
                           "anyOf": [
                             {
@@ -921,6 +943,124 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "effects": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "projectile": {
+                                    "type": "string"
+                                  },
+                                  "direction": {
+                                    "type": "integer"
+                                  },
+                                  "player": {
+                                    "type": "integer"
+                                  },
+                                  "actor": {
+                                    "type": "integer"
+                                  },
+                                  "damage": {
+                                    "type": "number"
+                                  },
+                                  "reflected": {
+                                    "type": "boolean"
+                                  },
+                                  "hitKing": {
+                                    "type": "boolean"
+                                  },
+                                  "path": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "side": {
+                                          "type": "integer"
+                                        },
+                                        "index": {
+                                          "type": "integer"
+                                        },
+                                        "reflected": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "impacts": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "side": {
+                                          "type": "integer"
+                                        },
+                                        "index": {
+                                          "type": "integer"
+                                        },
+                                        "reflected": {
+                                          "type": "boolean"
+                                        },
+                                        "kind": {
+                                          "type": "string"
+                                        },
+                                        "symbol": {
+                                          "type": "string"
+                                        },
+                                        "damage": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              }
+                            },
+                            "advice": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "text": {
+                                      "type": "string"
+                                    },
+                                    "move": {
+                                      "anyOf": [
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "type": {
+                                              "type": "string"
+                                            },
+                                            "index": {
+                                              "type": "integer"
+                                            },
+                                            "dir": {
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "required": [],
+                                          "additionalProperties": false
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
                             }
                           },
                           "required": [
@@ -1089,6 +1229,28 @@
                         },
                         "xp": {
                           "type": "integer"
+                        },
+                        "level": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "xp": {
+                              "type": "integer"
+                            },
+                            "start": {
+                              "type": "integer"
+                            },
+                            "next": {
+                              "type": "integer"
+                            },
+                            "frame": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [],
+                          "additionalProperties": false
                         },
                         "rank": {
                           "anyOf": [
@@ -1778,6 +1940,124 @@
                               "type": "null"
                             }
                           ]
+                        },
+                        "effects": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "projectile": {
+                                "type": "string"
+                              },
+                              "direction": {
+                                "type": "integer"
+                              },
+                              "player": {
+                                "type": "integer"
+                              },
+                              "actor": {
+                                "type": "integer"
+                              },
+                              "damage": {
+                                "type": "number"
+                              },
+                              "reflected": {
+                                "type": "boolean"
+                              },
+                              "hitKing": {
+                                "type": "boolean"
+                              },
+                              "path": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "side": {
+                                      "type": "integer"
+                                    },
+                                    "index": {
+                                      "type": "integer"
+                                    },
+                                    "reflected": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "impacts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "side": {
+                                      "type": "integer"
+                                    },
+                                    "index": {
+                                      "type": "integer"
+                                    },
+                                    "reflected": {
+                                      "type": "boolean"
+                                    },
+                                    "kind": {
+                                      "type": "string"
+                                    },
+                                    "symbol": {
+                                      "type": "string"
+                                    },
+                                    "damage": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [],
+                            "additionalProperties": false
+                          }
+                        },
+                        "advice": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                },
+                                "move": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "index": {
+                                          "type": "integer"
+                                        },
+                                        "dir": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
                         }
                       },
                       "required": [
@@ -2366,6 +2646,28 @@
                               "xp": {
                                 "type": "integer"
                               },
+                              "level": {
+                                "type": "object",
+                                "properties": {
+                                  "level": {
+                                    "type": "integer"
+                                  },
+                                  "xp": {
+                                    "type": "integer"
+                                  },
+                                  "start": {
+                                    "type": "integer"
+                                  },
+                                  "next": {
+                                    "type": "integer"
+                                  },
+                                  "frame": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              },
                               "rank": {
                                 "anyOf": [
                                   {
@@ -2925,6 +3227,124 @@
                                                 "type": "null"
                                               }
                                             ]
+                                          },
+                                          "effects": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "projectile": {
+                                                  "type": "string"
+                                                },
+                                                "direction": {
+                                                  "type": "integer"
+                                                },
+                                                "player": {
+                                                  "type": "integer"
+                                                },
+                                                "actor": {
+                                                  "type": "integer"
+                                                },
+                                                "damage": {
+                                                  "type": "number"
+                                                },
+                                                "reflected": {
+                                                  "type": "boolean"
+                                                },
+                                                "hitKing": {
+                                                  "type": "boolean"
+                                                },
+                                                "path": {
+                                                  "type": "array",
+                                                  "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "side": {
+                                                        "type": "integer"
+                                                      },
+                                                      "index": {
+                                                        "type": "integer"
+                                                      },
+                                                      "reflected": {
+                                                        "type": "boolean"
+                                                      }
+                                                    },
+                                                    "required": [],
+                                                    "additionalProperties": false
+                                                  }
+                                                },
+                                                "impacts": {
+                                                  "type": "array",
+                                                  "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "side": {
+                                                        "type": "integer"
+                                                      },
+                                                      "index": {
+                                                        "type": "integer"
+                                                      },
+                                                      "reflected": {
+                                                        "type": "boolean"
+                                                      },
+                                                      "kind": {
+                                                        "type": "string"
+                                                      },
+                                                      "symbol": {
+                                                        "type": "string"
+                                                      },
+                                                      "damage": {
+                                                        "type": "number"
+                                                      }
+                                                    },
+                                                    "required": [],
+                                                    "additionalProperties": false
+                                                  }
+                                                }
+                                              },
+                                              "required": [],
+                                              "additionalProperties": false
+                                            }
+                                          },
+                                          "advice": {
+                                            "anyOf": [
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "text": {
+                                                    "type": "string"
+                                                  },
+                                                  "move": {
+                                                    "anyOf": [
+                                                      {
+                                                        "type": "object",
+                                                        "properties": {
+                                                          "type": {
+                                                            "type": "string"
+                                                          },
+                                                          "index": {
+                                                            "type": "integer"
+                                                          },
+                                                          "dir": {
+                                                            "type": "integer"
+                                                          }
+                                                        },
+                                                        "required": [],
+                                                        "additionalProperties": false
+                                                      },
+                                                      {
+                                                        "type": "null"
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
                                           }
                                         },
                                         "required": [
@@ -3321,6 +3741,124 @@
                                               },
                                               "bucks": {
                                                 "type": "number"
+                                              }
+                                            },
+                                            "required": [],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "effects": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "projectile": {
+                                              "type": "string"
+                                            },
+                                            "direction": {
+                                              "type": "integer"
+                                            },
+                                            "player": {
+                                              "type": "integer"
+                                            },
+                                            "actor": {
+                                              "type": "integer"
+                                            },
+                                            "damage": {
+                                              "type": "number"
+                                            },
+                                            "reflected": {
+                                              "type": "boolean"
+                                            },
+                                            "hitKing": {
+                                              "type": "boolean"
+                                            },
+                                            "path": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "side": {
+                                                    "type": "integer"
+                                                  },
+                                                  "index": {
+                                                    "type": "integer"
+                                                  },
+                                                  "reflected": {
+                                                    "type": "boolean"
+                                                  }
+                                                },
+                                                "required": [],
+                                                "additionalProperties": false
+                                              }
+                                            },
+                                            "impacts": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "side": {
+                                                    "type": "integer"
+                                                  },
+                                                  "index": {
+                                                    "type": "integer"
+                                                  },
+                                                  "reflected": {
+                                                    "type": "boolean"
+                                                  },
+                                                  "kind": {
+                                                    "type": "string"
+                                                  },
+                                                  "symbol": {
+                                                    "type": "string"
+                                                  },
+                                                  "damage": {
+                                                    "type": "number"
+                                                  }
+                                                },
+                                                "required": [],
+                                                "additionalProperties": false
+                                              }
+                                            }
+                                          },
+                                          "required": [],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "advice": {
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "text": {
+                                                "type": "string"
+                                              },
+                                              "move": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "type": {
+                                                        "type": "string"
+                                                      },
+                                                      "index": {
+                                                        "type": "integer"
+                                                      },
+                                                      "dir": {
+                                                        "type": "integer"
+                                                      }
+                                                    },
+                                                    "required": [],
+                                                    "additionalProperties": false
+                                                  },
+                                                  {
+                                                    "type": "null"
+                                                  }
+                                                ]
                                               }
                                             },
                                             "required": [],
@@ -8215,6 +8753,28 @@
           "xp": {
             "type": "integer"
           },
+          "level": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "integer"
+              },
+              "xp": {
+                "type": "integer"
+              },
+              "start": {
+                "type": "integer"
+              },
+              "next": {
+                "type": "integer"
+              },
+              "frame": {
+                "type": "boolean"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
           "rank": {
             "anyOf": [
               {
@@ -8767,6 +9327,124 @@
                 "type": "null"
               }
             ]
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "projectile": {
+                  "type": "string"
+                },
+                "direction": {
+                  "type": "integer"
+                },
+                "player": {
+                  "type": "integer"
+                },
+                "actor": {
+                  "type": "integer"
+                },
+                "damage": {
+                  "type": "number"
+                },
+                "reflected": {
+                  "type": "boolean"
+                },
+                "hitKing": {
+                  "type": "boolean"
+                },
+                "path": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "side": {
+                        "type": "integer"
+                      },
+                      "index": {
+                        "type": "integer"
+                      },
+                      "reflected": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [],
+                    "additionalProperties": false
+                  }
+                },
+                "impacts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "side": {
+                        "type": "integer"
+                      },
+                      "index": {
+                        "type": "integer"
+                      },
+                      "reflected": {
+                        "type": "boolean"
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "symbol": {
+                        "type": "string"
+                      },
+                      "damage": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "advice": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "move": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          },
+                          "index": {
+                            "type": "integer"
+                          },
+                          "dir": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -8824,6 +9502,28 @@
               },
               "xp": {
                 "type": "integer"
+              },
+              "level": {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "integer"
+                  },
+                  "xp": {
+                    "type": "integer"
+                  },
+                  "start": {
+                    "type": "integer"
+                  },
+                  "next": {
+                    "type": "integer"
+                  },
+                  "frame": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
               },
               "rank": {
                 "anyOf": [
@@ -9379,6 +10079,124 @@
                         "type": "null"
                       }
                     ]
+                  },
+                  "effects": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "projectile": {
+                          "type": "string"
+                        },
+                        "direction": {
+                          "type": "integer"
+                        },
+                        "player": {
+                          "type": "integer"
+                        },
+                        "actor": {
+                          "type": "integer"
+                        },
+                        "damage": {
+                          "type": "number"
+                        },
+                        "reflected": {
+                          "type": "boolean"
+                        },
+                        "hitKing": {
+                          "type": "boolean"
+                        },
+                        "path": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "side": {
+                                "type": "integer"
+                              },
+                              "index": {
+                                "type": "integer"
+                              },
+                              "reflected": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [],
+                            "additionalProperties": false
+                          }
+                        },
+                        "impacts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "side": {
+                                "type": "integer"
+                              },
+                              "index": {
+                                "type": "integer"
+                              },
+                              "reflected": {
+                                "type": "boolean"
+                              },
+                              "kind": {
+                                "type": "string"
+                              },
+                              "symbol": {
+                                "type": "string"
+                              },
+                              "damage": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [],
+                      "additionalProperties": false
+                    }
+                  },
+                  "advice": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "text": {
+                            "type": "string"
+                          },
+                          "move": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "index": {
+                                    "type": "integer"
+                                  },
+                                  "dir": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -9459,6 +10277,28 @@
               },
               "xp": {
                 "type": "integer"
+              },
+              "level": {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "integer"
+                  },
+                  "xp": {
+                    "type": "integer"
+                  },
+                  "start": {
+                    "type": "integer"
+                  },
+                  "next": {
+                    "type": "integer"
+                  },
+                  "frame": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
               },
               "rank": {
                 "anyOf": [
@@ -10019,6 +10859,124 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "effects": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "projectile": {
+                                  "type": "string"
+                                },
+                                "direction": {
+                                  "type": "integer"
+                                },
+                                "player": {
+                                  "type": "integer"
+                                },
+                                "actor": {
+                                  "type": "integer"
+                                },
+                                "damage": {
+                                  "type": "number"
+                                },
+                                "reflected": {
+                                  "type": "boolean"
+                                },
+                                "hitKing": {
+                                  "type": "boolean"
+                                },
+                                "path": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "side": {
+                                        "type": "integer"
+                                      },
+                                      "index": {
+                                        "type": "integer"
+                                      },
+                                      "reflected": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "impacts": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "side": {
+                                        "type": "integer"
+                                      },
+                                      "index": {
+                                        "type": "integer"
+                                      },
+                                      "reflected": {
+                                        "type": "boolean"
+                                      },
+                                      "kind": {
+                                        "type": "string"
+                                      },
+                                      "symbol": {
+                                        "type": "string"
+                                      },
+                                      "damage": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [],
+                              "additionalProperties": false
+                            }
+                          },
+                          "advice": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "move": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string"
+                                          },
+                                          "index": {
+                                            "type": "integer"
+                                          },
+                                          "dir": {
+                                            "type": "integer"
+                                          }
+                                        },
+                                        "required": [],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
                           }
                         },
                         "required": [
@@ -10424,6 +11382,124 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "effects": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "projectile": {
+                              "type": "string"
+                            },
+                            "direction": {
+                              "type": "integer"
+                            },
+                            "player": {
+                              "type": "integer"
+                            },
+                            "actor": {
+                              "type": "integer"
+                            },
+                            "damage": {
+                              "type": "number"
+                            },
+                            "reflected": {
+                              "type": "boolean"
+                            },
+                            "hitKing": {
+                              "type": "boolean"
+                            },
+                            "path": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "side": {
+                                    "type": "integer"
+                                  },
+                                  "index": {
+                                    "type": "integer"
+                                  },
+                                  "reflected": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              }
+                            },
+                            "impacts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "side": {
+                                    "type": "integer"
+                                  },
+                                  "index": {
+                                    "type": "integer"
+                                  },
+                                  "reflected": {
+                                    "type": "boolean"
+                                  },
+                                  "kind": {
+                                    "type": "string"
+                                  },
+                                  "symbol": {
+                                    "type": "string"
+                                  },
+                                  "damage": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [],
+                          "additionalProperties": false
+                        }
+                      },
+                      "advice": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string"
+                              },
+                              "move": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string"
+                                      },
+                                      "index": {
+                                        "type": "integer"
+                                      },
+                                      "dir": {
+                                        "type": "integer"
+                                      }
+                                    },
+                                    "required": [],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       }
                     },
                     "required": [],
@@ -10506,6 +11582,28 @@
                     },
                     "xp": {
                       "type": "integer"
+                    },
+                    "level": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "integer"
+                        },
+                        "xp": {
+                          "type": "integer"
+                        },
+                        "start": {
+                          "type": "integer"
+                        },
+                        "next": {
+                          "type": "integer"
+                        },
+                        "frame": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [],
+                      "additionalProperties": false
                     },
                     "rank": {
                       "anyOf": [
@@ -11066,6 +12164,124 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "effects": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "projectile": {
+                                        "type": "string"
+                                      },
+                                      "direction": {
+                                        "type": "integer"
+                                      },
+                                      "player": {
+                                        "type": "integer"
+                                      },
+                                      "actor": {
+                                        "type": "integer"
+                                      },
+                                      "damage": {
+                                        "type": "number"
+                                      },
+                                      "reflected": {
+                                        "type": "boolean"
+                                      },
+                                      "hitKing": {
+                                        "type": "boolean"
+                                      },
+                                      "path": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "side": {
+                                              "type": "integer"
+                                            },
+                                            "index": {
+                                              "type": "integer"
+                                            },
+                                            "reflected": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": [],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "impacts": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "side": {
+                                              "type": "integer"
+                                            },
+                                            "index": {
+                                              "type": "integer"
+                                            },
+                                            "reflected": {
+                                              "type": "boolean"
+                                            },
+                                            "kind": {
+                                              "type": "string"
+                                            },
+                                            "symbol": {
+                                              "type": "string"
+                                            },
+                                            "damage": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "required": [],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "advice": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        },
+                                        "move": {
+                                          "anyOf": [
+                                            {
+                                              "type": "object",
+                                              "properties": {
+                                                "type": {
+                                                  "type": "string"
+                                                },
+                                                "index": {
+                                                  "type": "integer"
+                                                },
+                                                "dir": {
+                                                  "type": "integer"
+                                                }
+                                              },
+                                              "required": [],
+                                              "additionalProperties": false
+                                            },
+                                            {
+                                              "type": "null"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
                                 }
                               },
                               "required": [
@@ -11462,6 +12678,124 @@
                                     },
                                     "bucks": {
                                       "type": "number"
+                                    }
+                                  },
+                                  "required": [],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "effects": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "projectile": {
+                                    "type": "string"
+                                  },
+                                  "direction": {
+                                    "type": "integer"
+                                  },
+                                  "player": {
+                                    "type": "integer"
+                                  },
+                                  "actor": {
+                                    "type": "integer"
+                                  },
+                                  "damage": {
+                                    "type": "number"
+                                  },
+                                  "reflected": {
+                                    "type": "boolean"
+                                  },
+                                  "hitKing": {
+                                    "type": "boolean"
+                                  },
+                                  "path": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "side": {
+                                          "type": "integer"
+                                        },
+                                        "index": {
+                                          "type": "integer"
+                                        },
+                                        "reflected": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "impacts": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "side": {
+                                          "type": "integer"
+                                        },
+                                        "index": {
+                                          "type": "integer"
+                                        },
+                                        "reflected": {
+                                          "type": "boolean"
+                                        },
+                                        "kind": {
+                                          "type": "string"
+                                        },
+                                        "symbol": {
+                                          "type": "string"
+                                        },
+                                        "damage": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                              }
+                            },
+                            "advice": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "text": {
+                                      "type": "string"
+                                    },
+                                    "move": {
+                                      "anyOf": [
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "type": {
+                                              "type": "string"
+                                            },
+                                            "index": {
+                                              "type": "integer"
+                                            },
+                                            "dir": {
+                                              "type": "integer"
+                                            }
+                                          },
+                                          "required": [],
+                                          "additionalProperties": false
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
                                     }
                                   },
                                   "required": [],

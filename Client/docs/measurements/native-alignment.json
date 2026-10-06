@@ -1,0 +1,91 @@
+{
+  "file": "Client/app/build/outputs/apk/dev/qa/app-dev-qa.apk",
+  "libraries": [
+    {
+      "name": "lib/arm64-v8a/libandroidx.graphics.path.so",
+      "is64": true,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "is64": true,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/armeabi-v7a/libandroidx.graphics.path.so",
+      "is64": false,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/armeabi-v7a/libdatastore_shared_counter.so",
+      "is64": false,
+      "loadAlignments": [
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/x86/libandroidx.graphics.path.so",
+      "is64": false,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/x86/libdatastore_shared_counter.so",
+      "is64": false,
+      "loadAlignments": [
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/x86_64/libandroidx.graphics.path.so",
+      "is64": true,
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    },
+    {
+      "name": "lib/x86_64/libdatastore_shared_counter.so",
+      "is64": true,
+      "loadAlignments": [
+        16384,
+        16384
+      ],
+      "elf16k": true,
+      "zip16k": true
+    }
+  ],
+  "pass": true
+}

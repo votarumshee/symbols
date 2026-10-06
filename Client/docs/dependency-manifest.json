@@ -1,0 +1,10 @@
+{
+  "baseCommit": "085ce138841651cbcb96a00dbf5d0b1f26253419",
+  "testedServerCommit": "f9f8dede3d2d035d055e313a760e1262ceec39db",
+  "referenceCommit": "8c953993d57a887112a75c4b0a69bb2a376ea1eb",
+  "apiVersion": 3,
+  "minSdk": 26,
+  "targetSdk": 36,
+  "packagePendingOwnerConfirmation": "com.votarumshee.symbols",
+  "testedServerWithClientProjectionCommit": "c0a4540da64081f5a25bad18aff8d04540a90103"
+}
