@@ -1,6 +1,6 @@
 # API v3 — Kotlin handoff
 
-The authoritative machine-readable contract is `openapi.yaml` (JSON syntax, valid YAML 1.2); event frames use `events.schema.json`. Generate with `node Server/scripts/contracts.mjs`; CI checks consistency. The exact tested Server commit for Client is recorded in `server-version.json`: `703573cccaf9313bf5dabd8a0ef0246d86f48ebe`. Pin it in Client's dependency manifest. No public v2 adapter is exposed: the published web game remains on the export branch.
+The authoritative machine-readable contract is `openapi.yaml` (JSON syntax, valid YAML 1.2); event frames use `events.schema.json`. Generate with `node Server/scripts/contracts.mjs`; CI checks consistency. The exact tested Server commit for Client is recorded in `server-version.json`: `f9f8dede3d2d035d055e313a760e1262ceec39db`. Pin it in Client's dependency manifest. No public v2 adapter is exposed: the published web game remains on the export branch.
 
 HTTP JSON commands are the only write transport. Bearer session tokens must remain in Android encrypted storage and never appear in URLs. HTTPS and WSS terminate at Caddy. Tokens expire after 30 days; recovery revokes previous sessions. A recovery code can be legacy nine decimal digits (SHA-256 compatibility) or a new 128-bit hexadecimal code. Issuing a code never accepts localStorage progress. Recovery-code response is shown once; retrying its idempotency key returns `code:null, regenerate:true`, because plaintext recovery secrets are not stored in command receipts. Request a new key to replace a lost code.
 
