@@ -112,4 +112,3 @@ jobs:
         with:
           name: android-ui-results-${{ matrix.api }}
           path: Client/app/build/reports/androidTests/
-

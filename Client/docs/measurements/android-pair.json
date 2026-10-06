@@ -8,8 +8,8 @@
     ],
     "ok": true,
     "output": [
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.483\r\n\r\nOK (1 test)\r\n\r\n\r\n",
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.287\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.005\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.285\r\n\r\nOK (1 test)\r\n\r\n\r\n"
     ]
   },
   {
@@ -21,8 +21,8 @@
     ],
     "ok": true,
     "output": [
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.332\r\n\r\nOK (1 test)\r\n\r\n\r\n",
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.052\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.329\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.04\r\n\r\nOK (1 test)\r\n\r\n\r\n"
     ]
   },
   {
@@ -34,8 +34,20 @@
     ],
     "ok": true,
     "output": [
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.576\r\n\r\nOK (1 test)\r\n\r\n\r\n",
-      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.649\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.148\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.627\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+    ]
+  },
+  {
+    "mode": "play",
+    "small": true,
+    "devices": [
+      "emulator-5556",
+      "emulator-5558"
+    ],
+    "ok": true,
+    "output": [
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.743\r\n\r\nOK (1 test)\r\n\r\n\r\n"
     ]
   }
 ]
