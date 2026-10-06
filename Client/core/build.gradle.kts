@@ -11,6 +11,13 @@ dependencies {
     testImplementation(libs.ktor.mock)
 }
 tasks.test {
+    inputs.dir(rootProject.file("../contracts"))
     systemProperty("contracts.dir", rootProject.file("../contracts").absolutePath)
     systemProperty("symbols.integrationUrl", providers.environmentVariable("SYMBOLS_TEST_URL").orElse("").get())
+    systemProperty("symbols.measure", providers.environmentVariable("SYMBOLS_MEASURE").orElse("").get())
+    systemProperty("symbols.importFixture", providers.environmentVariable("SYMBOLS_IMPORT_FIXTURE").orElse("").get())
+}
+tasks.register("writeTestClasspath") {
+    dependsOn(tasks.testClasses)
+    doLast { rootProject.file(".tools/test-classpath.txt").apply { parentFile.mkdirs(); writeText(sourceSets.test.get().runtimeClasspath.asPath) } }
 }

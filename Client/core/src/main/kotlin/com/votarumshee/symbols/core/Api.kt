@@ -11,6 +11,10 @@ import io.ktor.websocket.*
 import kotlinx.serialization.json.*
 import java.net.URI
 import java.util.concurrent.atomic.AtomicLong
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+private suspend inline fun <reified T> decode(text: String): T = withContext(Dispatchers.Default) { wire.decodeFromString<T>(text) }
 
 class ApiFailure(val status: Int, val code: String, override val message: String, val retryAfterMs: Long = 0) : Exception(message)
 data class CatalogResponse(val catalog: Catalog?, val etag: String?, val maxAgeSeconds: Long)
@@ -49,22 +53,22 @@ class SymbolsApi(val base: String, allowLocal: Boolean = false, val traffic: Tra
         return response to text
     }
     suspend fun authenticate(value: String, recover: Boolean): Session {
-        val result = wire.parseToJsonElement(request("account/" + if (recover) "recover" else "register", body = objectOf((if (recover) "code" else "nick") to value)).second).jsonObject
+        val result = decode<JsonObject>(request("account/" + if (recover) "recover" else "register", body = objectOf((if (recover) "code" else "nick") to value)).second)
         return Session(result.text("id"), result.text("token"), if (recover) "Аккаунт" else value)
     }
-    suspend fun bootstrap(token: String) = wire.decodeFromString<Bootstrap>(request("bootstrap", token).second)
-    suspend fun command(token: String, command: PendingCommand): JsonObject = wire.parseToJsonElement(request("commands/${command.kind}", token, command.body, command.key).second).jsonObject
+    suspend fun bootstrap(token: String) = decode<Bootstrap>(request("bootstrap", token).second)
+    suspend fun command(token: String, command: PendingCommand): JsonObject = decode(request("commands/${command.kind}", token, command.body, command.key).second)
     suspend fun catalog(token: String, etag: String?): CatalogResponse {
         val (response, text) = request("catalog", token, etag = etag)
         val age = response.headers[HttpHeaders.CacheControl]?.substringAfter("max-age=", "0")?.substringBefore(',')?.toLongOrNull() ?: 0
-        return CatalogResponse(if (response.status.value == 304) null else wire.decodeFromString<Catalog>(text), response.headers[HttpHeaders.ETag], age.coerceIn(0, 3600))
+        return CatalogResponse(if (response.status.value == 304) null else decode<Catalog>(text), response.headers[HttpHeaders.ETag], age.coerceIn(0, 3600))
     }
     suspend fun market(token: String, symbol: String?, offset: Int, descending: Boolean): JsonObject {
         require(offset in 0..10000)
         val query = parameters { if (!symbol.isNullOrEmpty()) append("symbol", symbol); append("offset", "$offset"); append("desc", "$descending") }.formUrlEncode()
-        return wire.parseToJsonElement(request("market?$query", token).second).jsonObject
+        return decode(request("market?$query", token).second)
     }
-    suspend fun changes(token: String, cursor: Long) = wire.decodeFromString<EventPage>(request("changes?cursor=$cursor", token).second)
+    suspend fun changes(token: String, cursor: Long) = decode<EventPage>(request("changes?cursor=$cursor", token).second)
     suspend fun events(token: String, cursor: Long, connected: suspend () -> Unit, receive: suspend (EventPage) -> Unit) {
         val endpoint = base.replaceFirst("https://", "wss://").replaceFirst("http://", "ws://") + "/api/v3/events?cursor=$cursor"
         client.webSocket(urlString = endpoint, request = { bearerAuth(token) }) {
@@ -73,12 +77,12 @@ class SymbolsApi(val base: String, allowLocal: Boolean = false, val traffic: Tra
                 connected()
                 for (frame in incoming) if (frame is Frame.Text) {
                     val text = frame.readText(); traffic.wsMessages.incrementAndGet(); traffic.wsBytes.addAndGet(text.toByteArray().size.toLong())
-                    val obj = wire.parseToJsonElement(text).jsonObject
+                    val obj = decode<JsonObject>(text)
                     if ("error" in obj) {
                         val code = obj.obj("error").text("code")
                         throw ApiFailure(if (code == "UNAUTHORIZED") 401 else 409, code, "Нужно восстановить соединение")
                     }
-                    receive(wire.decodeFromString<EventPage>(text))
+                    receive(decode<EventPage>(text))
                 }
             } finally { traffic.connections.decrementAndGet() }
         }

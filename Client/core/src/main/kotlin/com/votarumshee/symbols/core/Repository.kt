@@ -18,13 +18,13 @@ interface PrivateStore {
     suspend fun catalog(): Catalog?
     suspend fun saveCatalog(catalog: Catalog)
 }
-enum class Connection { SignedOut, Connecting, Live, LongPolling, Offline, Paused, Expired }
+enum class Connection { SignedOut, Connecting, Live, LongPolling, Offline, Paused, Expired, Incompatible }
 data class AppState(
     val game: GameState? = null, val catalog: Catalog? = null,
     val accounts: List<Session> = emptyList(), val connection: Connection = Connection.SignedOut,
     val busy: Boolean = false, val message: String? = null, val pending: PendingCommand? = null,
     val recoveryCode: String? = null, val market: JsonObject? = null,
-    val serverOffsetMs: Long = 0
+    val serverOffsetMs: Long = 0, val marketLoading: Boolean = false
 )
 class GameRepository(private val api: SymbolsApi, private val store: PrivateStore, private val scope: CoroutineScope) {
     private val mutable = MutableStateFlow(AppState())
@@ -39,6 +39,8 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
     private val lifecycle = Mutex()
     private val commandLock = Mutex()
     private val snapshotLock = Mutex()
+    private val connectionLock = Mutex()
+    private var commandRetryAt = 0L
 
     suspend fun initialize() = lifecycle.withLock {
         val sessions = store.sessions()
@@ -98,7 +100,7 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
         if (stream?.isActive == true) return
         val s = session ?: return
         val g = generation
-        stream = scope.launch {
+        stream = scope.launch { connectionLock.withLock {
             var failures = 0
             var snapshotNeeded = true
             while (isActive && valid(g, s) && foreground && online) {
@@ -120,6 +122,9 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
                     if (e is ApiFailure && e.status == 401) {
                         expire(s); break
                     }
+                    if (e is ApiFailure && e.status == 426) {
+                        mutable.update { it.copy(connection = Connection.Incompatible, message = "Нужна новая версия приложения. Обнови «Символы» в магазине.") }; break
+                    }
                     snapshotNeeded = snapshotNeeded || e is SnapshotRequired || e is ApiFailure && e.status == 409
                     mutable.update { it.copy(connection = Connection.Offline, message = "Связь потеряна. Ход и таймер продолжаются на сервере.") }
                     failures++
@@ -128,7 +133,7 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
                     delay(delayMs)
                 }
             }
-        }
+        } }
     }
     private suspend fun bootstrap(s: Session, g: Long) = snapshotLock.withLock {
         val snapshot = api.bootstrap(s.token)
@@ -144,12 +149,14 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
             mutable.update { it.copy(catalog = catalog) }
         }
         val offset = java.time.Instant.parse(snapshot.serverTime).toEpochMilli() - System.currentTimeMillis()
-        mutable.update { old -> if (!valid(g, s) || old.game?.let { it.account == s.id && it.cursor > game.cursor } == true) old else old.copy(game = game, serverOffsetMs = offset) }
+        val accounts = store.sessions().map { if (it.id == s.id) it.copy(nick = snapshot.profile.text("nick")) else it }
+        if (valid(g, s)) store.saveSessions(accounts, s.id)
+        mutable.update { old -> if (!valid(g, s) || old.game?.let { it.account == s.id && it.cursor > game.cursor } == true) old else old.copy(game = game, accounts = accounts, serverOffsetMs = offset) }
     }
     private suspend fun apply(s: Session, g: Long, page: EventPage) {
         if (!valid(g, s)) return
         val initial = mutable.value.game ?: throw SnapshotRequired()
-        val next = EventReducer.apply(initial, page)
+        val next = withContext(Dispatchers.Default) { EventReducer.apply(initial, page) }
         val pending = mutable.value.pending
         val confirmed = pending != null && page.events.any { it.commandId == pending.key }
         if (confirmed) store.savePending(s.id, null)
@@ -161,6 +168,9 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
         val g = generation
         try {
             if (s == null || mutable.value.game == null) return null
+            if (System.currentTimeMillis() < commandRetryAt) {
+                mutable.update { it.copy(message = "Слишком много запросов. Повтори через ${(commandRetryAt - System.currentTimeMillis()) / 1000 + 1} с.") }; return null
+            }
             if (!online || mutable.value.connection !in setOf(Connection.Live, Connection.LongPolling)) {
                 mutable.update { it.copy(message = "Нет связи. Операция не отправлена.") }; return null
             }
@@ -184,6 +194,7 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
         } catch (e: CancellationException) { throw e }
         catch (e: Exception) {
             if (s != null && valid(g, s)) {
+                if (e is ApiFailure && e.status == 429) commandRetryAt = System.currentTimeMillis() + maxOf(1000, e.retryAfterMs)
                 if (e is ApiFailure && e.status in 400..499 && e.status != 408 && e.status != 429) {
                     store.savePending(s.id, null)
                     mutable.update { it.copy(pending = null) }
@@ -200,26 +211,32 @@ class GameRepository(private val api: SymbolsApi, private val store: PrivateStor
     }
     suspend fun reconcileMove() {
         val s = session ?: return
+        val g = generation
         val pending = store.pending(s.id) ?: return
         if (pending.kind !in setOf("action", "leave")) return
-        stream?.cancelAndJoin(); stream = null
-        bootstrap(s, generation)
-        // Never replay a move after a restart/timeout. The new authoritative board is displayed.
-        store.savePending(s.id, null)
-        mutable.update { it.copy(pending = null, message = "Показано актуальное поле. Старый ход повторно не отправлен.") }
-        launchStream()
+        try {
+            stream?.cancelAndJoin(); stream = null
+            bootstrap(s, g)
+            // Never replay a move after a restart/timeout. The new authoritative board is displayed.
+            if (!valid(g, s)) return
+            store.savePending(s.id, null)
+            mutable.update { it.copy(pending = null, message = "Показано актуальное поле. Старый ход повторно не отправлен.") }
+        } catch (e: CancellationException) { throw e }
+        catch (e: Exception) { if (valid(g, s)) error(e) }
+        finally { if (valid(g, s) && foreground && online) launchStream() }
     }
     fun market(symbol: String?, offset: Int = 0, descending: Boolean = false) {
         marketJob?.cancel()
         val s = session ?: return
         val g = generation
         marketJob = scope.launch {
+            mutable.update { it.copy(marketLoading = true, market = null) }
             delay(300)
             try {
                 val page = api.market(s.token, symbol, offset, descending)
-                if (valid(g, s)) mutable.update { it.copy(market = page) }
+                if (valid(g, s)) mutable.update { it.copy(market = page, marketLoading = false) }
             } catch (e: CancellationException) { throw e }
-            catch (e: Exception) { if (valid(g, s)) error(e) }
+            catch (e: Exception) { if (valid(g, s)) { mutable.update { it.copy(marketLoading = false) }; error(e) } }
         }
     }
     fun leaveMarket() { marketJob?.cancel(); marketJob = null }
