@@ -1,0 +1,36 @@
+{
+  "players": 50,
+  "seconds": 15.496708499999999,
+  "scenario": "half duel / half trial, small board, one legal placement per eligible player per ~0.9s, 20% reconnect once; no profile polling",
+  "hardware": {
+    "platform": "win32",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400 @ 2.60GHz",
+    "logicalCpus": 12,
+    "totalRamBytes": 34144509952,
+    "node": "v24.16.0"
+  },
+  "postgres": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "dbBytes": "10748431",
+  "httpRequests": 555,
+  "httpRps": 35.81405690118002,
+  "httpPayloadBytes": 121174,
+  "wsMessages": 1110,
+  "wsPayloadBytes": 561757,
+  "technicalErrors": 0,
+  "revisionConflicts": 0,
+  "p95HttpMs": 119.0536000000011,
+  "p95EventFromCommandStartMs": 105,
+  "cpuPercentOneCore": 2.0133307663366065,
+  "peakRssBytes": 208035840,
+  "databaseRowWrites": {
+    "tup_inserted": 2909,
+    "tup_updated": 2570,
+    "tup_deleted": 1
+  },
+  "pollingReferenceRequests": 938.4117924999999,
+  "notes": [
+    "CPU/RAM include in-process load driver; PostgreSQL runs separately in Docker.",
+    "Payload bytes exclude headers/TLS. Event latency starts before transaction, conservatively includes lock/commit time.",
+    "Polling reference is calculated until paired baseline run; it is not a measured baseline."
+  ]
+}

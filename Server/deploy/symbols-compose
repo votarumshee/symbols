@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+[[ $EUID == 0 ]] || { echo 'Run with sudo'; exit 1; }
+exec docker compose --project-name symbols --env-file /etc/symbols/production.env -f /opt/symbols/current/compose.production.yaml "$@"

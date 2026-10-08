@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Sitemap: https://simvoly-game.votarumshee.chatgpt.site/sitemap.xml

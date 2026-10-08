@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+def setting = { name -> providers.gradleProperty(name).orElse(providers.environmentVariable(name)).orElse('').get() }
+android {
+ namespace 'com.votarumshee.symbols.webpreview'
+ compileSdk rootProject.ext.compileSdkVersion
+ buildToolsVersion '36.0.0'
+ defaultConfig {
+  applicationId 'com.votarumshee.symbols'
+  minSdkVersion rootProject.ext.minSdkVersion
+  targetSdkVersion rootProject.ext.targetSdkVersion
+  versionCode 2
+  versionName '1.1.0'
+  manifestPlaceholders = [cleartext:'false']
+  testInstrumentationRunner 'com.votarumshee.symbols.webpreview.MigrationAcceptanceTest'
+ }
+ signingConfigs {
+  qa {
+   storeFile file(setting('SYMBOLS_QA_KEYSTORE') ?: '../../../Client/.tools/android-user/debug.keystore')
+   storePassword 'android'; keyAlias 'androiddebugkey'; keyPassword 'android'
+  }
+  if(setting('SYMBOLS_KEYSTORE')) owner {storeFile file(setting('SYMBOLS_KEYSTORE')); storePassword setting('SYMBOLS_STORE_PASSWORD'); keyAlias setting('SYMBOLS_KEY_ALIAS'); keyPassword setting('SYMBOLS_KEY_PASSWORD')}
+ }
+ testBuildType 'qa'
+ sourceSets { androidTest.assets.srcDir('../../artifacts/transition/fixture/assets') }
+ flavorDimensions 'environment'
+ productFlavors {
+  prod {dimension 'environment'}
+  local {dimension 'environment'; applicationIdSuffix (setting('SYMBOLS_LOCAL_SUFFIX') ?: '.dev'); manifestPlaceholders = [cleartext:'true']}
+  migration {dimension 'environment'; applicationIdSuffix '.migrationtest'; manifestPlaceholders = [cleartext:'true']}
+ }
+ buildTypes {
+  debug {signingConfig signingConfigs.qa}
+  release {
+   minifyEnabled true
+   shrinkResources true
+   debuggable false
+   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+   signingConfig signingConfigs.findByName('owner')
+  }
+  qa {
+   initWith release
+   applicationIdSuffix '.qa'
+   testProguardFiles 'test-proguard-rules.pro'
+   signingConfig signingConfigs.qa
+   matchingFallbacks = ['release']
+  }
+ }
+ compileOptions {sourceCompatibility JavaVersion.VERSION_21; targetCompatibility JavaVersion.VERSION_21}
+}
+repositories {flatDir {dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'}}
+dependencies {
+ implementation fileTree(include:['*.jar'],dir:'libs')
+ implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+ implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+ implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+ implementation project(':capacitor-android')
+ implementation project(':capacitor-cordova-android-plugins')
+ testImplementation "junit:junit:$junitVersion"
+ androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+ androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+}
+apply from: 'capacitor.build.gradle'
+// Refuse a production artifact if the bundled client or shell was built for preview.
+ tasks.configureEach { task ->
+  if(task.name in ['preProdQaBuild','preProdReleaseBuild']) task.doFirst {
+   def config = new groovy.json.JsonSlurper().parse(file('src/main/assets/capacitor.config.json'))
+   if(config.server?.url || config.server?.cleartext || config.android?.webContentsDebuggingEnabled) throw new GradleException('Unsafe production Capacitor config')
+   def metadata = new groovy.json.JsonSlurper().parse(file('src/main/assets/public/build.json'))
+   if(metadata.nativeApi != 'https://symbols-api.votarumshee.com') throw new GradleException('Production assets must target production HTTPS API')
+  }
+ }
+
+
+
+

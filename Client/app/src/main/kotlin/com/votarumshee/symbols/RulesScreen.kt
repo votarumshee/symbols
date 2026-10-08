@@ -1,0 +1,42 @@
+package com.votarumshee.symbols
+
+import androidx.compose.material3.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import com.votarumshee.symbols.core.*
+
+// Display text transcribed from the current dist/next.mjs (v45), not historical RULES.md.
+val symbolDescriptions = mapOf(
+    "arrowx2" to "40 урона. Пробивает обычный смайлик, но не круг. Усилители повышают урон. Отражается от треугольника.",
+    "arrow" to "20 урона. С усилением — 50. Круг не пробивает даже с усилителями. Пуля летит после ответа соперника.",
+    "smile" to "Простой защитный блок.",
+    "point" to "Усиливает символ по выбранному направлению. Сила: 1.",
+    "erase" to "Убирает свой символ. Ход не тратится. Первый использованный экземпляр не возвращается.",
+    "circle" to "Сильный блок. Лазер, танк и меч пробивают без усиления. Обычная стрелочка не пробивает.",
+    "electricity" to "Красный щит X2. Танк, лазер и стрелочка не пробивают. Меч пробивает.",
+    "sword" to "250 урона. Пробивает до двух кругов. Каждый уничтоженный блок или усилитель отнимает 50 урона. Пробивает обратную связь.",
+    "tank" to "200 урона. Пробивает круг и усилители. Электричество не пробивает.",
+    "laser" to "100 урона. Пробивает круг и обратную связь без усилителей. После обратной связи — 50 урона.",
+    "feedback" to "Отражает стрелочку и стрелочку X2. Меч, танк и лазер пробивают без усилителей.",
+    "inspect" to "Усилитель силой 3.", "powerful" to "Усилитель силой 6.",
+    "angry" to "Даёт два действия подряд.", "teleport" to "Переносит свой символ в свободную клетку. Выбери источник, затем место назначения."
+)
+@Composable fun RulesScreen(state: AppState) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+        Text("Поставь короля в крайнем ряду своей стороны. Защищай его и уничтожь королей другой команды.")
+        Text("Установи символ и выбери направление. Соперник получает ответный ход, затем летит твоя пуля.")
+        Text("Блоки останавливают атаки, точки усиливают символы. Один экземпляр списывается при первом использовании символа в партии и открывает весь его лимит на эту партию.")
+        Text("В 2×2 ходят по очереди четыре участника. Команда побеждает, когда уничтожены оба вражеских короля.")
+        Text("На ход — 90 секунд. Выход из начатой партии считается поражением. Сервер продолжает отсчёт, когда приложение в фоне или связь потеряна.")
+        state.catalog?.category("symbol")?.forEach { item ->
+            SymbolBadge(item.key)
+            Text(item.payload.text("name"), style = MaterialTheme.typography.titleLarge)
+            Text(symbolDescriptions[item.key].orEmpty())
+            Text(if (item.payload.flag("unlimited")) "Без ограничения ходов этим символом" else "Базовый лимит: ${item.payload.number("stock")}. Улучшения увеличивают лимит.", style = MaterialTheme.typography.bodySmall)
+        }
+    }
+}

@@ -1,0 +1,3 @@
+-- Execute separately in psql connected to postgres, outside a transaction:
+CREATE DATABASE symbols_export ENCODING 'UTF8' TEMPLATE template0;
+-- Then reconnect: psql -d symbols_export ...

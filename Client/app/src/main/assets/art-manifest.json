@@ -1,0 +1,31 @@
+{
+  "source": "8c953993d57a887112a75c4b0a69bb2a376ea1eb",
+  "symbols": [
+    "king",
+    "arrowx2",
+    "sword",
+    "electricity",
+    "arrow",
+    "smile",
+    "point",
+    "laser",
+    "circle",
+    "feedback",
+    "tank",
+    "inspect",
+    "powerful",
+    "angry",
+    "teleport",
+    "erase"
+  ],
+  "skins": [
+    "classic",
+    "neon",
+    "frost",
+    "ember",
+    "storm",
+    "cosmos",
+    "solar"
+  ],
+  "license": "GPL-3.0; see THIRD_PARTY_NOTICES.md"
+}

@@ -1,0 +1,10 @@
+// Applied only to a disposable synthetic package, never to a delivered Kotlin APK.
+gradle.beforeProject { p ->
+ if(p.name == 'app') p.afterEvaluate {
+  p.android.productFlavors.getByName('dev').applicationIdSuffix = '.migrationtest'
+  def fixture = new File(p.rootDir, '../WebClient/artifacts/transition/fixture')
+  p.android.sourceSets.getByName('dev').java.srcDir(new File(fixture,'src'))
+  p.android.sourceSets.getByName('dev').assets.srcDir(new File(fixture,'assets'))
+  p.android.sourceSets.getByName('dev').manifest.srcFile(new File(fixture,'AndroidManifest.xml'))
+ }
+}

@@ -1,0 +1,23 @@
+import pg from '../../Server/node_modules/pg/lib/index.js';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';import {execFile} from 'node:child_process';import {promisify} from 'node:util';
+const exec=promisify(execFile),adb='Client/.tools/sdk/platform-tools/adb.exe',device=process.argv[2]||'emulator-5556',pkg='com.votarumshee.symbols.dev.qa';
+const run=async(...args)=>(await exec(adb,['-s',device,...args],{maxBuffer:4e6})).stdout;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function dump(){for(let attempt=0;;attempt++){try{await run('shell','uiautomator','dump','/sdcard/ui-parity.xml');break;}catch(e){if(attempt>=2)throw e;await sleep(500);}}let xml=await run('shell','cat','/sdcard/ui-parity.xml');return [...xml.matchAll(/<node\b[^>]+>/g)].map(m=>Object.fromEntries([...m[0].matchAll(/([\w-]+)="([^"]*)"/g)].map(a=>[a[1],a[2]])));}
+async function tapText(text){for(let n=0;n<8;n++){const v=(await dump()).find(n=>n.text===text);if(v){const b=v.bounds.match(/\d+/g).map(Number);await run('shell','input','tap',String((b[0]+b[2])/2),String((b[1]+b[3])/2));await sleep(700);return;}await run('shell','input','swipe','600','1450','600','600','300');await sleep(400);}throw Error('Missing '+text);}
+async function shot(name){await run('shell','screencap','-p','/sdcard/parity.png');await run('pull','/sdcard/parity.png','Client/artifacts/ui-parity/android-'+device+'-'+name+'.png');fs.writeFileSync('Client/artifacts/ui-parity/android-'+device+'-'+name+'.json',JSON.stringify(await dump()));}
+
+const pool=new pg.Pool({connectionString:'postgres://symbols_test@127.0.0.1:5457/symbols_ui_test'});
+async function arena(){return (await pool.query("select revision,data from arenas where data->'players' @> $1::jsonb order by updated desc limit 1",[JSON.stringify([{nick:'Parity36'}])])).rows[0];}
+await exec(process.execPath,['Client/scripts/ui-parity-fixture.mjs']);
+await run('shell','am','force-stop',pkg);await run('shell','am','start','-n',pkg+'/com.votarumshee.symbols.MainActivity');await sleep(1800);let entry=await dump();if(!entry.some(n=>n.text==='Инвентарь')){await tapText('Меню');if((await dump()).some(n=>n.text==='Подтвердить')){await tapText('Подтвердить');await tapText('На главную');}}
+await tapText('Инвентарь');await shot('owned-inventory');await tapText('Меч');await shot('item');await run('shell','input','keyevent','4');await tapText('На главную');await tapText('Играть');await tapText('Двое на одном устройстве');
+async function cell(col,row){const n=(await dump()).find(n=>n['content-desc'].startsWith('Поле 10 на 14'));if(!n)throw Error('board missing');const b=n.bounds.match(/\d+/g).map(Number);const size=(b[2]-b[0])/14;await run('shell','input','tap',String(Math.round(b[0]+size*(col+.5))),String(Math.round(b[1]+size*(row+.5))));await sleep(1500);}
+async function shelf(name){for(let i=0;i<7;i++){if((await dump()).some(n=>n.text===name)){await tapText(name);return;}await run('shell','input','swipe','900','1650','180','1650','400');}throw Error('shelf missing '+name);}
+await cell(0,9);await cell(0,9);await shelf('Стрелочка');await cell(3,5);await tapText('↑');await shelf('Смайлик');await cell(4,5);const beforeTeleport=await arena();await shelf('Телепортация');await cell(3,5);assert.equal((await arena()).revision,beforeTeleport.revision,'source selection must not send');await shot('teleport-source');await cell(5,5);await shot('teleport-direction');await tapText('↗');await sleep(800);const moved=await arena();assert.equal(Number(moved.revision),Number(beforeTeleport.revision)+1);assert.equal(moved.data.g.boards[0][3],null);assert.equal(moved.data.g.boards[0][5].type,'arrow');assert.equal(moved.data.g.boards[0][5].dir,1);await shot('teleport-done');
+await run('shell','svc','wifi','disable');await run('shell','svc','data','disable');try{await sleep(12000);await shot('offline');const nodes=await dump();if(!nodes.some(n=>/Нет связи|Подключаемся/.test(n.text)))throw Error('Offline state not shown');}finally{await run('shell','svc','wifi','enable');await run('shell','svc','data','enable');}for(let i=0;i<20;i++){await sleep(1800);if(!(await dump()).some(n=>/Нет связи|Подключаемся/.test(n.text)))break;if(i===19)throw Error('Network did not recover within bounded wait');}
+await shot('reconnected');const beforeRecoveredMove=await arena();await shelf('Смайлик');await cell(6,5);assert.equal(Number((await arena()).revision),Number(beforeRecoveredMove.revision)+1,'command after recovery');
+
+await tapText('Меню');await tapText('Подтвердить');await tapText('На главную');console.log({device,advanced:'PASS owned items, teleport actual source/target/direction, network off/on'});
+
+await pool.end();

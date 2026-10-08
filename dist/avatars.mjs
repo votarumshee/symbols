@@ -1,0 +1,3 @@
+export const AVATARS=[['lion','🦁','Лев'],['eagle','🦅','Орёл'],['thunderlion','🦁','Лев с молнией'],['firec','C','Огненная C']];
+export function validAvatar(value){return AVATARS.some(a=>a[0]===value);}
+export function avatar(value){if(value==='firec')return '<img class="player-avatar avatar-firec" src="/fire-c.png" alt="Огненная C">';if(value==='thunderlion')return '<img class="player-avatar avatar-thunderlion" src="/thunder-lion.png" alt="Лев с молнией">';const a=AVATARS.find(a=>a[0]===value)??AVATARS[0];return `<span class="player-avatar avatar-${a[0]}" role="img" aria-label="${a[2]}">${a[1]}${a[0]==='thunderlion'?'<span class="avatar-lightning" aria-hidden="true">⚡</span>':''}</span>`;}

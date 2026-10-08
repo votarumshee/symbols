@@ -1,0 +1,5 @@
+.sites-runtime/
+node_modules/
+server/assets.mjs
+dist/server/
+dist/.openai/

@@ -1,0 +1,60 @@
+/* Electric blue arenas, warm attacks, violet energy. */
+body{background:radial-gradient(ellipse at 0 0,#b7e5ff,transparent 55%),radial-gradient(ellipse at 100% 60%,#d6c5ff,transparent 55%),#edf4ff;background-attachment:fixed}
+.home-scene{background:radial-gradient(ellipse at 10% 15%,#137edc55,transparent 50%),radial-gradient(ellipse at 95% 60%,#a144d744,transparent 52%),#102548;color:#edf7ff;border:1px solid #3571a9;box-shadow:0 20px 80px #183a6744}
+.home-scene h1{color:#fff;text-shadow:0 4px 0 #164980,0 0 28px #46c8ff66;letter-spacing:-.04em}
+.home-scene .brand,.home-scene .nick-button{color:#e3f4ff}
+.home-scene .presence-pill,.home-scene .game-description{color:#c1d7ee}
+.home-scene .profile-line .quiet{color:#e1efff}
+.home-scene .profile-line .quiet:hover{background:#25456b}
+.home-scene .rank-badge{color:#e0eeff}
+.home-scene .unranked{color:#bad2ed}
+.home-scene .symbol-tile{background:linear-gradient(140deg,#eefaff,#82cdff);border:2px solid #70c7ff;box-shadow:0 8px 0 #082348,0 0 25px #2bbaff44}
+.home-scene .symbol-tile:nth-child(2){background:linear-gradient(140deg,#fff2c3,#ffb565);border-color:#ffc06b;box-shadow:0 8px 0 #5a332c,0 0 25px #ff9e3344}
+.home-scene .symbol-tile:nth-child(3){background:linear-gradient(140deg,#eee5ff,#b795ff);border-color:#c3a2ff;box-shadow:0 8px 0 #34244d,0 0 25px #ad77ff44}
+.home-effects{opacity:.7}
+.home-scene .menu-actions>.primary{font-size:1.3rem;min-height:62px;box-shadow:0 5px 0 #a8491b,0 12px 28px #ff951a33}
+.home-scene .home-side-actions .choice:first-child{background:#dcf3ff;border-color:#65c7f0;color:#11426b}
+.home-scene .home-side-actions .choice:last-child{background:#ffe7ab;border-color:#ffc259;color:#653709}
+.primary{background:linear-gradient(120deg,#ffc355,#ff852f);color:#352008;border:1px solid #ed9b39;transition:transform .15s,box-shadow .15s}
+.primary:hover{background:linear-gradient(120deg,#ffd779,#ffac50);transform:translateY(-1px)}
+.primary:active{transform:translateY(1px)}
+.wallet{background:linear-gradient(120deg,#fff4c0,#ffdb72);color:#674100;border-color:#eeb74e;box-shadow:0 3px 10px #a9701620}
+.board-section.own{border:2px solid #65b6ee;background:linear-gradient(145deg,#eefaff,#fff);box-shadow:0 7px 0 #c2ddf0,0 12px 30px #236ec31a}
+.board-section.enemy{border:2px solid #b997ed;background:linear-gradient(145deg,#f2eaff,#fff);box-shadow:0 7px 0 #dbceee,0 12px 30px #693fa91a}
+.own .player-name,.own .health{color:#155d96}.enemy .player-name,.enemy .health{color:#70429c}
+.hp-track{height:7px;background:#dae7f4;border-radius:6px}.hp-track span{background:linear-gradient(90deg,#246ce0,#27c5e8);box-shadow:0 0 8px #37cbff}.enemy .hp-track span{background:linear-gradient(90deg,#8f46cb,#e26eba);box-shadow:0 0 8px #c777ed}
+.cell{border-color:#d9e5f0}.cell.home-row{background:#d9efff}.enemy .cell.home-row{background:#e9ddff}
+.cell[data-symbol=king]{background:radial-gradient(circle,#fff2a8,#e1f4ff 78%)}.enemy .cell[data-symbol=king]{background:radial-gradient(circle,#fff2ae,#ebdfff 78%)}
+.cell[data-symbol=circle]{background:#dbf7ff}.cell[data-symbol=feedback]{background:#ffe8d2}
+.cell[data-symbol=inspect]{background:#ddf9ed}.cell[data-symbol=powerful]{background:#eee1ff}.cell[data-symbol=point]{background:#fff2c8}
+.cell.boost-path{background:#fff6d9}.cell.boost-target{box-shadow:inset 0 0 0 2px #f6b625, inset 0 0 10px #ffd14466}
+.cell .boost-bolt{filter:drop-shadow(0 0 2px #ffc533);animation:energy-glow 1.8s ease-in-out infinite alternate}
+.cell.pending{background:#ffe3a4;box-shadow:inset 0 0 0 2px #ed9229}
+.cell.spent{opacity:.8}.cell.spent>.symbol-icon{opacity:.42}
+.own .cell:hover{background:#ffedb6}
+.shelf{background:linear-gradient(100deg,#edf8fff5,#f4edfff5);border-top:2px solid #b3c9ea}
+.piece{--piece-tint:#e5f1ff;--piece-edge:#9abde4;background:linear-gradient(160deg,#fff,var(--piece-tint));border:1px solid var(--piece-edge);border-top-width:4px;box-shadow:0 3px 0 #b8cde133}
+.piece[data-piece=arrow],.piece[data-piece=tank]{--piece-tint:#ffe8c6;--piece-edge:#e4ac5d}
+.piece[data-piece=laser],.piece[data-piece=powerful]{--piece-tint:#efddff;--piece-edge:#b986e6}
+.piece[data-piece=smile],.piece[data-piece=inspect]{--piece-tint:#d7f6e9;--piece-edge:#77cbb0}
+.piece[data-piece=circle],.piece[data-piece=teleport]{--piece-tint:#daf5ff;--piece-edge:#64c5e6}
+.piece[data-piece=feedback],.piece[data-piece=angry]{--piece-tint:#ffe3df;--piece-edge:#ee9b83}
+.piece[data-piece=point]{--piece-tint:#fff2c1;--piece-edge:#e4c15e}
+.piece:not(:disabled):hover{background:var(--piece-tint);border-color:#3485d9;transform:translateY(-2px)}
+.piece .stock{color:#405976;background:#ffffffbd;border-radius:6px;padding:2px 8px}
+.shop-card{background:linear-gradient(145deg,#fff,#eaf5ff);border-color:#aacbec;border-top:4px solid #4799de;box-shadow:0 6px 18px #274e8110}
+.shop-card:nth-child(3n+2){background:linear-gradient(145deg,#fff,#f2eaff);border-top-color:#a573db}.shop-card:nth-child(3n){background:linear-gradient(145deg,#fff,#fff0dd);border-top-color:#efa546}
+.shop-symbol{background:#ffffffd9;box-shadow:0 4px 12px #25477216}.quest-card{background:#ffffffdc;border-color:#b5cdeb;border-left:5px solid #4aa5d9}.quest-reward{background:linear-gradient(135deg,#fff1b5,#ffd270)}
+dialog{background:linear-gradient(145deg,#fff,#eef5ff);border-color:#a4c9ed;box-shadow:0 20px 70px #06234c55}dialog::backdrop{background:#102544a8}
+.shot-trail{position:absolute;inset:28%;border-radius:50%;background:#ffeeb2;box-shadow:0 0 6px #ffa93e;pointer-events:none;z-index:5;animation:trail-fade .26s ease-out forwards}
+.trail-laser{background:#f8dfff;box-shadow:0 0 9px #b044ef}.trail-tank{background:#ffd76b;box-shadow:0 0 10px #fb8529}.trail-reflected{background:#ffd1a0;box-shadow:0 0 10px #ee6d37}
+.impact-reflect{border:2px solid #ff983f;box-shadow:0 0 12px #ffbc4d}.impact-blocked{box-shadow:0 0 14px #46cfff}.flying-tank:before{box-shadow:0 9px 8px #ff8a00,0 15px 12px #ffd55c}
+@keyframes trail-fade{from{opacity:.75;transform:scale(1)}to{opacity:0;transform:scale(.2)}}
+@keyframes energy-glow{from{opacity:.75}to{opacity:1;filter:drop-shadow(0 0 4px #ffa000)}}
+@media(max-width:600px){.home-scene{border:0}.board-section.own,.board-section.enemy{box-shadow:0 4px 0 #cddbea}.home-scene .menu-actions>.primary{min-height:58px}.home-side-actions{gap:12px}}
+@media(prefers-reduced-motion:reduce){.cell .boost-bolt,.shot-trail{animation:none}.primary:hover,.piece:not(:disabled):hover{transform:none}.shot-trail{display:none}}
+
+/* One continuous arena; opposing rows are mirrored across the frontier. */
+.arena{max-width:640px;margin:0 auto}.arena .board-scroll{border:2px solid #35465e;border-radius:8px;background:#fff;overflow:auto}.arena .board{gap:0;background:#fff}.arena-player{padding:8px 0}.arena-player .board-head{margin:0}.arena-player .hp-track{margin:2px 0 0}.unified-board .cell{background-color:#f7fbff;border-color:#d0dcea}.unified-board .cell.enemy{color:#7947b6}.unified-board .cell.frontier{border-top:3px solid #202a38}.unified-board .cell.home-row{background:#dfedff}.unified-board .cell.enemy.home-row{background:#ebe1fa}.unified-board .cell.pending{background:#ffe3a4}.unified-board .cell.boost-path{background:#fff6d9}.unified-board .cell.coach-target{background:#d9f7d4}.unified-board .cell:hover{background:#ffedb6}
+
+.symbol-sword{filter:drop-shadow(0 0 3px #759dff)}.symbol-electricity{filter:drop-shadow(0 0 3px #ff4c48)}.unified-board .cell[data-symbol=electricity]{background:#ffe0de}.unified-board .cell[data-symbol=sword]{background:#e9e4ff}.flying-sword svg{width:100%;height:100%;filter:drop-shadow(0 0 4px #b396ff)}.trail-sword{background:#ae93ff;box-shadow:0 0 8px #8565fa}

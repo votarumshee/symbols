@@ -1,0 +1,66 @@
+name: symbols
+services:
+  db:
+    image: postgres:17.11-bookworm
+    environment:
+      POSTGRES_DB: symbols
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      OWNER_PASSWORD: ${OWNER_PASSWORD:?Set OWNER_PASSWORD}
+      APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./deploy/init-roles.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d symbols]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  migrate:
+    build: .
+    profiles: [tools]
+    environment:
+      DATABASE_URL: postgres://symbols_owner:${OWNER_PASSWORD}@db:5432/symbols
+    command: [sh, -ec, 'node scripts/migrate.mjs && node scripts/seed.mjs && node scripts/grants.mjs']
+    networks: [database]
+    depends_on:
+      db: {condition: service_healthy}
+  server:
+    build: .
+    environment:
+      DATABASE_URL: postgres://symbols_app:${APP_PASSWORD}@db:5432/symbols
+      PG_POOL_MAX: 10
+      TRUST_PROXY: 172.30.41.3
+      METRICS_TOKEN: ${METRICS_TOKEN:?Set METRICS_TOKEN}
+    networks:
+      database: {}
+      frontend: {ipv4_address: 172.30.41.2}
+    depends_on:
+      db: {condition: service_healthy}
+    volumes:
+      - ./private/avatars:/app/public/avatars
+    restart: unless-stopped
+    stop_grace_period: 30s
+  caddy:
+    image: caddy:2.11.2-alpine
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL}
+    ports: ['80:80', '443:443', '443:443/udp']
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+      - caddyconfig:/config
+    networks:
+      frontend: {ipv4_address: 172.30.41.3}
+    restart: unless-stopped
+volumes:
+  pgdata:
+  caddydata:
+  caddyconfig:
+networks:
+  database: {internal: true}
+  frontend:
+    ipam:
+      config: [{subnet: 172.30.41.0/24}]

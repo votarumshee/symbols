@@ -1,0 +1,6 @@
+Symbols / «Символы»
+Original repository author: Alexandr Vologodskiy.
+Original exported source: 8c953993d57a887112a75c4b0a69bb2a376ea1eb.
+Game rules remain derived from the original JavaScript implementation.
+This project is distributed under GPL-3.0-only; see LICENSE.
+Third-party dependencies retain their respective licenses in node_modules.

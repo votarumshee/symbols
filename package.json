@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "drizzle-kit": "^0.31.4",
+    "drizzle-orm": "^0.44.5",
+    "esbuild": "^0.25.9",
+    "linkedom": "^0.18.12"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/online.mjs"
+  }
+}

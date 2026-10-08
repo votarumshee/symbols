@@ -1,0 +1,53 @@
+[
+  {
+    "mode": "room",
+    "small": true,
+    "devices": [
+      "emulator-5556",
+      "emulator-5558"
+    ],
+    "ok": true,
+    "output": [
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.005\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.285\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+    ]
+  },
+  {
+    "mode": "duel",
+    "small": false,
+    "devices": [
+      "emulator-5556",
+      "emulator-5558"
+    ],
+    "ok": true,
+    "output": [
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.329\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 4.04\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+    ]
+  },
+  {
+    "mode": "team",
+    "small": true,
+    "devices": [
+      "emulator-5556",
+      "emulator-5558"
+    ],
+    "ok": true,
+    "output": [
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.148\r\n\r\nOK (1 test)\r\n\r\n\r\n",
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 6.627\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+    ]
+  },
+  {
+    "mode": "play",
+    "small": true,
+    "devices": [
+      "emulator-5556",
+      "emulator-5558"
+    ],
+    "ok": true,
+    "output": [
+      "\r\ncom.votarumshee.symbols.MultiplayerTest:.\r\n\r\nTime: 3.743\r\n\r\nOK (1 test)\r\n\r\n\r\n"
+    ]
+  }
+]

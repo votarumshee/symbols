@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-07",
+  "file": "artifacts/delivery/symbols-prod-qa-web-ui-20261007.apk",
+  "sha256": "2bb674d53fca17a9c297cbe2d271e00cb2bca47d6244248b3e613fdd9a943abb",
+  "variant": "prodQa",
+  "applicationId": "com.votarumshee.symbols.qa",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "minSdk": 26,
+  "targetSdk": 36,
+  "r8": true,
+  "debuggable": false,
+  "endpoint": "https://symbols-api.votarumshee.com",
+  "certificateSha256": "5a45093829a45a385855f8e53ae806b56f13a30c62db661c1292ef780fc457f0",
+  "signatureVerification": "PASS APK v2",
+  "zipAlignment": "PASS zipalign -c -P 16 4",
+  "uiVariantTested": "devQa; local Server v3/isolated PostgreSQL; Android26/36",
+  "prodQaRuntimeTested": false,
+  "productionChanged": false,
+  "previousArtifactPreserved": true,
+  "previousSha256": "78fdf7e180b6adc442413494d43f187f2e264ed4595fb094c91c5dbe56ec9a4d",
+  "report": "docs/web-ui-parity.md",
+  "visualReport": "artifacts/ui-parity/index.html",
+  "open": [
+    "Native fonts/emoji and some cosmetic page-vs-modal dimensions",
+    "Complex violet frame conic/shine is approximated",
+    "No synchronized all-effects comparison",
+    "Updated instrumentation compiled, not executed"
+  ],
+  "additionalAcceptance": {
+    "doubleTap": "PASS Android26 one Monkey injector;132/119ms;one revision",
+    "multiplayer": "PASS Android36 owner UI taps + real local API peers; ordinary2/team4, all seats",
+    "waitingResult": "Paired real screenshots",
+    "upgrades": "Inline without extra modal/confirmation",
+    "frames": "CSS metal palettes/stops and skew stripes"
+  }
+}

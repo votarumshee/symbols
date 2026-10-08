@@ -1,0 +1,3 @@
+-keep @com.getcapacitor.annotation.CapacitorPlugin class * { *; }
+-keepclassmembers class * { @com.getcapacitor.PluginMethod <methods>; }
+-keep class com.getcapacitor.** { *; }

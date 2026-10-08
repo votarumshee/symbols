@@ -1,0 +1,29 @@
+{
+  "name": "symbols-server",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/main.mjs",
+    "build": "node scripts/check.mjs",
+    "test": "node --test test/*.test.mjs",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate.mjs",
+    "db:status": "node --env-file-if-exists=.env scripts/migrate.mjs status",
+    "db:seed": "node --env-file-if-exists=.env scripts/seed.mjs",
+    "db:import": "node --env-file-if-exists=.env scripts/import.mjs",
+    "dev:seed": "node --env-file-if-exists=.env scripts/dev-seed.mjs",
+    "load": "node --env-file-if-exists=.env scripts/load.mjs"
+  },
+  "dependencies": {
+    "@fastify/static": "10.1.5",
+    "@fastify/websocket": "11.3.3",
+    "fastify": "5.12.5",
+    "node-pg-migrate": "9.0.0",
+    "pg": "8.23.1",
+    "ws": "8.22.0"
+  }
+}

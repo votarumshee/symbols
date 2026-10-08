@@ -1,0 +1,120 @@
+name: Client
+concurrency:
+  group: client-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+on:
+  push:
+    paths: ['Client/**', 'contracts/**', 'Server/**', '.github/workflows/client.yml']
+  pull_request:
+    paths: ['Client/**', 'contracts/**', 'Server/**', '.github/workflows/client.yml']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17.11-bookworm
+        env:
+          POSTGRES_PASSWORD: ci-only
+          POSTGRES_DB: symbols_client_test
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:ci-only@127.0.0.1:5432/symbols_client_test
+      SYMBOLS_TEST_URL: http://127.0.0.1:8080
+      PORT: 8080
+      SYMBOLS_FAULT_TEST: '1'
+      SYMBOLS_IMPORT_FIXTURE: ${{ github.workspace }}/Client/.tools/import-fixture.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: 8c953993d57a887112a75c4b0a69bb2a376ea1eb
+          path: .reference
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci --ignore-scripts && npm run build
+        working-directory: .reference
+      - run: npm ci --ignore-scripts && npm run db:migrate && npm run db:seed
+        working-directory: Server
+      - run: |
+          node Client/scripts/prepare-import-fixture.mjs
+          node Client/scripts/fault-proxy.mjs > /tmp/symbols-fault-proxy.log 2>&1 &
+      - run: |
+          node scripts/contracts.mjs --check
+          node src/main.mjs > /tmp/symbols-client-server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8080/ready && exit 0; sleep 1; done
+          exit 1
+        working-directory: Server
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - run: chmod +x gradlew && ./gradlew :core:test :app:assembleDevDebug :app:assembleDevQa :app:lintDevDebug
+        working-directory: Client
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-tests-and-internal-apks
+          path: |
+            Client/core/build/reports/tests/
+            Client/app/build/reports/
+            Client/app/build/outputs/apk/dev/
+  android:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [26, 36]
+    env:
+      DATABASE_URL: postgres://postgres:ci-only@127.0.0.1:5432/symbols_client_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: 8c953993d57a887112a75c4b0a69bb2a376ea1eb
+          path: .reference
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts && npm run build
+        working-directory: .reference
+      - run: |
+          docker run -d --name symbols-client-ci -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=ci-only -e POSTGRES_DB=symbols_client_test postgres:17.11-bookworm
+          npm ci --ignore-scripts
+          until docker exec symbols-client-ci pg_isready -U postgres; do sleep 1; done
+          npm run db:migrate
+          npm run db:seed
+          node src/main.mjs > /tmp/symbols-client-server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8080/ready && exit 0; sleep 1; done
+          exit 1
+        working-directory: Server
+        env:
+          DATABASE_URL: postgres://postgres:ci-only@127.0.0.1:5432/symbols_client_test
+          PORT: 8080
+      - run: |
+          node Client/scripts/prepare-import-fixture.mjs
+          mkdir -p Client/app/src/androidTest/assets
+          cp Client/.tools/import-fixture.json Client/app/src/androidTest/assets/synthetic-fixture.json
+      - run: sudo chmod 666 /dev/kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          target: default
+          arch: x86_64
+          working-directory: Client
+          script: chmod +x gradlew && ./gradlew :app:connectedDevDebugAndroidTest :app:assembleDevQa
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-ui-results-${{ matrix.api }}
+          path: Client/app/build/reports/androidTests/

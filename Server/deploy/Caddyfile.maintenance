@@ -1,0 +1,9 @@
+{
+ email {$ACME_EMAIL}
+}
+{$DOMAIN} {
+ @private path /metrics /metrics/*
+ respond @private 404
+ respond "Service is being prepared" 503
+ header Strict-Transport-Security "max-age=31536000"
+}

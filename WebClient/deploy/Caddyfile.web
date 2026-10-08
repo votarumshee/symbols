@@ -1,0 +1,25 @@
+# Add this host block to the existing Caddy configuration, preserving the API host.
+# Compose mounts the parent /srv/symbols-web read-only; current points inside releases/.
+symbols.votarumshee.com {
+ @browserApi path /api/web/v3/*
+ handle @browserApi {
+  reverse_proxy server:3000
+ }
+ @policy path /privacy /privacy.html /support /support.html /account-deletion /account-deletion.html /policy.css /account-deletion.mjs
+ handle @policy {
+  reverse_proxy server:3000
+ }
+ @health path /health /ready
+ handle @health {
+  reverse_proxy server:3000
+ }
+ handle {
+  root * /srv/symbols-web/current
+  header Cache-Control "no-cache"
+  header X-Content-Type-Options nosniff
+  header Referrer-Policy same-origin
+  header X-Frame-Options DENY
+  file_server
+ }
+ header Strict-Transport-Security "max-age=31536000"
+}

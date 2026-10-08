@@ -1,0 +1,11 @@
+.gradle/
+.tools/
+**/build/
+local.properties
+*.jks
+*.keystore
+signing.properties
+artifacts/
+.idea/
+app/src/androidTest/assets/synthetic-fixture.json
+app/src/androidTest/assets/multi-fixture.json
