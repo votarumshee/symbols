@@ -29,7 +29,7 @@ class SmokeTest {
     @Test fun createAccountOpenInventoryAndSurviveRecreation() {
         waitFor("Ник")
         compose.onNodeWithText("Ник", substring = false).performTextInput("Android тест")
-        compose.onNodeWithText("Создать аккаунт", useUnmergedTree = true).performScrollTo().performClick()
+        compose.onNodeWithText("Создать аккаунт", useUnmergedTree = true).performClick()
         waitFor("Android тест")
         screenshot("01-home")
         compose.onNodeWithText("Инвентарь", substring = false).performScrollTo().performClick()
@@ -56,7 +56,7 @@ class SmokeTest {
         screenshot("03-match")
         compose.activityRule.scenario.recreate()
         waitFor("Смайлик")
-        compose.onNodeWithText("Меню").performScrollTo().performClick()
+        compose.onNodeWithText("Меню").performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
         waitFor("Партия завершена")
         screenshot("04-result")
@@ -66,9 +66,9 @@ class SmokeTest {
         assumeTrue("Generate private synthetic fixture first", assets.list("")!!.contains("synthetic-fixture.json"))
         val fixture = wire.parseToJsonElement(assets.open("synthetic-fixture.json").bufferedReader().use { it.readText() }).jsonObject
         waitFor("У меня уже есть аккаунт")
-        compose.onNodeWithText("У меня уже есть аккаунт").performScrollTo().performClick()
+        compose.onNodeWithText("У меня уже есть аккаунт").performClick()
         compose.onNodeWithText("Код восстановления", substring = false).performTextInput(fixture.text("code"))
-        compose.onNodeWithText("Восстановить аккаунт", substring = false).performScrollTo().performClick()
+        compose.onNodeWithText("Восстановить аккаунт", substring = false).performClick()
         waitFor("Перенос Android")
         compose.onNodeWithText("1234,56", substring = true).assertExists()
         compose.activityRule.scenario.recreate()
@@ -79,15 +79,21 @@ class SmokeTest {
         waitFor("Купить за 20,00 рубинов")
         compose.onAllNodesWithText("Купить за 20,00 рубинов")[0].performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
-        waitFor("1214,56 ♦")
-        compose.onAllNodesWithText("Открыть", substring = false)[0].performScrollTo().performClick()
+        compose.waitUntil(15_000) {
+            (compose.activity.application as SymbolsApplication).repository!!.state.value.game!!.profile.number("balanceCents") == 121456L
+        }
+        compose.onNodeWithText("Закрыть", substring = false).performScrollTo().performClick()
+        waitFor("♦ 1214,56")
+        compose.onNodeWithText(firstCase).performScrollTo().performClick()
+        compose.onNodeWithText("Открыть · ×", substring = true).performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
-        waitFor("Последний результат:")
+        waitFor("Последний выигрыш:")
+        compose.onNodeWithText("Закрыть", substring = false).performScrollTo().performClick()
         compose.onNodeWithText("На главную").performClick()
-        compose.onNodeWithText("Настройки и данные").performScrollTo().performClick()
+        compose.onNodeWithText("Настройки", substring = false).performScrollTo().performClick()
         compose.onNodeWithText("Удалить аккаунт", substring = false).performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
-        waitFor("Твой первый ход")
+        waitFor("Твой ник")
     }
     private fun screenshot(name: String) {
         if (android.os.Build.VERSION.SDK_INT < 29) return // No storage permission added to the app for test screenshots.
