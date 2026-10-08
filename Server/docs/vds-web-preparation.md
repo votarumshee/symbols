@@ -43,3 +43,7 @@ Compose validation, active Caddy configuration, and the prepared web Caddyfile p
 The existing six backup/monitor timers remain enabled. An initial manual backup request met the scheduled upload lock and exited 75; a subsequent run succeeded. Fresh post-change backup: `20261008T171948Z`, including the web routing directory. Its external upload result is recorded in the operational follow-up below.
 
 Deployment credentials for automated production release have not been granted to GitHub. The PR workflow builds and tests artifacts; production delivery remains an explicit release step.
+
+## Operational follow-up
+
+Google Drive upload completed successfully at 17:23:57 UTC / 20:23:57 Moscow: two fresh snapshots, including the post-change backup, in 248 seconds. Transient storage HTTP 500 responses succeeded on retry; they did not leave a failed backup. The local backup, monitor, and external upload services were checked after preparation. No failed units remained. The Docker mount inspection confirmed `/srv/symbols-web` has `RW=false` inside Caddy.
