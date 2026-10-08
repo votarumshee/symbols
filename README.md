@@ -1,4 +1,23 @@
-# «Символы»: исходники опубликованной версии 45
+# «Символы»: первая самостоятельная версия
+
+Текущий поддерживаемый клиент — [WebClient](WebClient/README.md): общий web-интерфейс
+и локально упакованные ресурсы Capacitor для Android/iOS. Авторитетный backend —
+[Server](Server/README.md), API v3 и PostgreSQL. Браузер использует защищённые
+HttpOnly cookie через свой origin; мобильное приложение — токены в Keystore/Keychain.
+`Client/` сохраняет Kotlin-вариант и проверку перехода существующих аккаунтов.
+
+Начать разработку и сборку: [WebClient/README.md](WebClient/README.md).
+Развёртывание: [Server/docs/deployment.md](Server/docs/deployment.md) и
+[WebClient/docs/deployment.md](WebClient/docs/deployment.md).
+Объём проверки и открытые условия Android/iOS/store release:
+[приёмка перехода](WebClient/docs/transition-acceptance.md).
+Установка программ на VDS сама по себе не означает, что новая версия приложения выложена.
+Секреты, ключи подписи и собранные APK не хранятся в Git.
+
+## Исторический web-эталон: версия 45
+
+Описанный ниже SQLite/Worker quickstart сохранён для воспроизведения исходного
+web-эталона и сравнения интерфейса. Production v3 использует `Server/` и `WebClient/`.
 
 Экспорт оригинального коммита `453f22d1cef29bf771fb61906354600aae8179b3`, действовавшего 6 октября 2026 года:
 https://simvoly-game.votarumshee.chatgpt.site/

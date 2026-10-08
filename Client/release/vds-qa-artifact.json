@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-07",
+  "variant": "prodQa",
+  "applicationId": "com.votarumshee.symbols.qa",
+  "versionName": "1.0.0",
+  "versionCode": 1,
+  "endpoint": "https://symbols-api.votarumshee.com",
+  "file": "artifacts/delivery/symbols-prod-qa-1.0.0-20261007.apk",
+  "sha256": "78fdf7e180b6adc442413494d43f187f2e264ed4595fb094c91c5dbe56ec9a4d",
+  "certificateSha256": "5a45093829a45a385855f8e53ae806b56f13a30c62db661c1292ef780fc457f0",
+  "signer": "CN=Android Debug, O=Android, C=US",
+  "signatureVerification": "PASS APK signature v2",
+  "zipAlignment": "PASS zipalign -c -P 16 -v 4",
+  "r8": true,
+  "debuggable": false,
+  "uiAcceptance": {
+    "device": "AOSP Android 36 x86_64 emulator-5556",
+    "result": "PASS",
+    "evidence": "artifacts/qa-prodQa-emulator-5556.json",
+    "networkRecovery": "supported long-poll fallback; WSS after foreground/restart",
+    "serverDuringTest": "isolated PostgreSQL/app through IP-restricted temporary Caddy route"
+  },
+  "storeRelease": false,
+  "limitations": ["Debug test signature", "No physical-device performance acceptance", "Privacy/support URLs not supplied", "No store submission"]
+}

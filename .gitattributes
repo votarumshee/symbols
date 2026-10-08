@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+Server/deploy/*.sh text eol=lf
+Server/deploy/symbols-compose text eol=lf
+Server/deploy/*.service text eol=lf
+Server/deploy/*.timer text eol=lf
+WebClient/android/gradlew text eol=lf

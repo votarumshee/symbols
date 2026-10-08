@@ -1,11 +1,16 @@
 package com.votarumshee.symbols
 
 import androidx.compose.material3.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import com.votarumshee.symbols.core.*
 
 // Display text transcribed from the current dist/next.mjs (v45), not historical RULES.md.
-private val descriptions = mapOf(
+val symbolDescriptions = mapOf(
     "arrowx2" to "40 урона. Пробивает обычный смайлик, но не круг. Усилители повышают урон. Отражается от треугольника.",
     "arrow" to "20 урона. С усилением — 50. Круг не пробивает даже с усилителями. Пуля летит после ответа соперника.",
     "smile" to "Простой защитный блок.",
@@ -21,15 +26,16 @@ private val descriptions = mapOf(
     "angry" to "Даёт два действия подряд.", "teleport" to "Переносит свой символ в свободную клетку. Выбери источник, затем место назначения."
 )
 @Composable fun RulesScreen(state: AppState) {
-    Page("Правила и символы") {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(14.dp)) {
         Text("Поставь короля в крайнем ряду своей стороны. Защищай его и уничтожь королей другой команды.")
         Text("Установи символ и выбери направление. Соперник получает ответный ход, затем летит твоя пуля.")
         Text("Блоки останавливают атаки, точки усиливают символы. Один экземпляр списывается при первом использовании символа в партии и открывает весь его лимит на эту партию.")
         Text("В 2×2 ходят по очереди четыре участника. Команда побеждает, когда уничтожены оба вражеских короля.")
         Text("На ход — 90 секунд. Выход из начатой партии считается поражением. Сервер продолжает отсчёт, когда приложение в фоне или связь потеряна.")
         state.catalog?.category("symbol")?.forEach { item ->
-            Text("${symbolMark(item.key)} ${item.payload.text("name")}", style = MaterialTheme.typography.titleLarge)
-            Text(descriptions[item.key].orEmpty())
+            SymbolBadge(item.key)
+            Text(item.payload.text("name"), style = MaterialTheme.typography.titleLarge)
+            Text(symbolDescriptions[item.key].orEmpty())
             Text(if (item.payload.flag("unlimited")) "Без ограничения ходов этим символом" else "Базовый лимит: ${item.payload.number("stock")}. Улучшения увеличивают лимит.", style = MaterialTheme.typography.bodySmall)
         }
     }

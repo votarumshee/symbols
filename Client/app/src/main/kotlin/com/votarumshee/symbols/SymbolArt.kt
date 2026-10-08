@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -53,14 +55,19 @@ object SymbolArt {
                 }
             }
             val result = if (skin in setOf("neon", "frost", "ember")) Bitmap.createBitmap(96,96,Bitmap.Config.ARGB_8888).also { Canvas(it).drawBitmap(bitmap,0f,0f,Paint().apply { colorFilter=ColorMatrixColorFilter(matrix) }) } else bitmap
-            cache.put(key, result)
-            result
+            val glow = if(skin == "classic") when(symbol) { "point" -> 0xFFFFE086.toInt(); "circle" -> 0xFF43DFFF.toInt(); "feedback" -> 0xFFF79A50.toInt(); else -> null } else null
+            val finalBitmap = if(glow == null) result else Bitmap.createBitmap(96,96,Bitmap.Config.ARGB_8888).also { target ->
+                val offset=IntArray(2);val mask=result.extractAlpha(Paint().apply { maskFilter=android.graphics.BlurMaskFilter(6f,android.graphics.BlurMaskFilter.Blur.NORMAL) },offset)
+                Canvas(target).apply { drawBitmap(mask,offset[0].toFloat(),offset[1].toFloat(),Paint().apply {color=glow});drawBitmap(result,0f,0f,null) };mask.recycle()
+            }
+            cache.put(key, finalBitmap)
+            finalBitmap
         }.getOrNull()
     }
 }
 
-@Composable fun SymbolBadge(symbol: String, skin: String = "classic") {
+@Composable fun SymbolBadge(symbol: String, skin: String = "classic", size: androidx.compose.ui.unit.Dp = 56.dp) {
     val context = LocalContext.current
     val bitmap by produceState<Bitmap?>(null, symbol, skin) { value = SymbolArt.bitmap(context, symbol, skin) }
-    bitmap?.let { Image(it.asImageBitmap(), contentDescription = null, modifier = Modifier.size(56.dp)) }
+    Box(Modifier.size(size)) { bitmap?.let { Image(it.asImageBitmap(), contentDescription = null, modifier = Modifier.fillMaxSize()) } }
 }

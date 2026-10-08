@@ -14,8 +14,10 @@ import {ApiError} from './services/errors.mjs';
 import {scheduler} from './jobs/scheduler.mjs';
 import {eventHub,stream} from './transport/events.mjs';
 import {commandSchemas,registerSchema,recoverSchema} from './transport/schemas.mjs';
+import {browserRoutes} from './transport/browser.mjs';
+import {moderation} from './services/moderation.mjs';
 export async function buildApp(cfg,{pool:externalPool}={}){
- const pool=externalPool??createPool(cfg),app=Fastify({logger:cfg.log===false?false:{level:cfg.log??'info',redact:['req.headers.authorization','body','token','code']},disableRequestLogging:true,bodyLimit:16384,requestTimeout:15000,connectionTimeout:30000,keepAliveTimeout:10000,trustProxy:cfg.trustProxy??false,ajv:{customOptions:{removeAdditional:false}}});
+ const pool=externalPool??createPool(cfg),app=Fastify({logger:cfg.log===false?false:{level:cfg.log??'info',redact:['req.headers.authorization','req.headers.cookie','res.headers.set-cookie','body','token','code']},disableRequestLogging:true,bodyLimit:16384,requestTimeout:15000,connectionTimeout:30000,keepAliveTimeout:10000,trustProxy:cfg.trustProxy??false,ajv:{customOptions:{removeAdditional:false}}});
  app.decorate('pool',pool);const metrics={requests:0,errors:0,httpBytes:0,wsMessages:0,wsBytes:0,connections:0,latencyMs:0};app.decorate('metrics',metrics);
  const {hub,close:closeHub}=await eventHub(pool,app.log);let stopScheduler;
  app.addHook('onResponse',async(req,reply)=>{metrics.requests++;metrics.latencyMs+=reply.elapsedTime;if(reply.statusCode>=500)metrics.errors++;metrics.httpBytes+=Number(reply.getHeader('content-length')??0);});
@@ -33,11 +35,15 @@ export async function buildApp(cfg,{pool:externalPool}={}){
  app.get('/health',async()=>({ok:true}));
  app.get('/ready',async(req,reply)=>{const r=await pool.query('SELECT 1 FROM content_versions WHERE version=$1',[contentVersion]);if(!r.rowCount)return reply.code(503).send({ok:false});return {ok:true,contentVersion};});
  app.get('/metrics',async(req,reply)=>{if(cfg.metricsToken&&req.headers.authorization==='Bearer '+cfg.metricsToken){const due=await pool.query('SELECT count(*) pending,max(extract(epoch FROM now()-due_at)*1000) AS lag_ms FROM arenas WHERE due_at<now()');return {...metrics,pool:{total:pool.totalCount,idle:pool.idleCount,waiting:pool.waitingCount,errors:pool.errorCount},scheduler:due.rows[0]};}return reply.code(404).send();});
- app.get('/account-deletion',async(req,reply)=>reply.sendFile('account-deletion.html'));
+ for(const page of ['account-deletion','privacy','support'])app.get('/'+page,async(req,reply)=>{
+  if(cfg.webOrigin&&req.headers.host!==new URL(cfg.webOrigin).host)return reply.redirect(cfg.webOrigin+'/'+page);
+  return reply.sendFile(page+'.html');
+ });
  app.post('/api/v3/account/register',{schema:{body:registerSchema}},async(req,reply)=>{await limit(pool,'register:'+req.ip,10,900);return reply.code(201).send(await register(pool,req.body.nick));});
  app.post('/api/v3/account/recover',{schema:{body:recoverSchema}},async req=>{await limit(pool,'recover:'+req.ip,5,900);return recover(pool,req.body.code);});
  async function auth(req){req.user=await authenticate(pool,req.headers.authorization?.startsWith('Bearer ')?req.headers.authorization.slice(7):null);}
  app.get('/api/v3/bootstrap',{preHandler:auth},req=>snapshot(pool,req.user.profile_id));
+ app.get('/api/v3/moderation',{preHandler:auth},req=>moderation(pool,req.user.profile_id));
  app.get('/api/v3/profile',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);return {profile:s.profile,revision:s.revision};});
  app.get('/api/v3/matches/:id',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);if(s.match?.id!==req.params.id)throw new ApiError(404,'NOT_FOUND','Партия недоступна');return {match:s.match,cursor:s.cursor};});
  app.get('/api/v3/catalog',{preHandler:auth},async(req,reply)=>{reply.header('Cache-Control','private,max-age=3600');reply.header('ETag','"'+contentVersion+'"');if(req.headers['if-none-match']==='"'+contentVersion+'"')return reply.code(304).send();return {version:contentVersion,...catalog};});
@@ -52,6 +58,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
  });
  const connections=new Map();
  app.get('/api/v3/events',{websocket:true,preValidation:async req=>{await auth(req);await limit(pool,'ws:'+req.user.profile_id,30,60);if((connections.get(req.user.profile_id)??0)>=3||metrics.connections>=1000)throw new ApiError(429,'CONNECTION_LIMIT','Лимит соединений');},schema:{querystring:cursorQuery}},(socket,req)=>{const id=req.user.profile_id;connections.set(id,(connections.get(id)??0)+1);socket.once('close',()=>{const remaining=(connections.get(id)??1)-1;if(remaining>0)connections.set(id,remaining);else connections.delete(id);});stream(socket,req,pool,hub,metrics);});
+ await app.register(browserRoutes,{prefix:'/api/web/v3',pool,cfg,hub});
  app.addHook('onReady',async()=>{if(cfg.scheduler!==false)stopScheduler=scheduler(pool,app.log);});
  app.addHook('preClose',async()=>{for(const socket of app.websocketServer.clients)socket.close(1001,'Server shutdown');});
  app.addHook('onClose',async()=>{if(stopScheduler)await stopScheduler();await closeHub();if(!externalPool)await pool.end();});

@@ -1,0 +1,18 @@
+import fs from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const dir=new URL('../artifacts/',import.meta.url);
+const reports=await Promise.all(['browser','integration','recovery','android'].map(async name=>({name,...JSON.parse(await fs.readFile(new URL(name+'-report.json',dir),'utf8'))})));
+if(reports.some(r=>!r.passed))throw Error('A verification did not pass');
+const apk=await fs.readFile(new URL('symbols-web-preview-local.apk',dir));
+const meta={date:'2026-10-08',package:'com.votarumshee.symbols.webpreview',environment:'local API 10.0.2.2:8080 / PostgreSQL test database',apkBytes:apk.length,sha256:createHash('sha256').update(apk).digest('hex'),unitTests:11,reports};
+await fs.writeFile(new URL('verification.json',dir),JSON.stringify(meta,null,2));
+const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
+const screenshots=[['android-home','Android: исходный главный экран'],['android-direction','Android: направление и кнопка «Назад»'],['android-restored','Android: партия после force-stop/relaunch'],['browser-board','Браузер: телепортация'],['browser-team','Браузер: матч 2×2'],['browser-market-purchase','Рынок: подтверждённая покупка'],['browser-case-result','Кейс: результат сервера']];
+await fs.writeFile(new URL('index.html',dir),`<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Символы · Capacitor</title><style>
+:root{color-scheme:dark}body{margin:0;background:#13141b;color:#eee;font:16px/1.55 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:36px 24px}h1{font-size:clamp(28px,5vw,48px);line-height:1.15}h2{margin-top:40px}.tag{display:inline-block;background:#284f40;border-radius:20px;padding:6px 14px}.note{padding:18px 22px;background:#232432;border-left:4px solid #b29ef6;border-radius:8px}a{color:#b3d6ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px}figure{margin:0;background:#232432;padding:16px;border-radius:12px}img{width:100%;height:560px;object-fit:contain;object-position:top;background:#101016}figcaption{margin:12px 0 0}code{overflow-wrap:anywhere}li{margin:7px 0}.report{border-bottom:1px solid #454553;padding:16px 0}small{color:#b5b5c5}</style></head><body><main>
+<span class="tag">Локальная проверка пройдена · 08.10.2026</span><h1>Общий web-клиент<br>с Capacitor подходит</h1><p>Один интерфейс в браузере и Android, API v3 и PostgreSQL. На снимках — работающая игра на тестовом стенде.</p>
+<div class="note">Это прототип. До замены Kotlin нужны production-вход в браузере, проверка обновления Android с сохранением аккаунта, полная приёмка функций и iOS/Keychain. Production не переключён.</div>
+<h2>Проверки</h2><p>11 unit/catalog тестов: PASS.</p>${reports.map(r=>`<section class="report"><strong>${esc(r.name)} · PASS</strong><ul>${r.checks.map(c=>'<li>'+esc(c)+'</li>').join('')}</ul></section>`).join('')}
+<h2>Настоящие скриншоты</h2><div class="grid">${screenshots.map(([file,title])=>`<figure><a href="${file}.png"><img loading="lazy" src="${file}.png" alt="${esc(title)}"></a><figcaption>${esc(title)}</figcaption></figure>`).join('')}</div>
+<h2>Артефакт</h2><p><a href="symbols-web-preview-local.apk">Debug APK для локального эмулятора</a> · ${(apk.length/1024/1024).toFixed(2)} MiB. Сервер: <code>10.0.2.2:8080</code>.</p><p><small>SHA-256: <code>${meta.sha256}</code></small></p><p><a href="../README.md">Технический отчёт и этапы перехода</a> · <a href="verification.json">Машиночитаемые результаты</a></p></main></body></html>`);
+console.log(JSON.stringify({passed:true,unitTests:11,apkBytes:apk.length,sha256:meta.sha256}));

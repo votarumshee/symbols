@@ -16,7 +16,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.activity.compose.LocalActivity
@@ -38,9 +41,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable fun SymbolsTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = darkColorScheme(primary = Color(0xFFC7EF7D), onPrimary = Color(0xFF183023),
-        background = Color(0xFF0D1916), surface = Color(0xFF152720), secondary = Color(0xFF9ACCB5),
-        surfaceVariant = Color(0xFF25392F)), content = content)
+    MaterialTheme(colorScheme = darkColorScheme(primary = Color(0xFFF5F5F5), onPrimary = Color(0xFF111111),
+        background = Color(0xFF100E18), surface = Color(0xFF241E2D), secondary = Color(0xFFE0D8E9),
+        surfaceVariant = Color(0xFF30283A)), content = content)
 }
 @Composable private fun SymbolsRoot(vm: GameViewModel = viewModel()) {
     val repository = vm.repository
@@ -61,31 +64,30 @@ class MainActivity : ComponentActivity() {
     LaunchedEffect(account) { if (previousAccount != account) { page = "home"; confirmation = null; previousAccount = account; previousMatch = null } }
     LaunchedEffect(state.game?.match?.text("id")) {
         val id = state.game?.match?.text("id")
-        if (id != previousMatch) { if (id != null) page = "game"; previousMatch = id }
+        if (id != previousMatch) { if (id != null && state.game?.match?.text("status") != "done") page = "game"; previousMatch = id }
     }
     BackHandler(page != "home") { page = "home"; repository.leaveMarket() }
     fun navigate(next: String) { repository.leaveMarket(); page = next; if (next == "market") repository.market(null) }
     val command: (String, JsonObject) -> Unit = { kind, body ->
-        if (kind in setOf("buy", "sell", "cancel", "buy-case", "open-case", "buy-skin", "buy-avatar", "upgrade", "delete-account", "logout", "leave")) confirmation = kind to body
+        if (kind in setOf("buy", "sell", "cancel", "buy-case", "open-case", "buy-skin", "buy-avatar", "delete-account", "logout", "leave")) confirmation = kind to body
         else vm.command(kind, body)
     }
-    Scaffold(containerColor = MaterialTheme.colorScheme.background, topBar = {
-        Column(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp)) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                TextButton(onClick = { navigate("home") }) { Text("♛  СИМВОЛЫ", fontWeight = FontWeight.Bold) }
-                state.game?.profile?.let { Text("${Cents.wire(it.text("balanceCents")).display()} ♦", Modifier.padding(12.dp)) }
+    Scaffold(contentColor = Color(0xFFF3F3F3), containerColor = Color.Transparent, modifier = Modifier.background(androidx.compose.ui.graphics.Brush.linearGradient(listOf(Color(0xFF25192F), Color(0xFF10211E), Color(0xFF2B1924)))), topBar = {
+        Column(Modifier.statusBarsPadding()) {
+            if (account != null && page !in setOf("home", "game")) Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                TextButton(onClick = { navigate("home") }) { Text("На главную") }
+                Text("♦ ${Cents.wire(state.game!!.profile.text("balanceCents")).display()}", Modifier.padding(12.dp))
             }
-            if (account != null) Text(when(state.connection) {
-                Connection.Live -> "● На связи"
+            if (account != null && state.connection !in setOf(Connection.Live)) Text(when(state.connection) {
                 Connection.LongPolling -> "↻ Резервное соединение"
                 Connection.Connecting -> "Подключаемся…"
                 Connection.Paused -> "Пауза · таймер партии продолжается"
                 else -> "Нет связи · показано последнее состояние"
-            }, style = MaterialTheme.typography.labelMedium)
+            }, Modifier.padding(horizontal = 12.dp), style = MaterialTheme.typography.labelSmall)
         }
     }) { padding ->
         Column(Modifier.padding(padding).consumeWindowInsets(padding).imePadding()) {
-            state.message?.let { message ->
+            state.message?.takeUnless { it == "Операция подтверждена сервером" }?.let { message ->
                 Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
                     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(message, Modifier.weight(1f).padding(vertical = 10.dp), style = MaterialTheme.typography.bodySmall)
@@ -105,13 +107,13 @@ class MainActivity : ComponentActivity() {
             } else when(page) {
                 "home" -> HomeScreen(state, ::navigate)
                 "modes" -> ModeScreen(state, command)
-                "game" -> MatchScreen(state, reduced, command)
+                "game" -> MatchScreen(state, reduced, command, ::navigate)
                 "inventory", "upgrades", "shop", "skins", "avatars", "frames" -> CollectionScreen(page, state, command, ::navigate)
                 "market" -> MarketScreen(state, repository, command, ::navigate)
-                "profile" -> ProfileScreen(state, command, ::navigate)
+                "profile" -> { HomeScreen(state, ::navigate); AlertDialog(onDismissRequest={navigate("home")},title={Text("Профиль")},text={Box(Modifier.height(500.dp)){ProfileScreen(state,command,::navigate)}},confirmButton={}) }
                 "accounts" -> AccountsScreen(state, vm::select, command)
                 "quests" -> QuestScreen(state)
-                "rules" -> RulesScreen(state)
+                "rules" -> { HomeScreen(state, ::navigate); AlertDialog(onDismissRequest={navigate("home")},title={Text("Правила")},text={Box(Modifier.height(500.dp)){RulesScreen(state)}},confirmButton={}) }
                 "settings" -> SettingsScreen(reduced, vm::reduceEffects, command)
             }
         }
@@ -136,15 +138,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable fun Tile(title: String, detail: String = "", onClick: () -> Unit) {
-    Card(onClick = onClick, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp)) {
-        Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+    Card(onClick = onClick, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp)) {
+        Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(title, style = MaterialTheme.typography.titleLarge)
             if (detail.isNotBlank()) Text(detail, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
         }
     }
 }
 @Composable fun Action(text: String, enabled: Boolean = true, onClick: () -> Unit) {
-    Button(onClick, Modifier.fillMaxWidth().heightIn(min = 48.dp), enabled = enabled) { Text(text) }
+    Button(onClick, Modifier.fillMaxWidth().heightIn(min = 52.dp), enabled = enabled, shape = RoundedCornerShape(12.dp)) { Text(text) }
 }
 @Composable fun Entry(value: String, onChange: (String) -> Unit, label: String, number: Boolean = false) {
     OutlinedTextField(value, onChange, Modifier.fillMaxWidth(), label = { Text(label) }, singleLine = true,
@@ -154,81 +156,79 @@ class MainActivity : ComponentActivity() {
     var recovery by rememberSaveable { mutableStateOf(false) }
     var nick by rememberSaveable { mutableStateOf("") }
     var code by remember { mutableStateOf("") } // Deliberately excluded from saved instance state.
-    Page(if (recovery) "С возвращением" else "Твой первый ход") {
-        Text("Пошаговая игра о точном ходе. Поставь короля, собери защиту и найди путь к победе.")
-        if (recovery) {
-            Text("В старой игре открой Профиль → Восстановить аккаунт и сохрани код до перехода. После переноса данных сервером введи его здесь. Данные браузера сами не переносятся.")
-            OutlinedTextField(code, { code = it }, Modifier.fillMaxWidth(), label = { Text("Код восстановления") }, singleLine = true, visualTransformation = PasswordVisualTransformation())
-            Action("Восстановить аккаунт", !state.busy && code.length in 9..40) { login(code, true); code = "" }
-        } else {
-            Entry(nick, { nick = it.take(20) }, "Никнейм")
-            Action("Создать аккаунт", !state.busy && nick.isNotBlank()) { login(nick, false) }
+    Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+        Column(Modifier.fillMaxWidth().padding(14.dp).background(androidx.compose.ui.graphics.Brush.linearGradient(listOf(Color(0xFF241A2D),Color(0xFF162721),Color(0xFF2E1B23))), RoundedCornerShape(18.dp)).border(1.dp,Color(0xFF55505F),RoundedCornerShape(18.dp)).padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            Text(if(recovery) "Войти по коду" else "Твой ник",style=MaterialTheme.typography.headlineSmall,fontWeight=FontWeight.Bold)
+            if(recovery) OutlinedTextField(code,{code=it},Modifier.fillMaxWidth(),label={Text("Код восстановления")},singleLine=true,visualTransformation=PasswordVisualTransformation()) else Entry(nick,{nick=it.take(20)},"Ник")
+            Action(if(recovery)"Восстановить аккаунт" else "Создать аккаунт",!state.busy && (if(recovery)code.length in 9..40 else nick.isNotBlank())){if(recovery){login(code,true);code=""}else login(nick,false)}
+            TextButton(onClick={recovery=!recovery;code=""}){Text(if(recovery)"Создать новый аккаунт" else "У меня уже есть аккаунт")}
+            if(state.connection in setOf(Connection.Connecting,Connection.Offline)) TextButton(onClick=reconnect){Text("Повторить подключение")}
+            state.accounts.forEach { account -> TextButton(onClick={select(account.id)}){Text(account.nick)} }
         }
-        TextButton(onClick = { recovery = !recovery; code = "" }) { Text(if (recovery) "Создать новый аккаунт" else "У меня уже есть аккаунт") }
-        if (state.connection in setOf(Connection.Connecting, Connection.Offline)) Action("Повторить подключение", onClick = reconnect)
-        state.accounts.forEach { account -> Tile(account.nick, "Открыть сохранённый аккаунт") { select(account.id) } }
-        Text("Новый аккаунт создаётся только по твоей кнопке. Ошибка восстановления не стирает прежний прогресс.", style = MaterialTheme.typography.bodySmall)
     }
+
 }
 @Composable private fun HomeScreen(state: AppState, navigate: (String) -> Unit) {
     val profile = state.game!!.profile
-    Page("Привет, ${profile.text("nick")}") {
-        ProfileArt(profile, state.catalog)
-        Text("${profile.obj("rank").text("name", "Без звания")} · ${profile.number("xp")} опыта", color = MaterialTheme.colorScheme.secondary)
-        if (state.game?.match?.text("status")?.let { it != "done" } == true) Tile("Продолжить партию", "Ход и таймер продолжаются даже вне приложения") { navigate("game") }
-        Tile("Играть  ↗", "Дуэль, команды, испытания и игра с другом") { navigate("modes") }
-        Tile("Инвентарь", "Твои символы, кейсы и улучшения") { navigate("inventory") }
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            OutlinedButton({ navigate("shop") }, Modifier.weight(1f)) { Text("Магазин") }
-            OutlinedButton({ navigate("market") }, Modifier.weight(1f)) { Text("Рынок") }
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(14.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = androidx.compose.ui.Alignment.Top) {
+            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally, modifier = Modifier.width(94.dp).clickable { navigate("profile") }) {
+                Text(profile.obj("rank").text("name", "Без звания"), style = MaterialTheme.typography.labelMedium)
+                RankArt(profile.obj("rank"))
+                Text(profile.text("nick"), style = MaterialTheme.typography.labelLarge)
+            }
+            Surface(color = Color(0xFFF5F5F5), contentColor = Color(0xFF111111), shape = RoundedCornerShape(10.dp), modifier = Modifier.padding(top = 24.dp).width(110.dp).clickable { navigate("profile") }) {
+                Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) { Text("Уровень ${profile.obj("level").number("level",1)}", style = MaterialTheme.typography.labelMedium); Text("${profile.number("xp")} / ${profile.obj("level").number("next",260)} очков", style = MaterialTheme.typography.labelSmall); LinearProgressIndicator(progress = { (profile.number("xp").toFloat() / profile.obj("level").number("next",260).coerceAtLeast(1)).coerceIn(0f,1f) }, color = Color(0xFF8961ED), trackColor = Color(0xFFD6DEEB), drawStopIndicator = {}) }
+            }
+            Box(Modifier.padding(top = 22.dp).clickable { navigate("profile") }) { AvatarArt(profile.text("avatar", "lion"), size = 64.dp) }
         }
-        listOf("profile" to "Профиль и история", "quests" to "Задания", "rules" to "Правила и символы", "accounts" to "Аккаунты", "settings" to "Настройки и данные").forEach { (id, label) -> TextButton({ navigate(id) }) { Text(label) } }
+        Text("♦  ${Cents.wire(profile.text("balanceCents")).display()} рубинов", Modifier.align(androidx.compose.ui.Alignment.End).padding(vertical = 14.dp).background(Color(0xFF202020),RoundedCornerShape(12.dp)).border(1.dp,Color(0xFF444444),RoundedCornerShape(12.dp)).padding(10.dp), style = MaterialTheme.typography.labelLarge)
+        Spacer(Modifier.weight(1f).heightIn(min = 14.dp))
+        Row(Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            listOf("arrow", "king", "smile").forEachIndexed { i,t -> Surface(modifier=Modifier.rotate(listOf(-6f,5f,-3f)[i]),color = listOf(Color(0xFF30233F),Color(0xFF203A30),Color(0xFF402633))[i], shape = RoundedCornerShape(12.dp), border = BorderStroke(1.dp, Color(0xFF655369))) { Box(Modifier.padding(11.dp)) { SymbolBadge(t, size = 42.dp) } } }
+        }
+        Text("Символы", Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally).padding(top = 18.dp, bottom = 28.dp), style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.Bold)
+        Action(if (state.game?.match?.text("status")?.let { it != "done" } == true) "Продолжить партию" else "Играть") { navigate(if (state.game?.match?.text("status")?.let { it != "done" } == true) "game" else "modes") }
+        Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { listOf("profile" to "Профиль", "inventory" to "Инвентарь").forEach { (id,label) -> Button(onClick = { navigate(id) }, modifier = Modifier.weight(1f).height(56.dp), shape = RoundedCornerShape(12.dp)) { Text(label) } } }
+        Button(onClick = { navigate("upgrades") }, modifier = Modifier.align(androidx.compose.ui.Alignment.End).padding(top = 12.dp, end = 18.dp), shape = RoundedCornerShape(12.dp)) { Text("Улучшить") }
+        Spacer(Modifier.weight(1f).heightIn(min = 16.dp))
+        listOf(listOf("market" to "Рынок", "shop" to "Магазин", "quests" to "Задания"), listOf("accounts" to "Аккаунты", "rules" to "Правила", "settings" to "Настройки")).forEach { row -> Row(Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally), horizontalArrangement = Arrangement.spacedBy(4.dp)) { row.forEach { (id,label) -> Button(onClick = { navigate(id) }, shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(horizontal = 10.dp, vertical = 8.dp)) { Text(label, style = MaterialTheme.typography.bodySmall) } } } }
     }
 }
 @Composable private fun ModeScreen(state: AppState, command: (String, JsonObject) -> Unit) {
     var small by rememberSaveable { mutableStateOf(true) }
     var code by rememberSaveable { mutableStateOf("") }
-    Page("Выбери игру") {
-        Row { Switch(small, { small = it }); Text(if (small) "Поле 10 × 14" else "Поле 28 × 20", Modifier.padding(12.dp)) }
-        listOf("play" to "Поиск соперника / обучение", "duel" to "Дуэль · один на один", "team" to "Команды · 2 × 2", "trial" to "Испытание звания", "local" to "Двое на одном устройстве").forEach { (mode, label) ->
-            Action(label, !state.busy) { command("start", objectOf("mode" to mode, "small" to small)) }
+    var room by rememberSaveable { mutableStateOf(false) }
+    Page("Играть") {
+        listOf(Triple("play","Играть","Поиск соперника"),Triple("duel","Дуэль","Один на один"),Triple("team","Дуэль 2 на 2","Четыре короля · две команды"),Triple("trial","Повысить звание","Пять сложностей")).forEach { (mode,title,detail) ->
+            Button(onClick={command("start",objectOf("mode" to mode,"small" to small))},enabled=!state.busy,shape=RoundedCornerShape(12.dp),modifier=Modifier.fillMaxWidth(),contentPadding=PaddingValues(16.dp)) {Column(Modifier.fillMaxWidth()){Text(title,style=MaterialTheme.typography.titleMedium);Text(detail,style=MaterialTheme.typography.bodySmall)}}
         }
-        Text("Если соперник не найден за 8 секунд, сервер добавит бота. В комнате по коду ожидание продолжается до входа друга.")
-        Entry(code, { code = it.uppercase().take(6) }, "Код комнаты")
-        Action(if (code.isBlank()) "Создать комнату" else "Войти в комнату", !state.busy && (code.isBlank() || code.length == 6)) {
-            command("start", if (code.isBlank()) objectOf("mode" to "room", "small" to small) else objectOf("mode" to "room", "small" to small, "code" to code))
-        }
+        Choice("Размер поля",listOf("small","large"),if(small)"small" else "large",{small=it=="small"}){if(it=="small")"10 × 14" else "28 × 20"}
+        TextButton(onClick={room=true}){Text("С другом по коду")}
+        Action("Двое на одном устройстве",!state.busy){command("start",objectOf("mode" to "local","small" to small))}
     }
+    if(room)AlertDialog(onDismissRequest={room=false},title={Text("С другом по коду")},text={Entry(code,{code=it.uppercase().take(6)},"Код комнаты")},confirmButton={TextButton(enabled=!state.busy && (code.isBlank()||code.length==6),onClick={command("start",if(code.isBlank())objectOf("mode" to "room","small" to small)else objectOf("mode" to "room","small" to small,"code" to code));room=false}){Text(if(code.isBlank())"Создать комнату" else "Войти")}},dismissButton={TextButton(onClick={room=false}){Text("Отмена")}})
 }
 @Composable private fun ProfileScreen(state: AppState, command: (String, JsonObject) -> Unit, navigate: (String) -> Unit) {
-    val profile = state.game!!.profile
-    var nick by rememberSaveable(profile.text("nick")) { mutableStateOf(profile.text("nick")) }
-    Page("Профиль") {
-        ProfileArt(profile, state.catalog)
-        Text("${profile.obj("rank").text("name", "Без звания")} · ${profile.number("rankProgress")}%")
-        val levels = state.catalog?.category("level").orEmpty()
-        val level = profile.obj("level").takeIf { it.isNotEmpty() } ?: levels.lastOrNull { it.payload.number("xp") <= profile.number("xp") }?.payload
-        Text("Уровень ${level?.number("level") ?: 1} · опыт ${profile.number("xp")}")
-        Text("До следующего уровня: ${((level?.number("next") ?: 0) - profile.number("xp")).coerceAtLeast(0)} опыта. Каждые 10 уровней сервер выдаёт случайный кейс; уровни продолжаются после 300.")
-        profile.array("levelRewards").takeLast(30).reversed().forEach { reward ->
-            val r = reward.jsonObject
-            Text("Уровень ${r.number("level")}: ${state.catalog?.find("case", r.text("case"))?.text("name", r.text("case"))}")
-        }
-        Entry(nick, { nick = it.take(20) }, "Никнейм")
-        Action("Сохранить ник", !state.busy && nick.isNotBlank()) { command("nickname", objectOf("nick" to nick)) }
-        Row { TextButton({ navigate("avatars") }) { Text("Аватарки") }; TextButton({ navigate("frames") }) { Text("Рамки") } }
-        Action("Получить новый код восстановления", !state.busy) { command("recovery-code", objectOf()) }
-        Text("История матчей", style = MaterialTheme.typography.titleLarge)
-        if (profile.array("history").isEmpty()) Text("Здесь появятся результаты партий.")
-        profile.array("history").reversed().forEach { entry ->
-            val h = entry.jsonObject
-            Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) {
-                Text(if (h.text("outcome") == "win") "Победа" else "Поражение", fontWeight = FontWeight.Bold)
-                Text("${h.text("opponent", "Бот")} · ${h.number("xp")} опыта")
-                Text(java.time.Instant.ofEpochMilli(h.number("at")).atZone(java.time.ZoneId.systemDefault()).toLocalDate().toString())
-            } }
-        }
+    val profile=state.game!!.profile
+    var nick by rememberSaveable(profile.text("nick")){mutableStateOf(profile.text("nick"))}
+    var editing by rememberSaveable { mutableStateOf(false) }
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Box(Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally).clickable {navigate("avatars")}){AvatarArt(profile.text("avatar","lion"),state.catalog?.find("frame",profile.text("frame"))?:objectOf(),profile.obj("level").number("level",1),96.dp)}
+        Text(profile.obj("rank").text("name","Без звания"),Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally),color=Color(0xFFB6ABCA),style=MaterialTheme.typography.labelMedium)
+        Text(profile.text("nick"),fontWeight=FontWeight.Bold)
+        Surface(color=Color(0xFFF5F5F5),contentColor=Color(0xFF111111),shape=RoundedCornerShape(10.dp)){Column(Modifier.padding(10.dp)){Text("Уровень ${profile.obj("level").number("level",1)}",style=MaterialTheme.typography.labelLarge);Text("${profile.number("xp")} / ${profile.obj("level").number("next",260)} очков",style=MaterialTheme.typography.bodySmall)}}
+        LinearProgressIndicator(progress={profile.number("rankProgress")/100f},modifier=Modifier.fillMaxWidth(),color=Color(0xFF8961ED),trackColor=Color(0xFFD6DEEB),drawStopIndicator={})
+        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){TextButton(onClick={editing=true}){Text("Изменить ник")};TextButton(onClick={navigate("frames")}){Text("Рамки")}}
+        TextButton(onClick={command("recovery-code",objectOf())},enabled=!state.busy){Text("Восстановить аккаунт")}
+        HorizontalDivider()
+        Text("История матчей",style=MaterialTheme.typography.titleLarge)
+        if(profile.array("history").isEmpty())Text("Здесь появятся результаты партий.")
+        profile.array("history").reversed().forEach { value -> val h=value.jsonObject;Surface(color=Color(0xFF242424),shape=RoundedCornerShape(8.dp)){Column(Modifier.fillMaxWidth().padding(12.dp)){Text(if(h.text("outcome")=="win")"Победа" else "Поражение");Text("${h.text("opponent","Бот")} · ${h.number("xp")} очков",style=MaterialTheme.typography.bodySmall)}} }
+        profile.array("levelRewards").takeLast(30).reversed().forEach { val r=it.jsonObject;Text("Уровень ${r.number("level")}: ${state.catalog?.find("case",r.text("case"))?.text("name")}") }
     }
+    if(editing)AlertDialog(onDismissRequest={editing=false},title={Text("Изменить ник")},text={Entry(nick,{nick=it.take(20)},"Ник")},confirmButton={TextButton(onClick={command("nickname",objectOf("nick" to nick));editing=false},enabled=!state.busy && nick.isNotBlank()){Text("Сохранить")}})
 }
 @Composable private fun AccountsScreen(state: AppState, select: (String?) -> Unit, command: (String, JsonObject) -> Unit) {
     Page("Аккаунты") {
@@ -244,7 +244,7 @@ class MainActivity : ComponentActivity() {
         state.catalog?.category("quest")?.forEach { quest -> Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(18.dp)) {
             Text(quest.payload.text("title"), style = MaterialTheme.typography.titleMedium)
             Text(quest.payload.text("text"))
-            Text("${quest.payload.number("reward")} руб. · выполнено: ${state.game?.profile?.obj("quests")?.number(quest.key) ?: 0}")
+            Text("${quest.payload.number("reward")} рубинов · выполнено: ${state.game?.profile?.obj("quests")?.number(quest.key) ?: 0}")
         } } }
     }
 }
@@ -265,11 +265,35 @@ private fun confirmationText(kind: String, body: JsonObject, catalog: Catalog?):
     "delete-account" -> "Профиль, инвентарь, история и доступ будут удалены сервером. Открытые предложения отменятся. Это действие необратимо."
     "logout" -> "Доступ на этом устройстве будет отозван. Для следующего входа понадобится код восстановления. Убедись, что сохранил его."
     "leave" -> "Поиск отменится. Выход из начавшейся партии считается поражением."
-    "buy-case" -> "Купить ${catalog?.find("case", body.text("case"))?.text("name")} за ${catalog?.find("case", body.text("case"))?.number("priceCents")?.let { Cents(it).display() }} руб.?"
+    "buy-case" -> "Купить ${catalog?.find("case", body.text("case"))?.text("name")} за ${catalog?.find("case", body.text("case"))?.number("priceCents")?.let { Cents(it).display() }} рубинов?"
     "open-case" -> "Открыть один кейс? Результат определит сервер по показанным вероятностям."
-    "sell" -> "Выставить ${body.number("quantity", 1)} шт. ${catalog?.symbolName(body.text("symbol"))} по базовой цене ${body.text("price")} руб.? Надбавку за скин рассчитает сервер."
+    "sell" -> "Выставить ${body.number("quantity", 1)} шт. ${catalog?.symbolName(body.text("symbol"))} по базовой цене ${body.text("price")} рубинов? Надбавку за скин рассчитает сервер."
     "buy" -> "Купить выбранное предложение по показанной точной цене?"
     "cancel" -> "Снять предложение с рынка и вернуть предмет в инвентарь?"
     "upgrade" -> "Купить улучшение ${catalog?.symbolName(body.text("symbol"))}? Оно подействует со следующей партии."
     else -> "Подтвердить покупку по указанной цене за игровые рубины?"
+}
+
+// Web secondary controls are light rounded buttons; preserve native focus/touch semantics.
+@Composable fun TextButton(onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, content: @Composable RowScope.() -> Unit) {
+    Button(onClick = onClick, modifier = modifier.heightIn(min = 40.dp), enabled = enabled, shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp), content = content)
+}
+
+@Composable fun AlertDialog(onDismissRequest: () -> Unit, confirmButton: @Composable () -> Unit,
+    modifier: Modifier = Modifier, dismissButton: (@Composable () -> Unit)? = null,
+    title: (@Composable () -> Unit)? = null, text: (@Composable () -> Unit)? = null) {
+    androidx.compose.ui.window.Dialog(onDismissRequest, properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false)) {
+        CompositionLocalProvider(LocalContentColor provides Color(0xFFF3F3F3)) {
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(12.dp)) {
+            Column(modifier.fillMaxWidth().heightIn(max = maxHeight * .9f).background(androidx.compose.ui.graphics.Brush.linearGradient(listOf(Color(0xFF241A2D), Color(0xFF162721), Color(0xFF2E1B23))), RoundedCornerShape(18.dp)).border(1.dp, Color(0xFF55505F), RoundedCornerShape(18.dp)).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                    Box(Modifier.weight(1f)) { ProvideTextStyle(MaterialTheme.typography.headlineSmall) { title?.invoke() } }
+                    TextButton(onClick = onDismissRequest, modifier = Modifier.semantics { contentDescription = "Закрыть" }) { Text("×") }
+                }
+                text?.invoke()
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) { dismissButton?.invoke(); confirmButton() }
+            }
+        }
+        }
+    }
 }

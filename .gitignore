@@ -23,3 +23,13 @@ Server/assets.mjs
 *.dump
 
 legacy/assets.mjs
+
+# Local credentials and signing material are never release source.
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+signing.properties
+id_ed25519
+id_rsa

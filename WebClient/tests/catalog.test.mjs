@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as webCases from '../src/cases.mjs';
+import * as serverCases from '../../Server/src/domain/cases.mjs';
+import {TYPES as webTypes} from '../src/engine.mjs';
+import {TYPES as serverTypes} from '../../Server/src/domain/engine.mjs';
+import {BASE as webBase,PRICES as webPrices} from '../src/economy.mjs';
+import {BASE as serverBase,PRICES as serverPrices} from '../../Server/src/domain/economy.mjs';
+import * as webUpgrades from '../src/upgrades.mjs';
+import * as serverUpgrades from '../../Server/src/domain/upgrades.mjs';
+test('displayed original stock limits and prices match v3 content',()=>{assert.deepEqual(webTypes,serverTypes);assert.deepEqual(webBase,serverBase);assert.deepEqual(webPrices,serverPrices);});
+test('case odds and prices match server-authoritative catalog',()=>{assert.equal(webCases.CASES.length,serverCases.CASES.length);for(const c of webCases.CASES){const server=serverCases.CASES.find(s=>s.id===c.id);assert.deepEqual(c.drops,server.drops);assert.equal(webCases.casePrice(c),serverCases.casePrice(server));}});
+test('upgrade pricing and limits match server at every legal level',()=>{for(const symbol of ['king',...Object.keys(webTypes)])for(let level=0;level<=(symbol==='king'||Number.isFinite(webTypes[symbol]?.stock)?30:0);level++){const p={upgrades:{[symbol]:level},balanceCents:999999};assert.deepEqual(webUpgrades.upgradeInfo(p,symbol),serverUpgrades.upgradeInfo(p,symbol));}});

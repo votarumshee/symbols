@@ -1,0 +1,32 @@
+{
+  "name": "symbols-web-client",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev-server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node scripts/e2e.mjs browser",
+    "test:integration": "node scripts/e2e.mjs integration recovery cosmetics gameplay",
+    "sync": "npm run build && cap sync android",
+    "test:e2e": "node scripts/e2e.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "test:unit": "node --test tests/state.test.mjs tests/reliability.test.mjs tests/catalog.test.mjs tests/storage.test.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3",
+    "esbuild": "0.25.9",
+    "playwright": "1.56.1"
+  },
+  "overrides": {
+    "xcode": {
+      "uuid": "11.1.1"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+.shelf { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+#connection-status { position: fixed; top: env(safe-area-inset-top); left: 0; right: 0; z-index: 2000; background: #fff4cf; color: #442b00; padding: 8px; text-align: center; font-size: 13px; }
+#connection-status:empty { display: none; }
+#connection-status button { margin-left: 8px; }
+#app[data-busy="true"] button { pointer-events: none; }

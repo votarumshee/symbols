@@ -1,0 +1,92 @@
+name: symbols
+x-logging: &logging
+  driver: local
+  options: {max-size: 10m, max-file: '3'}
+services:
+  db:
+    image: ${POSTGRES_IMAGE:?Pinned postgres image required}
+    environment:
+      POSTGRES_DB: symbols
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Required}
+      OWNER_PASSWORD: ${OWNER_PASSWORD:?Required}
+      APP_PASSWORD: ${APP_PASSWORD:?Required}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-roles.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d symbols]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+    mem_limit: 1536m
+    cpus: 1.25
+    shm_size: 256m
+    logging: *logging
+  migrate:
+    image: ${SYMBOLS_IMAGE:?Verified application image required}
+    pull_policy: never
+    profiles: [tools]
+    environment:
+      DATABASE_URL: postgres://symbols_owner:${OWNER_PASSWORD}@db:5432/symbols
+    command: [sh, -ec, 'node scripts/migrate.mjs && node scripts/seed.mjs && node scripts/grants.mjs']
+    healthcheck: {disable: true}
+    networks: [database]
+    depends_on:
+      db: {condition: service_healthy}
+    mem_limit: 512m
+    logging: *logging
+  server:
+    image: ${SYMBOLS_IMAGE:?Verified application image required}
+    pull_policy: never
+    environment:
+      DATABASE_URL: postgres://symbols_app:${APP_PASSWORD}@db:5432/symbols
+      PG_POOL_MAX: 10
+      TRUST_PROXY: 172.30.41.3
+      WEB_ORIGIN: ${WEB_ORIGIN:-}
+      METRICS_TOKEN: ${METRICS_TOKEN:?Required}
+    ports: ['127.0.0.1:3000:3000']
+    volumes: [/var/lib/symbols/avatars:/app/public/avatars]
+    networks:
+      database: {}
+      frontend: {ipv4_address: 172.30.41.2}
+    depends_on:
+      db: {condition: service_healthy}
+    restart: unless-stopped
+    stop_grace_period: 30s
+    mem_limit: 768m
+    cpus: 1.5
+    security_opt: [no-new-privileges:true]
+    logging: *logging
+  caddy:
+    image: ${CADDY_IMAGE:?Pinned caddy image required}
+    profiles: [public]
+    environment:
+      DOMAIN: ${DOMAIN:-}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    ports: ['80:80', '443:443', '443:443/udp']
+    volumes:
+      - ./Caddyfile.production:/etc/caddy/Caddyfile:ro
+      - /srv/symbols-web:/srv/symbols-web:ro
+      - caddydata:/data
+      - caddyconfig:/config
+    networks:
+      frontend: {ipv4_address: 172.30.41.3}
+    restart: unless-stopped
+    mem_limit: 256m
+    logging: *logging
+volumes:
+  pgdata: {name: symbols_pgdata}
+  caddydata: {name: symbols_caddydata}
+  caddyconfig: {name: symbols_caddyconfig}
+networks:
+  database:
+    name: symbols_database
+    internal: true
+    ipam:
+      config: [{subnet: 172.30.42.0/24}]
+  frontend:
+    name: symbols_frontend
+    ipam:
+      config: [{subnet: 172.30.41.0/24}]

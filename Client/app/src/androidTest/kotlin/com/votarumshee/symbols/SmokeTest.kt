@@ -1,6 +1,7 @@
 package com.votarumshee.symbols
 
 import androidx.compose.ui.test.*
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -26,38 +27,36 @@ class SmokeTest {
         compose.waitUntil(30_000) { compose.onAllNodesWithText(text, substring = true).fetchSemanticsNodes().isNotEmpty() }
     }
     @Test fun createAccountOpenInventoryAndSurviveRecreation() {
-        waitFor("Никнейм")
-        compose.onNodeWithText("Никнейм").performTextInput("Android тест")
+        waitFor("Ник")
+        compose.onNodeWithText("Ник", substring = false).performTextInput("Android тест")
         compose.onNodeWithText("Создать аккаунт", useUnmergedTree = true).performScrollTo().performClick()
-        waitFor("Привет, Android тест")
-        waitFor("На связи")
+        waitFor("Android тест")
         screenshot("01-home")
         compose.onNodeWithText("Инвентарь", substring = false).performScrollTo().performClick()
-        waitFor("Улучшить символы")
+        waitFor("Common")
         screenshot("02-inventory")
         compose.activityRule.scenario.recreate()
-        waitFor("Улучшить символы")
-        compose.onNodeWithText("♛  СИМВОЛЫ").performClick()
-        compose.onNodeWithText("Играть  ↗").performScrollTo().performClick()
-        waitFor("Выбери игру")
+        waitFor("Common")
+        compose.onNodeWithText("На главную").performClick()
+        compose.onNodeWithText("Играть", substring = false).performScrollTo().performClick()
+        waitFor("Поиск соперника")
         compose.onNodeWithText("Двое на одном устройстве").performScrollTo().performClick()
-        waitFor("Твой ход")
+        waitFor("Расставляем королей")
         repeat(2) {
             val before = (compose.activity.application as SymbolsApplication).repository!!.state.value.game!!.match!!.get("revision").toString()
-            compose.onNodeWithText("Ряд 1–5").performScrollTo().performTextClearance()
-            compose.onNodeWithText("Ряд 1–5").performTextInput("5")
-            compose.onNodeWithText("Столбец 1–14").performTextClearance()
-            compose.onNodeWithText("Столбец 1–14").performTextInput("1")
-            compose.onNodeWithText("Выбрать по координатам (TalkBack)").performScrollTo().performClick()
-            compose.onNodeWithText("Подтвердить: Король").performScrollTo().performClick()
+            compose.onNodeWithContentDescription("Поле 10 на 14.", substring = true).performTouchInput { click(Offset(width / 28f, height * .95f)) }
             compose.waitUntil(15_000) { (compose.activity.application as SymbolsApplication).repository!!.state.value.game!!.match!!.get("revision").toString() != before }
         }
-        waitFor("Направление:")
-        compose.onNodeWithText("Твой ход").performScrollTo()
+        waitFor("Стрелочка")
+        compose.onNodeWithText("Стрелочка").performClick()
+        compose.onNodeWithContentDescription("Поле 10 на 14.", substring = true).performTouchInput { click(Offset(width * 1.5f / 14, height * .55f)) }
+        waitFor("Куда направить?")
+        compose.onNodeWithText("↑", substring = false).performClick()
+        waitFor("Смайлик")
         screenshot("03-match")
         compose.activityRule.scenario.recreate()
-        waitFor("Твой ход")
-        compose.onNodeWithText("Выйти из партии").performScrollTo().performClick()
+        waitFor("Смайлик")
+        compose.onNodeWithText("Меню").performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
         waitFor("Партия завершена")
         screenshot("04-result")
@@ -70,20 +69,21 @@ class SmokeTest {
         compose.onNodeWithText("У меня уже есть аккаунт").performScrollTo().performClick()
         compose.onNodeWithText("Код восстановления", substring = false).performTextInput(fixture.text("code"))
         compose.onNodeWithText("Восстановить аккаунт", substring = false).performScrollTo().performClick()
-        waitFor("Привет, Перенос Android")
-        waitFor("На связи")
-        compose.onNodeWithText("1234,56 ♦").assertExists()
+        waitFor("Перенос Android")
+        compose.onNodeWithText("1234,56", substring = true).assertExists()
         compose.activityRule.scenario.recreate()
-        waitFor("Привет, Перенос Android")
+        waitFor("Перенос Android")
         compose.onNodeWithText("Магазин", substring = false).performScrollTo().performClick()
-        waitFor("Купить за 20,00 руб.")
-        compose.onAllNodesWithText("Купить за 20,00 руб.")[0].performScrollTo().performClick()
+        val firstCase=(compose.activity.application as SymbolsApplication).repository!!.state.value.catalog!!.category("case").first().payload.text("name")
+        compose.onNodeWithText(firstCase).performScrollTo().performClick()
+        waitFor("Купить за 20,00 рубинов")
+        compose.onAllNodesWithText("Купить за 20,00 рубинов")[0].performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
         waitFor("1214,56 ♦")
         compose.onAllNodesWithText("Открыть", substring = false)[0].performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()
         waitFor("Последний результат:")
-        compose.onNodeWithText("♛  СИМВОЛЫ").performClick()
+        compose.onNodeWithText("На главную").performClick()
         compose.onNodeWithText("Настройки и данные").performScrollTo().performClick()
         compose.onNodeWithText("Удалить аккаунт", substring = false).performScrollTo().performClick()
         compose.onNodeWithText("Подтвердить", substring = false).performClick()

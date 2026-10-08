@@ -1,0 +1,19 @@
+# Deployment and rollback (prepared, not executed)
+
+The shared UI is WebClient/src. `npm ci`, `npm run build`, `npm run test:unit`, `npm run test:e2e`, `npm run check:release`. E2E creates/drops a uniquely named local PostgreSQL database from TEST_DATABASE_URL; it never uses production. Node24/JDK21/AndroidSDK36 are required. TEST_DATABASE_URL must be loopback and allow CREATE DATABASE. CI uses PostgreSQL17.11 and Playwright Chromium. Set CHROME_PATH when using an external local browser.
+
+1. Run Server regression plus WebClient unit/API/E2E and Android acceptance. Build with SYMBOLS_NATIVE_API=https://symbols-api.votarumshee.com; run SYMBOLS_RELEASE_CHECK=production npm run check:release. Record build.json contentVersion and assetVersion with both web archive and APK SHA-256. APK resources are bundled, with no server.url or downloaded remote UI.
+2. Create a server backup; verify restore before staging. Build the server image through existing reviewed Server pipeline. On a staging copy apply additive migration0004, seed, and grants. Set WEB_ORIGIN to the exact staging HTTPS origin. Browser requests require same origin; no CORS wildcard. Native Bearer remains unchanged.
+3. Place web assets under immutable /srv/symbols-web/releases/<assetVersion>. Mount the chosen release read-only in Caddy. Add WebClient/deploy/Caddyfile.web host block, preserve the API host block and other projects. Set production WEB_ORIGIN=https://symbols.votarumshee.com in runtime env and apply migration/grants before exposing web. Add DNS A symbols.votarumshee.com→135.106.172.96 only during the separately approved rollout. Validate Caddy config before reload; check /ready contentVersion and /build.json contentVersion agree, /health, cookie flags, no-cache, privacy/support/deletion, and native bootstrap.
+4. Stage synthetic smoke in staging, then release web assets and deliver the QA APK to a controlled tester. Do not create test players on production. APK .qa uses the existing QA certificate, versionCode2; store release .symbols requires owner signing secrets and store review. Generated CI keys are disposable and cannot update the delivered QA installation.
+5. Rollback web by changing release mount/symlink to previous compatible immutable asset directory, validate Caddy and reload; rollback server image only to a schema-compatible build. Keep additive browser tables/grants to preserve accounts. Never restore an old database over new player data as a routine rollback. Never downgrade Android via install-r: retain the old Kotlin source and make a new higher-version rescue build with compatible signing/storage migration, or recover an account using its code in a separate install. Uninstall erases app data and is not rollback.
+
+CI produces artifacts only; there is no automatic production deployment or store upload. A GitHub job that is merely configured is UNVERIFIED until it actually runs. Owner keystore provisioning, DNS/live TLS/hosting activation, physical phone acceptance, Android26 with WebView103+, and macOS/iOS build/device acceptance remain release gates.
+
+## Dependency audit
+
+The dev-only chain capacitor/cli→xcode→uuid was fixed with the scoped package override xcode.uuid=11.1.1. `npm audit` and `npm audit --omit=dev` are both zero. xcode still uses v4, and its project parse/generateUuid/write smoke passed. This does not force-upgrade the entire CLI. Re-run audit on every lockfile change.
+
+## Local commands
+
+PowerShell: `$env:TEST_DATABASE_URL='postgres://symbols_test@127.0.0.1:5457/postgres'`; `npm --prefix Server test`; `npm --prefix WebClient ci`; `npm --prefix WebClient run build`; `npm --prefix WebClient test`; `npm --prefix WebClient run test:e2e`; `npm --prefix WebClient run check:release`. E2E default ports8083/8793 can be changed with SYMBOLS_E2E_API_PORT and SYMBOLS_E2E_WEB_PORT. SYMBOLS_E2E_TESTS optionally selects comma-separated browser,integration,recovery,cosmetics,gameplay.

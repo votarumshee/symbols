@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-08",
+  "reviewer": "root independent acceptance",
+  "verdict": "Local Android/browser transition accepted; production rollout and external platform gates remain open",
+  "tests": {
+    "serverRegression": {"passed": 34, "failed": 0, "evidence": "server-tests.log"},
+    "finalWebAndIndependent": {"passed": 39, "failed": 0, "skipped": 0, "web": 26, "independent": 13, "evidence": "all-final-tests.log"},
+    "browserSuites": {"passed": ["browser", "integration", "recovery", "cosmetics", "gameplay"], "evidence": "e2e-accepted.log"},
+    "finalProductionBundleRecovery": {"passed": true, "assetVersion": "ca92f14255a9d1727a7604ac2e29aac6cacffb4f95a61852c3d9a7623cbe7bb7", "evidence": "recovery-accepted.log"},
+    "blockedBrowserStorage": {"passed": true, "evidence": "storage-ui.log"},
+    "dependencyAudit": {"vulnerabilities": 0, "evidence": "audit.json"}
+  },
+  "independentFindingsResolved": [
+    "late successful command cleared another account journal",
+    "account switch during durable write could dispatch another account command",
+    "browser account-limit failure could orphan registration or revoke recovered identity",
+    "Fastify browser error envelope registration order",
+    "malformed/future pending timestamps and storage recovery",
+    "legacy random IV starting 0x7b misclassified as JSON envelope",
+    "reset must preserve old vault decryption key",
+    "own logout/delete raced with stale longpoll 401"
+  ],
+  "android": {
+    "productionApkVerification": "apk-verification.json",
+    "productionApkSha256": "d2859b82fc91977f1dcef422211d448b6167a17170669c4fce4396589a56e491",
+    "migrationPackage": "com.votarumshee.symbols.migrationtest.qa",
+    "finalMigrationInstallAndInstrumentation": "PASS; reviewed native-acceptance.json, final marker and test source",
+    "independentForceStopRelaunch": "PASS; final migrated app visually shows MigrationTwo and 346.67 balance",
+    "screenshot": "migration-relaunch.png",
+    "accessibilityNote": "UIAutomator XML exposes only WebView container; account restoration verified from actual screenshot instead",
+    "homeBack": "PASS; migrated app minimizes and previous Android task resumes",
+    "productionApiRuntimeNotExercised": true
+  },
+  "criteria": {
+    "K01": "PASS local",
+    "K02": "PASS local",
+    "K03": "PASS isolated real Kotlin upgrade",
+    "K04": "PASS local",
+    "K05": "PASS browser/API matrix with disclosed synthetic setup and endgame fixtures",
+    "K06": "PASS optimized QA on API36; physical phone, API26/WebView and owner signing open",
+    "K07": "iOS source reviewed; macOS build/device UNVERIFIED",
+    "K08": "local checks and prepared workflow/config; hosted CI and rollout UNVERIFIED",
+    "K09": "PASS artifacts/documentation with explicit external limitations"
+  },
+  "productionChanged": false,
+  "requiredBeforeRollout": [
+    "Deploy reviewed backend changes, additive migration/grants and WEB_ORIGIN; native moderation listing also needs the updated backend",
+    "Configure and verify symbols.votarumshee.com DNS, TLS and same-origin hosting",
+    "Physical Android and Android26 with supported WebView acceptance",
+    "macOS/iOS build, Keychain and device acceptance",
+    "Run actual hosted GitHub CI; provide owner signing only when store release is needed"
+  ]
+}

@@ -1,5 +1,15 @@
 # Проверки Client
 
+## Production VDS acceptance — 2026-10-07
+
+На AOSP Android36 выполнена новая black-box приёмка `stagingQa` и точно выдаваемого `prodQa` через доверенный `https://symbols-api.votarumshee.com`. Во время всех изменяющих данные тестов Caddy направлял только IP проверяющего на отдельные app/PostgreSQL, с тем же immutable server image. Production БД не использовалась. Выполнены регистрация, каталог/инвентарь, игровой экран, доставка событий, отключение Wi-Fi/data и восстановление, Home/возврат, force-stop/восстановление матча и завершение. В prodQa после сетевого отказа наблюдался предусмотренный long-poll fallback; после foreground/restart подтверждён WSS. Начальный тест ошибочно требовал только WSS сразу после восстановления сети; исправлен тест, бинарник не менялся, повторный полный прогон PASS.
+
+Собраны `:app:assembleStagingDebug`, `:app:assembleStagingQa`, `:app:assembleProdQa` с соответствующими URL properties. `:app:lintStagingDebug`:0errors,23warnings,5hints; R8/vital lint прошли. Повторный `:core:test --rerun-tasks` с `SYMBOLS_TEST_URL=https://symbols-api.votarumshee.com`:10passed (9 protocol + real ServerIntegrationTest),3skipped (import, opt-in local fault-proxy, traffic measurements). Это не повторная fault-proxy/нагрузочная приёмка. До интеграционного прогона подтверждён уникальный маркер временного маршрута; тесты нельзя направлять на открытый production.
+
+APK и подпись: [manifest](../release/vds-qa-artifact.json). Локальные свидетельства: `artifacts/qa-stagingQa-emulator-5556.json`, `artifacts/qa-prodQa-emulator-5556.json`, `artifacts/screenshots/{variant}-emulator-5556-{home,inventory,match,result}.png`. Staging SHA256: `978c76337a9c214d58aa3d3001752eb8e480afa1bcc2540f297396837fdc930d`. ProdQa SHA256: `78fdf7e180b6adc442413494d43f187f2e264ed4595fb094c91c5dbe56ec9a4d`. UI-script разрешает только отдельные QA packages и для staging/prod до `pm clear` требует точный `SYMBOLS_ACCEPTANCE_MARKER`, возвращаемый изолированным Caddy. Показатели эмулятора не являются производительностью физического телефона.
+
+Подробный итог VDS: [public API verification](../../Server/docs/vds-public-api-verification.md). Предыдущий отчёт ниже сохраняет историю разработки и отдельные ограничения магазинного выпуска.
+
 Это отчёт о фактической проверке разработки, **не подтверждение готовности production**. Дата: 2026-10-06. Windows, JDK 21, Gradle 8.14.3, Android SDK 36. Реальный локальный Server v3 + PostgreSQL 17.11, отдельная БД `symbols_client_test`. Данные игроков не использовались.
 
 ## Выполнено
@@ -38,3 +48,9 @@ Compose instrumentation против minified target столкнулся с о�
 Запустить `node Client/scripts/fault-proxy.mjs`; для `:core:test` задать `SYMBOLS_FAULT_TEST=1`, `SYMBOLS_TEST_URL=http://127.0.0.1:8080`, `SYMBOLS_IMPORT_FIXTURE=<absolute path>`. Для UI выбрать один эмулятор через `ANDROID_SERIAL` и выполнить `:app:connectedDevDebugAndroidTest`. Парный тест opt-in: сначала `android-pair.mjs prepare`, собрать/установить debug и androidTest APK на два эмулятора, затем `android-pair.mjs run`. Credentials не выводятся; тестовый APK с assets не распространять.
 
 Многократные прогоны упираются в реальные серверные лимиты 10 регистраций/5 восстановлений за 15 минут. На локальной синтетической БД лимиты очищались между полными прогонами; в production их ослаблять нельзя. Fault-тест отдельно проверяет настоящий клиентский ответ на 429.
+
+## Web UI QA — 2026-10-07
+
+См. [web-ui-parity.md](web-ui-parity.md) и `artifacts/ui-parity/index.html`. DevQa R8 реальные касания на API26/36; SQL asserts teleport и network recovery PASS36; lint и обе R8 QA сборки PASS. Core:10tests PASS,3 opt-in skipped. Updated instrumentation test compiled, not executed. ProdQa verified statically only; production untouched. Новый artifact `release/web-ui-qa-artifact.json`, прежний APK сохранён. Открытые визуальные/сценарные пункты перечислены в матрице, а не объявлены PASS.
+
+Дополнительная приёмка UI: double-tap26 PASS (один Monkey injector,80ms; одна revision); ordinary2/team4 PASS36 с owner UI taps + real API peers; paired waiting/result, inline upgrade SQL assertion и result→home PASS. Frames получили металлические CSS-градиенты. Итоговый SHA256 web-ui APK: `2bb674d53fca17a9c297cbe2d271e00cb2bca47d6244248b3e613fdd9a943abb`. Последние сборки/lint: `final-acceptance-build.log`, `final-delivery-build.log`; подпись5A и zipalign16K PASS.
