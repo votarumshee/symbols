@@ -68,6 +68,7 @@ jobs:
   android:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         api: [26, 36]
     env:

@@ -30,6 +30,8 @@ class SmokeTest {
         waitFor("Ник")
         compose.onNodeWithText("Ник", substring = false).performTextInput("Android тест")
         compose.onNodeWithText("Создать аккаунт", useUnmergedTree = true).performClick()
+        // The nickname also exists in the login text field; wait for the authenticated screen.
+        waitFor("Инвентарь")
         waitFor("Android тест")
         screenshot("01-home")
         compose.onNodeWithText("Инвентарь", substring = false).performScrollTo().performClick()

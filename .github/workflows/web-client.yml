@@ -43,6 +43,7 @@ jobs:
             WebClient/www/
   android:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     services:
       postgres:
         image: postgres:17.11-bookworm
@@ -78,12 +79,16 @@ jobs:
         working-directory: WebClient
       - run: chmod +x gradlew && ./gradlew :app:assembleLocalQa :app:assembleLocalQaAndroidTest
         working-directory: WebClient/android
+      - name: Enable emulator hardware acceleration
+        run: sudo chmod 666 /dev/kvm && test -r /dev/kvm && test -w /dev/kvm
       - uses: reactivecircus/android-emulator-runner@v2
+        timeout-minutes: 20
         with:
           api-level: 36
           target: google_apis
           arch: x86_64
           profile: pixel_2
+          disable-linux-hw-accel: false
           script: |
             adb install WebClient/android/app/build/outputs/apk/local/qa/app-local-qa.apk
             adb install WebClient/android/app/build/outputs/apk/androidTest/local/qa/app-local-qa-androidTest.apk
