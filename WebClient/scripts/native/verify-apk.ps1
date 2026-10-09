@@ -11,7 +11,8 @@ $manifest=(& "$bt\aapt.exe" dump xmltree $apkPath AndroidManifest.xml | Out-Stri
 & "$bt\zipalign.exe" -c -P 16 4 $apkPath | Out-Null;if($LASTEXITCODE){throw 'APK alignment failed'}
 $certificate=[regex]::Match($cert,'certificate SHA-256 digest: ([a-f0-9]+)').Groups[1].Value
 $identity=[regex]::Match($badging,"package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'")
-if($identity.Groups[2].Value -ne '2'){throw 'Expected increased versionCode 2'}
+$expectedCode=[regex]::Match((Get-Content (Join-Path $repo 'WebClient/android/app/build.gradle') -Raw),'versionCode (\d+)').Groups[1].Value
+if(-not $expectedCode -or $identity.Groups[2].Value -ne $expectedCode){throw 'APK versionCode must match the current Android build'}
 if($badging -match 'application-debuggable'){throw 'QA must be nondebuggable'}
 if($manifest -notmatch 'allowBackup.*0x0'){throw 'Backup must be disabled'}
 $minimum=[regex]::Match($badging,"sdkVersion:'([0-9]+)'").Groups[1].Value
@@ -32,8 +33,7 @@ try{
   if($identity.Groups[1].Value -ne 'com.votarumshee.symbols.qa'){throw 'Wrong upgrade package'}
  }
  $libs=@($zip.Entries | Where-Object {$_.FullName -match '\.so$'} | ForEach-Object {$_.FullName})
- $result=[ordered]@{file=[IO.Path]::GetFileName($apkPath);sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $apkPath).Hash.ToLowerInvariant();package=$identity.Groups[1].Value;versionCode=2;versionName=$identity.Groups[3].Value;certificateSha256=$certificate;minSdk=[int]$minimum;targetSdk=[int]$target;debuggable=$false;allowBackup=$false;nativeApi=$build.nativeApi;assetVersion=$assetHash;contentVersion=$build.contentVersion;packagedAssetsMatch=$true;remoteServerUrl=$false;webDebugging=$false;logging='none';zipAlignment16K='PASS';nativeLibraries=$libs;nativeLibrary16K=if($libs.Count){'ELF inspection required'}else{'N/A: no packaged native libraries'};r8=$true;productionChanged=$false}
+ $result=[ordered]@{file=[IO.Path]::GetFileName($apkPath);sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $apkPath).Hash.ToLowerInvariant();package=$identity.Groups[1].Value;versionCode=[int]$identity.Groups[2].Value;versionName=$identity.Groups[3].Value;certificateSha256=$certificate;minSdk=[int]$minimum;targetSdk=[int]$target;debuggable=$false;allowBackup=$false;nativeApi=$build.nativeApi;assetVersion=$assetHash;contentVersion=$build.contentVersion;packagedAssetsMatch=$true;remoteServerUrl=$false;webDebugging=$false;logging='none';zipAlignment16K='PASS';nativeLibraries=$libs;nativeLibrary16K=if($libs.Count){'ELF inspection required'}else{'N/A: no packaged native libraries'};r8=$true;productionChanged=$false}
  $json=$result|ConvertTo-Json -Depth 8;$json|Set-Content -Encoding utf8 ($apkPath+'.json');$json
 }finally{$zip.Dispose()}
-
 

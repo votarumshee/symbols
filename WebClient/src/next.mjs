@@ -619,11 +619,34 @@ function render() {
   }));
   app.querySelectorAll("[data-cancel-listing]").forEach((b) => b.onclick = () => cancelOffer(b.dataset.cancelListing));
   app.querySelector("#leave-game")?.addEventListener("click", () => {
+    const matchId = game?.id;
+    const goHome = () => {
+      document.querySelector("#next-dialog")?.close();
+      page = "home";
+      selected = source = null;
+      notice = "";
+      showConnection();
+      render();
+    };
+    if (!game || game.status === "done") {
+      goHome();
+      return;
+    }
     const d = modal("Выйти из партии?", game.status === "waiting" ? '<p>Поиск будет отменён.</p><button class="primary" id="confirm-leave">Выйти</button>' : '<p>Это будет считаться поражением.</p><button class="primary" id="confirm-leave">Выйти</button>');
     d.querySelector("#confirm-leave").onclick = () => act(async () => {
-      await request("leave", { revision });
-      d.close();
-      page = "home";
+      if (game && game.id !== matchId) throw Error("Партия изменилась. Закрой окно и проверь поле.");
+      if (game && game.status !== "done") {
+        try {
+          await request("leave", { revision });
+        } catch (error) {
+          if (error.status !== 409) throw error;
+          // The match may finish after confirmation but before the server locks it.
+          // Refresh its authoritative result; never retry surrender or hide other conflicts.
+          await request("profile");
+          if (game && (game.id !== matchId || game.status !== "done")) throw error;
+        }
+      }
+      goHome();
     });
   });
   app.querySelector("#coach-select")?.addEventListener("click", () => {

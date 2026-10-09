@@ -8,8 +8,8 @@ android {
   applicationId 'com.votarumshee.symbols'
   minSdkVersion rootProject.ext.minSdkVersion
   targetSdkVersion rootProject.ext.targetSdkVersion
-  versionCode 2
-  versionName '1.1.0'
+  versionCode 3
+  versionName '1.1.1'
   manifestPlaceholders = [cleartext:'false']
   testInstrumentationRunner 'com.votarumshee.symbols.webpreview.MigrationAcceptanceTest'
  }
@@ -69,7 +69,6 @@ apply from: 'capacitor.build.gradle'
    if(metadata.nativeApi != 'https://symbols-api.votarumshee.com') throw new GradleException('Production assets must target production HTTPS API')
   }
  }
-
 
 
 

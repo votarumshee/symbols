@@ -17,12 +17,14 @@ Push-Location $clientRoot
 try{
  & npm.cmd run build;if($LASTEXITCODE){throw 'Web build failed'}
  & npx.cmd cap sync android;if($LASTEXITCODE){throw 'Capacitor sync failed'}
- $tasks=if($Mode -eq 'LocalQa'){@(':app:assembleLocalQa')}elseif($Mode -eq 'ProdQa'){@(':app:assembleProdQa')}else{@(':app:assembleProdRelease',':app:bundleProdRelease')}
+ [string[]]$tasks=if($Mode -eq 'LocalQa'){@(':app:assembleLocalQa')}elseif($Mode -eq 'ProdQa'){@(':app:assembleProdQa')}else{@(':app:assembleProdRelease',':app:bundleProdRelease')}
  & .\android\gradlew.bat -p android @tasks --console=plain;if($LASTEXITCODE){throw 'Native build failed'}
  $folder=Join-Path $clientRoot 'artifacts\transition';New-Item -ItemType Directory -Force $folder|Out-Null
  if($Mode -ne 'OwnerRelease'){
   $flavor=if($Mode -eq 'LocalQa'){'local'}else{'prod'}
-  $destination=Join-Path $folder "symbols-web-$flavor-qa-1.1.0.apk"
+  $version=[regex]::Match((Get-Content 'android/app/build.gradle' -Raw),"versionName '([^']+)'").Groups[1].Value
+  if(-not $version){throw 'Missing Android version name'}
+  $destination=Join-Path $folder "symbols-web-$flavor-qa-$version.apk"
   Copy-Item -LiteralPath "android\app\build\outputs\apk\$flavor\qa\app-$flavor-qa.apk" -Destination $destination
   & "$PSScriptRoot\verify-apk.ps1" -Apk $destination -Environment $flavor
  }
