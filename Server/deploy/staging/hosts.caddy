@@ -1,0 +1,25 @@
+symbols-api-staging.votarumshee.com {
+ @private path /metrics /metrics/*
+ respond @private 404
+ reverse_proxy symbols-staging-api:3000
+ header Strict-Transport-Security "max-age=31536000"
+ header X-Robots-Tag "noindex, nofollow"
+}
+symbols-staging.votarumshee.com {
+ @private path /metrics /metrics/*
+ respond @private 404
+ @api path /api/web/v3/* /privacy /privacy.html /support /support.html /account-deletion /account-deletion.html /policy.css /account-deletion.mjs /health /ready
+ handle @api {
+  reverse_proxy symbols-staging-api:3000
+ }
+ handle {
+  root * /srv/symbols-web/staging/current
+  header Cache-Control "no-cache"
+  header X-Content-Type-Options nosniff
+  header Referrer-Policy same-origin
+  header X-Frame-Options DENY
+  file_server
+ }
+ header Strict-Transport-Security "max-age=31536000"
+ header X-Robots-Tag "noindex, nofollow"
+}

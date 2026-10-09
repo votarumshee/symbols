@@ -1,0 +1,84 @@
+Задание: изолированное staging-окружение «Символов» на существующем VDS
+
+Цель
+Создать и включить staging web и API на 135.106.172.96:
+  https://symbols-staging.votarumshee.com
+  https://symbols-api-staging.votarumshee.com
+Пользователь создаёт две A-записи самостоятельно. Проверять DNS; до корректного
+разрешения имён подготовить всё остальное. Не считать недоступный TLS успешным.
+
+Исходное состояние и полномочия
+- Production уже работает: symbols.votarumshee.com и symbols-api.votarumshee.com.
+- Выпущенный main: 39e3241175e6ce9f23cd783bed0c16782440ec6a, API image
+  sha256:3d7b1ae39ad546dde77483fe28bc1d7aa25a8a368f05137d743c37000c684e1a.
+  Перед работой проверить фактическое состояние: оно могло измениться.
+- SSH symbols-admin, ключ ~/.ssh/id_ed25519_vds_symbols, sudo -n;
+  BatchMode=yes и StrictHostKeyChecking=yes. Не выводить секреты/полные env.
+- Разрешена установка staging и изменение общего Caddy для маршрутизации.
+  Не мигрировать, не пересоздавать и не сбрасывать production API/БД.
+- Локальная ветка codex/fix-finished-game-exit содержит незакоммиченный hotfix
+  WebClient. Не трогать, не коммитить и не терять эти изменения. Не менять ветку.
+  Для первой staging-установки взять точный выпущенный main; hotfix пока не включать.
+- Работать самостоятельно, исправляя ошибки в пределах задания. Не делать merge,
+  push, DNS-изменения или новый CI/CD с production-секретами в GitHub.
+
+Реализация
+1. Снять безопасный baseline production: image/config hashes, container IDs/start
+   time, health, текущие mounts/networks, схема БД (без игровых данных/секретов).
+   Оценить RAM/disk/CPU. Сохранить конфигурацию и план отката до изменений.
+2. Отдельный Compose project symbols-staging; отдельные PostgreSQL container и
+   volume, API, internal DB network, frontend network, аватары, env и каталоги
+   releases/current. Имена, подсети, статические IP и локальные порты не должны
+   пересекаться с production. БД без опубликованного порта, API не доступен извне
+   в обход HTTPS proxy. Контейнер API не должен иметь прямого доступа к production
+   DB/network/volume/secrets. Удаление staging не должно затрагивать production.
+3. Сгенерировать отдельные DB owner/runtime/admin passwords и metrics token;
+   root-only файлы/права 0600. Никаких production env в staging контейнерах.
+   PostgreSQL owner/runtime имеют такие же минимальные права, как в production.
+   Только новая чистая база + migrations/seed/grants; не копировать игроков.
+4. Развернуть серверный образ опубликованного main. Собрать web из ТОГО ЖЕ commit
+   с native API https://symbols-api-staging.votarumshee.com; фиксировать SHA и
+   contentVersion/assetVersion. WEB_ORIGIN равен staging web HTTPS origin.
+   Не обходить production APK guards: staging APK сейчас не входит в задачу.
+5. Общий Caddy обслуживает оба новых имени с отдельными TLS сертификатами и
+   отправляет трафик только в staging API/static. Browser API остаётся same-origin.
+   Не занимать 80/443 вторым Caddy. Предпочесть reload. Если нужна новая сеть Caddy,
+   подключение должно быть декларативным и переживать recreation/reboot;
+   не оставлять docker network connect единственным источником конфигурации.
+   Валидировать весь Caddyfile перед применением. Production routing сохранить.
+6. Ограничить RAM/CPU/pids/log size staging с учётом VDS 4GB; оставить резерв
+   production. Настроить healthchecks и restart unless-stopped. Метрики закрыты.
+   Staging страницы не индексируются (X-Robots-Tag noindex, nofollow).
+7. Отдельный ежедневный локальный backup staging в собственный каталог/lock,
+   retention 3-7 копий. Проверить restore в disposable staging DB. Не менять
+   production restic repository, backup locks, timers и retention. Не подключать
+   offsite staging автоматически: описать, что локальный staging backup находится
+   на том же VDS, а offsite production остаётся действующим.
+8. Сохранить воспроизводимую конфигурацию/скрипты в Server/deploy/staging/ и
+   инструкции эксплуатации в Server/docs/staging.txt. Примеры env без секретов.
+   Если требуется изменить общие production-файлы, сообщить root до изменения.
+   Зафиксировать команды запуска/обновления/отката/удаления только staging,
+   безопасные image IDs, source SHA, пути, версии, лимиты и результаты проверок.
+
+Приёмка (предоставить фактические доказательства, не только описание)
+- Оба staging HTTPS имени имеют доверенные сертификаты; HTTP перенаправляет на
+  HTTPS. /ready, web/build.json и API contentVersion согласованы.
+- Web загружается; регистрация и чтение профиля, native Bearer и browser cookie
+  авторизация работают на синтетических STAGING аккаунтах; cookie Secure,
+  HttpOnly, SameSite=Strict; запрос с production Origin запрещён staging BFF.
+- Staging token не принимается production API; не получать настоящие production
+  пользовательские токены. Только read-only/unauthorized проверки production.
+- Отдельные DB/volumes/secrets/mounts/networks и runtime privileges доказаны;
+  direct DB network недоступен из staging API для production адреса.
+- Staging restart/recreate сохраняет тестовые данные; конфигурация остаётся
+  работоспособной после recreation staging и Caddy (общий VDS не перезагружать).
+- Backup/restore staging успешен, ограничения ресурсов применены.
+- Production health/HTTPS не ухудшились, API/DB container IDs и startedAt прежние,
+  production image и схема не менялись, production backup timers продолжают работу.
+- Нет утечек паролей/токенов в Git, артефактах или выводе. Рабочие изменения
+  WebClient hotfix полностью сохранены.
+
+Итоговый ответ root
+Список изменённых файлов, фактические URL/версии, выполненные проверки и команды
+для независимого аудита, сведения об откате и любые незакрытые ограничения.
+Не объявлять готовность без доступного HTTPS и проверки изоляции.

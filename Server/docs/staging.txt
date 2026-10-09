@@ -1,0 +1,170 @@
+Symbols staging on production VDS
+================================
+Installed: 2026-10-09. Host: 135.106.172.96 (symbols-admin, sudo -n).
+Web: https://symbols-staging.votarumshee.com
+Native API: https://symbols-api-staging.votarumshee.com
+Browser API: https://symbols-staging.votarumshee.com/api/web/v3/* (same origin).
+This is a public testing environment with no production players copied.
+X-Robots-Tag: noindex, nofollow. This is an indexing directive, not access control.
+
+Deployed source and artifacts
+----------------------------
+Source commit: 39e3241175e6ce9f23cd783bed0c16782440ec6a (released main).
+Server image: sha256:3d7b1ae39ad546dde77483fe28bc1d7aa25a8a368f05137d743c37000c684e1a
+PostgreSQL image: sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+Content version: 6ce99aba116be01d15816dccb4f85613ba314a8fb8c78ae1da70cb33d79f7c56
+Web asset version: 5b62cc3f106d8d534ce4f0792f55fb8144bd9e6d2f6b61efa2c760a8134ace66
+Local uncommitted WebClient finished-game-exit hotfix is NOT part of this deployment.
+No staging APK was built; production APK release guards remain unchanged.
+
+Isolation and limits
+--------------------
+Compose project: symbols-staging. Services: db, api, optional tools-profile migrate.
+Important: staging API service MUST NOT be named server. Docker supplies an implicit
+service-name alias. The shared proxy resolves production upstream server:3000;
+another server alias on a connected network would make routing ambiguous.
+Staging upstream has the explicit unique alias symbols-staging-api:3000.
+
+symbols_staging_database: internal bridge 172.30.52.0/24, only staging db/api/tools.
+symbols_staging_frontend: bridge 172.30.51.0/24, API .2 and shared Caddy .3.
+No staging API or DB published ports. Staging API has no production DB network,
+volume, bind mounts or env file. Only Caddy bridges both frontend networks.
+PostgreSQL volume: symbols_staging_pgdata. Clean migrations 0001-0004 + content seed.
+DB roles symbols_owner and symbols_app are separate roles on the separate cluster.
+Runtime has no superuser, createdb, createrole, schema-create or migration-table access.
+Secrets: /etc/symbols-staging/staging.env, root:root 0600, independently generated.
+Avatars: /var/lib/symbols-staging/avatars, uid/gid1000, directory0750.
+API:384MiB, 0.5CPU, 128pids, pool4. DB:512MiB, 0.5CPU, 128pids, shm128MiB.
+Migration:256MiB, 0.5CPU, 64pids. Docker local logs5MiB x2 each.
+Healthchecks enabled, runtime restart unless-stopped. Metrics blocked by Caddy.
+
+Layout
+------
+/opt/symbols-staging/releases/<sourceSHA>   compose, roles, ingress and audit scripts
+/opt/symbols-staging/current               release symlink
+/srv/symbols-web/staging/releases/<asset>   immutable web build
+/srv/symbols-web/staging/current            web release symlink
+/srv/symbols-web/caddy/staging.caddy        live Caddy host definitions
+/var/lib/symbols-staging/checkpoints        rollback and audit records (root-only)
+/var/backups/symbols-staging                independent daily local backups
+/usr/local/sbin/symbols-staging-compose     explicit project/env/config wrapper
+
+Shared Caddy configuration
+--------------------------
+There is ONE Caddy, no second listener on80/443. Its production compose file
+declares external symbols_staging_frontend network with Caddy172.30.51.3.
+This declaration is added idempotently by patch-ingress.py; it is not merely a
+docker network connect operation. Static staging files use the existing RO
+/srv/symbols-web mount. Production web current symlink was not changed.
+
+CRITICAL FOR FUTURE PRODUCTION DEPLOYMENTS:
+Before selecting a new production runtime or recreating Caddy, apply:
+  python3 /opt/symbols-staging/current/patch-ingress.py NEW_RUNTIME/compose.production.yaml
+  docker compose --env-file /etc/symbols/production.env -f NEW_RUNTIME/compose.production.yaml --profile public config --quiet
+The staging frontend network must already exist. Keep staging.caddy in the imported
+directory. Losing this declaration breaks staging ingress after Caddy recreation.
+Production API and DB do not need a restart for staging changes.
+
+Initial installation (root, using reviewed files)
+-------------------------------------------------
+1. Export exact released gitSHA into an isolated build directory, including
+   WebClient/src, scripts/build.mjs, package*.json, Server/content/catalog.json.
+2. In exported WebClient run npm ci --ignore-scripts and build with environment
+   SYMBOLS_NATIVE_API=https://symbols-api-staging.votarumshee.com.
+   Package the resulting www with Server/deploy/staging/ files.
+3. Verify image ID and sourceSHA in install.sh. Run bash install.sh as root.
+   It generates fresh secrets only when staging.env does not exist, starts clean DB,
+   applies migrations/seed/grants, starts API, installs backup service and web assets.
+4. Once both A records resolve to135.106.172.96, run bash activate-ingress.sh.
+   It checks alias collision, checkpoints production compose/container identity,
+   validates Caddy/compose, recreates ONLY Caddy, checks production ready and identity.
+   A failed activation restores previous compose and removes staging hostfile.
+5. Validate real trusted HTTPS for both hosts (never use curl -k), auth isolation,
+   and browser UI before announcing readiness.
+
+Daily operations (root)
+-----------------------
+  symbols-staging-compose ps
+  symbols-staging-compose logs --tail 100 api
+  symbols-staging-compose restart api
+  curl -fsS https://symbols-api-staging.votarumshee.com/ready
+  curl -fsS https://symbols-staging.votarumshee.com/build.json
+Do not print docker compose config or env files: they contain secrets.
+No new CI/CD or GitHub deployment credentials were installed by this task.
+
+Update staging
+--------------
+1. Select a tested source SHA and build immutable server image and web from it.
+   Do not copy a production env file. Keep the unique api service and aliases.
+2. Run symbols-staging-backup; record previous runtime, image and web symlink.
+3. Copy reviewed staging config into a new /opt/symbols-staging/releases/<SHA>.
+   Set staging.env SYMBOLS_IMAGE/GIT_COMMIT to reviewed image/SHA without displaying it.
+4. Switch /opt/symbols-staging/current, run symbols-staging-compose config --quiet,
+   symbols-staging-compose run --rm migrate, symbols-staging-compose up -d --wait api.
+5. Place verified web assets under a new assetVersion path and atomically select
+   staging/current. Reload Caddy only if routes changed. Verify contentVersion match.
+6. Run HTTPS/auth/isolation acceptance. Do not update production in this procedure.
+
+Rollback
+--------
+App-only: restore previous staging image/config/web selections, recreate staging api.
+For incompatible migrations restore a staging backup into a replacement staging
+database; never point staging at production DB and never restore over production.
+Initial ingress checkpoint:
+  /var/lib/symbols-staging/checkpoints/20261009T121741Z/compose.production.yaml
+To undo only staging ingress: remove /srv/symbols-web/caddy/staging.caddy, use
+patch-ingress.py /opt/symbols/current/compose.production.yaml --remove, validate
+compose and full Caddy config, then symbols-compose --profile public up -d
+--no-deps --force-recreate caddy. This detaches Caddy from staging persistently.
+
+Backups and restore
+-------------------
+Timer symbols-staging-backup.timer: daily04:35UTC +random0-10min, Persistent=true.
+Separate lock /run/lock/symbols-staging-backup.lock; retains latest7 successful copies.
+Manual: symbols-staging-backup. Backups include custom-format DB dump, avatars and
+staging config/env; root-only directories/files. Avatar copy is not transactionally
+atomic with database. Immutable web assets can be rebuilt from sourceSHA.
+Verify: bash /opt/symbols-staging/current/verify-restore.sh.
+The verifier creates an internal-network disposable PostgreSQL, restores without
+owner/ACL, checks profile count and migration/content metadata, then removes its
+container, anonymous volume and network. This does not replace live staging DB.
+Actual disaster recovery must recreate roles from staging.env/init-roles.sh and
+apply grants (the verifier's --no-acl restore is not a production-role restore).
+Staging backups are ON THIS VDS ONLY, not offsite. Production Google Drive/restic,
+backup locks, timers and retention remain unchanged.
+
+Remove staging (production remains)
+-----------------------------------
+First remove ingress as above, ensuring Caddy no longer uses staging network.
+Then systemctl disable --now symbols-staging-backup.timer and
+symbols-staging-compose down. This stops only project symbols-staging and keeps DB.
+Do NOT add -v unless explicitly deciding to erase all staging data. Before any
+deletion, inspect exact paths and volume name symbols_staging_pgdata.
+Do not remove /srv/symbols-web parent, production volumes or shared Caddy volumes.
+Backup/config/avatar deletion is a separate explicit data-retention decision.
+
+Acceptance notes
+----------------
+Trusted HTTPS and HTTP308 for both hosts; noindex headers; web build/API content
+versions agree. Independent root smoke validated nativeBearer, browser session
+Secure/HttpOnly/SameSiteStrict cookie, productionOrigin403, production rejection
+of a stagingBearer401, and metrics404. No real production tokens used.
+Runtime SQL privilege checks and real stagingAPI->productionDB TCP probe pass.
+Production API/DB IDs/start timestamps/image unchanged; schema not migrated here.
+Staging DB/API restart and force-recreate preserved the synthetic StagePersist profile
+(profile-ID fingerprint compared before, after restart and after recreate). Evidence:
+/var/lib/symbols-staging/checkpoints/persistence-20261009T122129Z.
+Backup20261009T122239Z restored successfully:1synthetic profile,4migrations,expected
+contentVersion. Disposable restore container/volume/network removed. StagePersist
+remains a test fixture; no production account/data was copied. Its token was discarded.
+The systemd backup service also completed successfully; all6production backup/monitor
+timers remained active. Root independently checked final Docker isolation and real
+browser login screen with same-origin requests and no JavaScript errors.
+
+During initial activation, staging originally used service name server, producing
+a duplicate Docker alias on Caddy's two frontend networks. The issue was detected
+immediately by root review, staging API disconnected, service renamed to api and
+Caddy reloaded (approximately12:17-12:19UTC on2026-10-09). Final DNS resolves server
+ONLY to172.30.41.2 and symbols-staging-api ONLY to172.30.51.2. Staging profiles count
+was0 before synthetic acceptance. There is no claim that transient routing effects
+during that short interval are proven absent. A preflight guard prevents recurrence.

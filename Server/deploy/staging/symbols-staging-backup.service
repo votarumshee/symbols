@@ -1,0 +1,10 @@
+[Unit]
+Description=Symbols staging local backup (separate from production)
+After=docker.service
+Requires=docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/symbols-staging-backup
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=300

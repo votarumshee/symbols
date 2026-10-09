@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily Symbols staging local backup
+[Timer]
+OnCalendar=*-*-* 04:35:00 UTC
+RandomizedDelaySec=600
+Persistent=true
+[Install]
+WantedBy=timers.target
