@@ -5,6 +5,7 @@ const obj=properties=>({type:'object',properties,additionalProperties:false});
 const revision={type:'string',pattern:'^[0-9]{1,19}$'};
 export const commandSchemas={
  promo:{...obj({code:str(40)}),required:['code']},
+ 'sell-symbol':{...obj({symbol:str(20),quantity:{type:'integer',minimum:1,maximum:100}}),required:['symbol']},
  wish:{...obj({text:{type:'string',minLength:3,maxLength:1000}}),required:['text']},
  'wish-like':{...obj({id:str(80),liked:{type:'boolean'}}),required:['id','liked']},
  start:obj({mode:{enum:['play','duel','team','trial','local','room']},small:{type:'boolean'},code:str(6)}),

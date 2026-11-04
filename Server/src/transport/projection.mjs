@@ -3,7 +3,7 @@ import {BASE} from '../domain/economy.mjs';
 import {levelInfo} from '../domain/progression.mjs';
 // Explicit allowlists: new internal fields never become public by accident.
 const pick=(o,keys)=>Object.fromEntries(keys.filter(k=>o?.[k]!==undefined).map(k=>[k,structuredClone(o[k])]));
-export function profileView(d){const v=pick(d,['nick','tutorialDone','balanceCents','inventory','xp','rank','rankProgress','trialRun','history','quests','game','ownedSkins','skins','avatar','ownedAvatars','upgrades','frame','cases','lastCaseDrop','levelRewards']);v.balanceCents=String(d.balanceCents);v.level=levelInfo(d.xp);return v;}
+export function profileView(d){const v=pick(d,['nick','tutorialDone','balanceCents','rubyReserveCents','inventory','xp','rank','rankProgress','trialRun','history','quests','game','ownedSkins','skins','avatar','ownedAvatars','upgrades','frame','cases','lastCaseDrop','levelRewards']);v.balanceCents=String(d.balanceCents);v.level=levelInfo(d.xp);return v;}
 export function matchView(s,user,revision){
  if(!s)return null;
  const seats=s.players.flatMap((p,i)=>p.id===user&&!p.bot?[i]:[]);

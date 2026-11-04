@@ -358,6 +358,11 @@
                           "pattern": "^[0-9]+$",
                           "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                         },
+                        "rubyReserveCents": {
+                          "type": "string",
+                          "pattern": "^(0|[1-9][0-9]{0,79})$",
+                          "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
+                        },
                         "inventory": {
                           "type": "object",
                           "additionalProperties": {
@@ -1220,6 +1225,11 @@
                           "type": "string",
                           "pattern": "^[0-9]+$",
                           "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                        },
+                        "rubyReserveCents": {
+                          "type": "string",
+                          "pattern": "^(0|[1-9][0-9]{0,79})$",
+                          "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
                         },
                         "inventory": {
                           "type": "object",
@@ -2831,6 +2841,11 @@
                                 "type": "string",
                                 "pattern": "^[0-9]+$",
                                 "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                              },
+                              "rubyReserveCents": {
+                                "type": "string",
+                                "pattern": "^(0|[1-9][0-9]{0,79})$",
+                                "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
                               },
                               "inventory": {
                                 "type": "object",
@@ -4448,6 +4463,261 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision/idempotency conflict or SNAPSHOT_REQUIRED",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retry"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/commands/sell-symbol": {
+      "post": {
+        "operationId": "command_sell_symbol",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Atomic command. See compatibility.md for retry semantics; profile and game updates arrive through events.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{8,80}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "symbol": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "symbol"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commandId": {
+                      "type": "string"
+                    },
+                    "matchId": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    },
+                    "listingId": {
+                      "type": "string"
+                    },
+                    "listingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "drop": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "regenerate": {
+                      "type": "boolean"
+                    },
+                    "loggedOut": {
+                      "type": "boolean"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "reportId": {
+                      "type": "string"
+                    },
+                    "blocked": {
+                      "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -4672,6 +4942,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -4900,6 +5183,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -5134,6 +5430,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -5420,6 +5729,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -5649,6 +5971,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -5888,6 +6223,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -6112,6 +6460,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -6336,6 +6697,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -6569,6 +6943,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -6800,6 +7187,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -7024,6 +7424,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -7248,6 +7661,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -7472,6 +7898,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -7702,6 +8141,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -7932,6 +8384,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -8156,6 +8621,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -8380,6 +8858,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -8595,6 +9086,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -8810,6 +9314,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -9032,6 +9549,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -9262,6 +9792,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -9486,6 +10029,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -9710,6 +10266,19 @@
                     },
                     "quantity": {
                       "type": "integer"
+                    },
+                    "rubies": {
+                      "type": "string",
+                      "pattern": "^[0-9]{1,80}$",
+                      "description": "Exact whole rubies granted by a promo; may exceed the legacy wallet range."
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "creditedCents": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
                     }
                   },
                   "required": [],
@@ -9866,6 +10435,11 @@
             "type": "string",
             "pattern": "^[0-9]+$",
             "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+          },
+          "rubyReserveCents": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,79})$",
+            "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
           },
           "inventory": {
             "type": "object",
@@ -10616,6 +11190,11 @@
                 "type": "string",
                 "pattern": "^[0-9]+$",
                 "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+              },
+              "rubyReserveCents": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]{0,79})$",
+                "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
               },
               "inventory": {
                 "type": "object",
@@ -11391,6 +11970,11 @@
                 "type": "string",
                 "pattern": "^[0-9]+$",
                 "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+              },
+              "rubyReserveCents": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]{0,79})$",
+                "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
               },
               "inventory": {
                 "type": "object",
@@ -12696,6 +13280,11 @@
                       "type": "string",
                       "pattern": "^[0-9]+$",
                       "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    },
+                    "rubyReserveCents": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]{0,79})$",
+                      "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
                     },
                     "inventory": {
                       "type": "object",

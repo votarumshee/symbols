@@ -48,6 +48,11 @@
                 "pattern": "^[0-9]+$",
                 "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
               },
+              "rubyReserveCents": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]{0,79})$",
+                "description": "Exact additional ruby cents above the bounded legacy wallet. Total equals balanceCents plus this optional reserve."
+              },
               "inventory": {
                 "type": "object",
                 "additionalProperties": {
