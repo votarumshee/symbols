@@ -1,0 +1,47 @@
+name: Staging artifact
+on:
+  push:
+    branches: [codex/task-staging-artifact]
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact tested source commit
+        required: true
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha || '54d5b78c1b7a7286e69a5a38d67792777721e750' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+      - name: Verify exact source
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.19.0
+      - run: npm ci --ignore-scripts && npm run build && node scripts/contracts.mjs --check
+        working-directory: Server
+      - run: npm ci && npm run build
+        working-directory: WebClient
+        env:
+          SYMBOLS_NATIVE_API: https://symbols-api-staging.votarumshee.com
+      - name: Build and export immutable artifacts
+        run: |
+          mkdir -p bundle
+          docker build --label org.opencontainers.image.revision="$SOURCE_SHA" -t "symbols-staging:$SOURCE_SHA" Server
+          docker image inspect "symbols-staging:$SOURCE_SHA" --format '{{.Id}}' > bundle/image-id.txt
+          docker save "symbols-staging:$SOURCE_SHA" | gzip -1 > bundle/server-image.tar.gz
+          tar -czf bundle/staging-web.tar.gz -C WebClient www -C ../Server/deploy staging
+          cp WebClient/www/build.json bundle/build.json
+          printf '%s\n' "$SOURCE_SHA" > bundle/source-sha.txt
+          (cd bundle && sha256sum server-image.tar.gz staging-web.tar.gz build.json source-sha.txt image-id.txt > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: staging-${{ env.SOURCE_SHA }}
+          path: bundle/
+          retention-days: 7
