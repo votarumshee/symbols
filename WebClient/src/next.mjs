@@ -18,6 +18,7 @@ import { accounts } from "./accounts.mjs";
 import { boostVisuals, lightning } from "./boost-visuals.mjs";
 import { animateShots, soundEnabled, toggleSound } from "./effects.mjs";
 import { tutorialAdvice } from "./tutorial.mjs";
+import { wishesScreen } from "./wishes.mjs";
 const app = document.querySelector("#app"), manager = safeManager(), storage = manager.storage;
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 function safeManager(){try{return accounts(clientStorage);}catch{markStorageError();const m=new Map();return accounts({getItem:k=>m.get(k),setItem:(k,v)=>m.set(k,v)});}}
@@ -26,6 +27,20 @@ let session = readJSON('symbols-session',null), legacy = freshProgress();
 const savedProgress=readJSON(STORAGE_KEY,{});
 legacy={...legacy,...savedProgress,human:{...legacy.human,...savedProgress.human}};
 let profile = null, game = null, revision = -1, page = "home", shopTab = "cases", skinSymbol = "arrow", busy = false, selected = null, source = null, zoom = false, small = true, desc = false, filter = null, listings = [], groups = [], nextOffset = null, notice = "", lastFx = -1, pollBusy = false;
+let wishes = [], wishSort = 'top', wishNext = null, wishDraft = '';
+
+async function loadWishes(append=false){
+ const c=client.context();
+ const data=await client.request('wishes?sort='+wishSort+'&offset='+(append?wishNext:0),undefined,undefined,undefined,c);
+ client.assertCurrent(c);
+ wishes=append?[...new Map([...wishes,...data.wishes].map(w=>[w.id,w])).values()]:data.wishes;
+ wishNext=data.nextOffset;
+}
+
+function showPromo(){
+ const d=modal('Промокод','<form id="promo-form"><label for="promo-code">Введи промокод</label><input id="promo-code" maxlength="40" required autocomplete="off"><button class="primary" type="submit">Применить</button></form>');
+ d.querySelector('form').onsubmit=e=>{e.preventDefault();act(async()=>{await request('promo',{code:d.querySelector('input').value});d.close();notice='Получено по 25 каждого расходуемого символа!';});};
+}
 function icon(type, dir = 0, skin = profile?.skins?.[type] ?? "classic") {
   return skinIcon(type, dir, skin);
 }
@@ -117,10 +132,10 @@ function top() {
   return `<header class="v2-top"><button class="rank-corner " data-rank><span>${esc(profile.rank?.name || "Без звания")}</span>${profile.rank ? rankBadge(profile.rank) : '<span class="empty-emblem">◇</span>'}<small>${esc(profile.nick)}</small></button>${levelBlock()}<button class="avatar-button" data-profile aria-label="Открыть профиль">${framedAvatar(profile.avatar, activeFrame(profile), levelInfo(profile.xp).level)}</button><div class="wallet">${money(profile.balanceCents)} <small>рубинов</small></div></header>`;
 }
 function home() {
-  return `<section class="hub">${top()}<div class="hub-title"><div class="menu-art"><div class="symbol-tile">${icon("arrow")}</div><div class="symbol-tile">${icon("king")}</div><div class="symbol-tile">${icon("smile")}</div></div><h1>Символы</h1></div><div class="hub-main"><button class="primary" data-nav="modes">Играть</button><button class="choice" data-profile>Профиль</button><button class="choice" data-nav="inventory">Инвентарь</button></div><div class="upgrade-entry"><button class="primary" data-nav="upgrades">Улучшить</button></div><nav class="hub-bottom"><button class="quiet" data-nav="market">Рынок</button><button class="quiet" data-nav="shop">Магазин</button><button class="quiet" data-nav="quests">Задания</button><button class="quiet" data-accounts>Аккаунты</button><button class="quiet" data-rules>Правила</button></nav></section>`;
+  return `<section class="hub">${top()}<div class="hub-title"><div class="menu-art"><div class="symbol-tile">${icon("arrow")}</div><div class="symbol-tile">${icon("king")}</div><div class="symbol-tile">${icon("smile")}</div></div><h1>Символы</h1></div><div class="hub-main"><button class="primary" data-nav="modes">Играть</button><button class="choice" data-profile>Профиль</button><button class="choice" data-nav="inventory">Инвентарь</button><button class="primary change-button" data-nav="wishes">Изменить</button></div><div class="upgrade-entry"><button class="primary" data-nav="upgrades">Улучшить</button></div><nav class="hub-bottom"><button class="quiet" data-nav="market">Рынок</button><button class="quiet" data-nav="shop">Магазин</button><button class="quiet" data-nav="quests">Задания</button><button class="quiet" data-promo>Промокод</button><button class="quiet" data-accounts>Аккаунты</button><button class="quiet" data-rules>Правила</button></nav></section>`;
 }
 function modes() {
-  return `<section class="v2-page">${back()}<h1>Играть</h1><div class="mode-list"><button class="choice" data-start="play"><strong>Играть</strong><small>Поиск соперника</small></button><button class="choice" data-start="duel"><strong>Дуэль</strong><small>Один на один</small></button><button class="choice" data-start="team"><strong>Дуэль 2 на 2</strong><small>Четыре короля · две команды</small></button><button class="choice" data-start="trial"><strong>Повысить звание</strong><small>Пять сложностей · партия ${(profile.trialRun?.length ?? 0) + 1} из 5</small></button></div><label class="size-picker">Размер поля <select id="board-size"><option value="small" ${small ? "selected" : ""}>10 × 14</option><option value="large" ${!small ? "selected" : ""}>28 × 20</option></select></label><div class="dialog-actions"><button class="quiet" data-room>С другом по коду</button><button class="quiet" data-start="local">Вдвоём на одном устройстве</button></div></section>`;
+  return `<section class="v2-page">${back()}<h1>Играть</h1><div class="mode-list"><button class="choice" data-start="play"><strong>Играть</strong><small>Соперник твоего уровня · через 10 секунд — бот</small></button><button class="choice" data-start="duel"><strong>Дуэль</strong><small>Один на один</small></button><button class="choice" data-start="team"><strong>Дуэль 2 на 2</strong><small>Четыре короля · две команды</small></button><button class="choice" data-start="trial"><strong>Повысить звание</strong><small>Пять сложностей · партия ${(profile.trialRun?.length ?? 0) + 1} из 5</small></button></div><label class="size-picker">Размер поля <select id="board-size"><option value="small" ${small ? "selected" : ""}>10 × 14</option><option value="large" ${!small ? "selected" : ""}>28 × 20</option></select></label><div class="dialog-actions"><button class="quiet" data-room>С другом по коду</button><button class="quiet" data-start="local">Вдвоём на одном устройстве</button></div></section>`;
 }
 function back() {
   return '<button class="quiet" data-nav="home">На главную</button>';
@@ -251,7 +266,7 @@ function showCase(id) {
   });
 }
 function quests() {
-  return `<section class="v2-page">${back()}<h1>Задания</h1><p>За задания — 1 или 2 рубина. Выполняй снова в следующих партиях.</p><div class="quest-list">${NEW_QUESTS.map((q) => `<article class="quest-card"><div class="quest-reward">+${q.reward}<small>${q.reward === 1 ? "рубин" : "рубина"}</small></div><div><h2>${q.title}</h2><p>${q.text}</p><small>Выполнено: ${profile.quests[q.id] ?? 0}</small></div></article>`).join("")}</div><p>Награды начисляются за обычную игру. </p></section>`;
+  return `<section class="v2-page">${back()}<h1>Задания</h1><p>Выполняй задания в игре. Опыт и рубины начисляются после завершения партии.</p><div class="quest-list">${NEW_QUESTS.map(q=>`<article class="quest-card"><div><h2>${q.title}</h2><p>${q.id==='clean'?'Победи без полученного урона, в том числе против бота-новичка.':q.text}</p><small>Выполнено: ${profile.quests[q.id]??0}</small></div></article>`).join('')}</div><p>За хорошую игру иногда выпадает 1 рубин, за победу без урона — 2. Победа без урона с тремя уничтоженными блоками приносит 5 рубинов. В локальной игре, при выходе и истечении времени наград нет.</p></section>`;
 }
 function showItem(t) {
   const free = BASE.includes(t), d = modal(TYPES[t].name, `<div class="item-preview"><div class="item-art">${icon(t)}${rarityStrip(t)}</div><div><p>${details[t]}</p><p>${free ? "Стартовый · без ограничений" : "В инвентаре: " + profile.inventory[t] + " · максимум за партию: " + upgradeInfo(profile, t).value}</p></div></div>${free ? "" : `<div class="dialog-actions"><button class="primary" id="sell-item" ${profile.inventory[t] > 0 ? "" : "disabled"}>Продать</button><button class="choice" id="find-item">Найти на рынке</button></div>`}`);
@@ -439,7 +454,7 @@ function teamHeader(team) {
 }
 function play() {
   if (!game) return '<section class="v2-page">' + back() + "<p>Партия завершена.</p></section>";
-  if (game.status === "waiting") return `<section class="v2-page queue-page"><h1>${game.mode === "room" ? "Комната для друга" : "Ищем игру"}</h1>${game.code ? `<p class="room-code">${game.code}</p>` : ""}<p>${game.players.length} из ${game.capacity}</p><div class="queue-members">${game.players.map((p) => `<p>${esc(p.nick)}</p>`).join("")}</div>${game.mode === "room" ? "<p>Передай код другу. Он может войти через «С другом по коду».</p>" : ""}<button class="quiet" id="leave-game">Отменить поиск</button></section>`;
+  if (game.status === "waiting") return `<section class="v2-page queue-page"><h1>${game.mode === "room" ? "Комната для друга" : "Ищем игру"}</h1>${game.code ? `<p class="room-code">${game.code}</p>` : ""}<p>${game.players.length} из ${game.capacity}</p>${game.deadline ? `<p>Ищем игроков твоего уровня. Если никто не подключится, через <span id="queue-seconds">${Math.max(0,Math.ceil((game.deadline-Date.now())/1000))}</span> с добавится бот.</p>` : ""}<div class="queue-members">${game.players.map((p) => `<p>${esc(p.nick)}</p>`).join("")}</div>${game.mode === "room" ? "<p>Передай код другу. Он может войти через «С другом по коду».</p>" : ""}<button class="quiet" id="leave-game">Отменить поиск</button></section>`;
   const seat = currentSeat(), view = seat % 2, myTurn = game.actor === seat && !game.players[game.actor].bot, setup = game.status === "setup";
   const stock = game.g.playerStocks[seat];
   const remaining = (t) => game.sharedUses ? stock?.[t] ?? 0 : Math.min(stock?.[t] ?? Infinity, profile.inventory[t] ?? 0);
@@ -451,7 +466,7 @@ function resultPanel() {
   const r = game.results?.[session.id];
   if (!r) return `<button class="primary" data-nav="home">На главную</button>`;
   const rank = r.rank;
-  return `<section class="battle-result"><h2>${game.mode === "local" ? "Победил " + esc(game.players[game.g.winner].nick) : r.won ? "Победа!" : "Поражение"}</h2>${game.tutorial ? '<p>Первая партия закончена. Если что-то осталось непонятно, открой правила.</p><button class="choice" data-rules>Правила игры</button>' : ""}<div class="winner-players">${game.players.filter((p, i) => i % 2 === game.g.winner).map((p) => `<div class="winner-player">${framedAvatar(p.avatar, p.frame, p.level ?? 1)}<strong>${esc(p.nick)}</strong></div>`).join("")}</div><p>+${r.xp} очков · +${r.bucks ?? r.quests.reduce((n, id) => n + (id === "clean" ? 2 : 1), 0)} рубинов</p>${rank ? `<div class="result-rank"><div id="animated-rank">${rankBadge(rank.before.rank, "large")}</div><div class="rank-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${rank.after.progress}"><i style="--from:${rank.before.progress}%;--to:${(rank.after.rank?.index ?? -1) > (rank.before.rank?.index ?? -1) ? 100 : (rank.after.rank?.index ?? -1) < (rank.before.rank?.index ?? -1) ? 0 : rank.after.progress}%;width:${rank.after.progress}%"></i></div><p>${rank.qualifies ? "Испытание пройдено" : "Испытание не пройдено"} · ${esc(rank.before.rank?.name || "Без звания")} → ${esc(rank.after.rank?.name || "Без звания")}</p></div>` : ""}<div class="dialog-actions">${game.mode === "trial" ? '<button class="primary" data-start="trial">Продолжить испытания</button>' : '<button class="primary" data-nav="modes">Играть ещё</button>'}<button class="choice" data-nav="home">На главную</button></div></section>`;
+  return `<section class="battle-result"><h2>${game.mode === "local" ? "Победил " + esc(game.players[game.g.winner].nick) : r.won ? "Победа!" : "Поражение"}</h2>${game.tutorial ? '<p>Первая партия закончена. Если что-то осталось непонятно, открой правила.</p><button class="choice" data-rules>Правила игры</button>' : ""}<div class="winner-players">${game.players.filter((p, i) => i % 2 === game.g.winner).map((p) => `<div class="winner-player">${framedAvatar(p.avatar, p.frame, p.level ?? 1)}<strong>${esc(p.nick)}</strong></div>`).join("")}</div><p>+${r.xp} очков опыта · +${r.bucks ?? r.quests.reduce((n, id) => n + (id === "clean" ? 2 : 1), 0)} рубинов</p>${rank ? `<div class="result-rank"><div id="animated-rank">${rankBadge(rank.before.rank, "large")}</div><div class="rank-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${rank.after.progress}"><i style="--from:${rank.before.progress}%;--to:${(rank.after.rank?.index ?? -1) > (rank.before.rank?.index ?? -1) ? 100 : (rank.after.rank?.index ?? -1) < (rank.before.rank?.index ?? -1) ? 0 : rank.after.progress}%;width:${rank.after.progress}%"></i></div><p>${rank.qualifies ? "Испытание пройдено" : "Испытание не пройдено"} · ${esc(rank.before.rank?.name || "Без звания")} → ${esc(rank.after.rank?.name || "Без звания")}</p></div>` : ""}<div class="dialog-actions">${game.mode === "trial" ? '<button class="primary" data-start="trial">Продолжить испытания</button>' : '<button class="primary" data-nav="modes">Играть ещё</button>'}<button class="choice" data-nav="home">На главную</button></div></section>`;
 }
 let cancelQueue = [], cancelRunning = false;
 function cancelOffer(id) {
@@ -520,7 +535,7 @@ function render() {
     };
     return;
   }
-  app.innerHTML = (notice ? `<div class="v2-notice" role="status">${esc(notice)}</div>` : "") + (page === "home" ? home() : page === "modes" ? modes() : page === "inventory" ? inventory() : page === "market" ? market() : page === "shop" ? shop() : page === "quests" ? quests() : page === "upgrades" ? upgrades() : play());
+  app.innerHTML = (notice ? `<div class="v2-notice" role="status">${esc(notice)}</div>` : "") + (page === "home" ? home() : page === "modes" ? modes() : page === "inventory" ? inventory() : page === "market" ? market() : page === "shop" ? shop() : page === "wishes" ? wishesScreen({wishes,sort:wishSort,nextOffset:wishNext,draft:wishDraft}) : page === "quests" ? quests() : page === "upgrades" ? upgrades() : play());
   const skinTabs = app.querySelector(".skin-symbol-tabs"), skinCards = app.querySelector(".skins-carousel");
   if (skinTabs) skinTabs.scrollLeft = skinScroll;
   if (skinCards) skinCards.scrollLeft = cardScroll;
@@ -539,10 +554,24 @@ function render() {
   }
   app.querySelectorAll("[data-nav]").forEach((b) => b.onclick = () => act(async () => {
     page = b.dataset.nav;
+    if (page === "wishes") await loadWishes();
     if (page === "market") {
       filter = null;
       await loadMarket();
     }
+  }));
+  app.querySelector('[data-promo]')?.addEventListener('click',showPromo);
+  app.querySelector('#wish-text')?.addEventListener('input',e=>{wishDraft=e.target.value;});
+  app.querySelector('#wish-form')?.addEventListener('submit',e=>{e.preventDefault();act(async()=>{
+    const text=wishDraft.trim();if(text.length<3)throw Error('Пожелание: от 3 до 1000 символов');
+    await request('wish',{text});wishDraft='';wishSort='new';await loadWishes();notice='Пожелание отправлено!';
+  });});
+  app.querySelector('#wish-sort')?.addEventListener('change',e=>act(async()=>{wishSort=e.target.value;await loadWishes();}));
+  app.querySelector('#refresh-wishes')?.addEventListener('click',()=>act(()=>loadWishes()));
+  app.querySelector('#more-wishes')?.addEventListener('click',()=>act(()=>loadWishes(true)));
+  app.querySelectorAll('[data-wish-like]').forEach(b=>b.onclick=()=>act(async()=>{
+    const w=wishes.find(w=>w.id===b.dataset.wishLike);if(!w)return;
+    await request('wish-like',{id:w.id,liked:!w.liked});await loadWishes();
   }));
   app.querySelectorAll("[data-avatar]").forEach((b) => b.onclick = showAvatars);
   app.querySelectorAll("[data-rank]").forEach((b) => b.onclick = showRank);

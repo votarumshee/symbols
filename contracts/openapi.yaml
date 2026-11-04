@@ -1554,6 +1554,201 @@
         }
       }
     },
+    "/api/v3/wishes": {
+      "get": {
+        "operationId": "wishes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "top",
+                "new"
+              ]
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "wishes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "owner": {
+                            "type": "string"
+                          },
+                          "nick": {
+                            "type": "string"
+                          },
+                          "body": {
+                            "type": "string"
+                          },
+                          "created": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "likes": {
+                            "type": "integer"
+                          },
+                          "liked": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "owner",
+                          "nick",
+                          "body",
+                          "created",
+                          "likes",
+                          "liked"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "nextOffset": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "wishes",
+                    "nextOffset"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision/idempotency conflict or SNAPSHOT_REQUIRED",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retry"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v3/matches/{id}": {
       "get": {
         "operationId": "matchSnapshot",
@@ -4135,6 +4330,682 @@
         }
       }
     },
+    "/api/v3/commands/promo": {
+      "post": {
+        "operationId": "command_promo",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Atomic command. See compatibility.md for retry semantics; profile and game updates arrive through events.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{8,80}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commandId": {
+                      "type": "string"
+                    },
+                    "matchId": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    },
+                    "listingId": {
+                      "type": "string"
+                    },
+                    "listingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "drop": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "regenerate": {
+                      "type": "boolean"
+                    },
+                    "loggedOut": {
+                      "type": "boolean"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "reportId": {
+                      "type": "string"
+                    },
+                    "blocked": {
+                      "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision/idempotency conflict or SNAPSHOT_REQUIRED",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retry"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/commands/wish": {
+      "post": {
+        "operationId": "command_wish",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Atomic command. See compatibility.md for retry semantics; profile and game updates arrive through events.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{8,80}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 1000
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commandId": {
+                      "type": "string"
+                    },
+                    "matchId": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    },
+                    "listingId": {
+                      "type": "string"
+                    },
+                    "listingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "drop": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "regenerate": {
+                      "type": "boolean"
+                    },
+                    "loggedOut": {
+                      "type": "boolean"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "reportId": {
+                      "type": "string"
+                    },
+                    "blocked": {
+                      "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision/idempotency conflict or SNAPSHOT_REQUIRED",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retry"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/commands/wish-like": {
+      "post": {
+        "operationId": "command_wish_like",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Atomic command. See compatibility.md for retry semantics; profile and game updates arrive through events.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{8,80}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "liked": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "liked"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commandId": {
+                      "type": "string"
+                    },
+                    "matchId": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$",
+                      "description": "Unsigned decimal integer. Cursor/revision: signed PostgreSQL BIGINT range; money <= 9007199254740991 cents."
+                    },
+                    "listingId": {
+                      "type": "string"
+                    },
+                    "listingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "drop": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "code": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "regenerate": {
+                      "type": "boolean"
+                    },
+                    "loggedOut": {
+                      "type": "boolean"
+                    },
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "reportId": {
+                      "type": "string"
+                    },
+                    "blocked": {
+                      "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision/idempotency conflict or SNAPSHOT_REQUIRED",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Seconds before retry"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v3/commands/start": {
       "post": {
         "operationId": "command_start",
@@ -4251,6 +5122,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -4525,6 +5408,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -4742,6 +5637,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -4969,6 +5876,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -5181,6 +6100,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -5393,6 +6324,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -5614,6 +6557,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -5833,6 +6788,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -6045,6 +7012,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -6257,6 +7236,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -6469,6 +7460,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -6687,6 +7690,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -6905,6 +7920,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -7117,6 +8144,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -7329,6 +8368,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -7532,6 +8583,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -7735,6 +8798,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -7945,6 +9020,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -8163,6 +9250,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -8375,6 +9474,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],
@@ -8587,6 +9698,18 @@
                     },
                     "blocked": {
                       "type": "boolean"
+                    },
+                    "wishId": {
+                      "type": "string"
+                    },
+                    "liked": {
+                      "type": "boolean"
+                    },
+                    "promo": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer"
                     }
                   },
                   "required": [],

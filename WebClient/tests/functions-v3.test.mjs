@@ -34,7 +34,7 @@ test('K05 functional API v3 matrix',{skip:!databaseUrl,timeout:120000},async t=>
    for(const small of [true,false])for(const mode of ['play','duel','room','team','trial','local']){
     const a=await user('Mode '+mode,{tutorialDone:mode!=='play'}),users=[a];await cmd(a,'start',{mode,small});let s=await snap(a);
     assert.deepEqual(s.match.size,small?[10,14]:[28,20]);assert.equal(s.match.mode,mode);
-    if(mode==='play'){assert.equal(s.match.tutorial,true);assert.equal(s.match.advice.move.type,'king');assert.ok(s.match.advice.text.length>5);}
+    if(mode==='play'){assert.equal(s.match.status,'waiting');await step(pool,Date.now()+11000);s=await snap(a);assert.equal(s.match.tutorial,true);assert.equal(s.match.advice.move.type,'king');assert.ok(s.match.advice.text.length>5);}
     if(['duel','room','team'].includes(mode)){
      for(let i=1;i<(mode==='team'?4:2);i++){const u=await user('Partner '+i);users.push(u);await cmd(u,'start',{mode,small,...(mode==='room'?{code:s.match.code}:{})});}
      s=await setup(users);assert.equal(s.match.status,'play');assert.equal(s.match.players.length,users.length);assert.ok(s.match.players.every(p=>!p.bot));
@@ -63,7 +63,7 @@ test('K05 functional API v3 matrix',{skip:!databaseUrl,timeout:120000},async t=>
    await pool.query('UPDATE arenas SET data=$2 WHERE id=$1',[s.match.id,row.data]);
    const before=await snap(a),current=await snap(b),key=randomUUID(),body={matchId:current.match.id,revision:current.match.revision,action:{type:'smile',index:2}};
    const result=await cmd(b,'action',body,key);assert.deepEqual(await cmd(b,'action',body,key),result);s=await snap(a);
-   assert.equal(s.match.status,'done');assert.equal(s.match.result.won,true);assert.equal(s.profile.xp,1200);assert.equal(s.profile.balanceCents,String(BigInt(before.profile.balanceCents)+300n));assert.equal(s.profile.quests.clean,1);assert.equal(s.profile.quests.blocks,1);assert.equal(s.profile.history.length,1);assert.equal(s.profile.history[0].id,s.match.id);assert.equal(s.profile.history[0].xp,1200);
+   assert.equal(s.match.status,'done');assert.equal(s.match.result.won,true);assert.equal(s.profile.xp,1200);assert.equal(s.profile.balanceCents,String(BigInt(before.profile.balanceCents)+500n));assert.equal(s.profile.quests.clean,1);assert.equal(s.profile.quests.blocks,1);assert.equal(s.profile.history.length,1);assert.equal(s.profile.history[0].id,s.match.id);assert.equal(s.profile.history[0].xp,1200);
    // Earn a level milestone through a server cosmetic command, once only.
    const v=await one(pool,'SELECT data FROM vaults WHERE profile_id=$1',[a.id]);v.data.xp=levelThreshold(10);await pool.query('UPDATE vaults SET data=$2 WHERE profile_id=$1',[a.id,v.data]);await cmd(a,'nickname',{nick:'Level reward'});s=await snap(a);assert.equal(s.profile.level.level,10);assert.equal(s.profile.levelRewards.filter(r=>r.level===10).length,1);const cases=Object.values(s.profile.cases).reduce((a,b)=>a+b,0);await cmd(a,'nickname',{nick:'Level reward two'});assert.equal(Object.values((await snap(a)).profile.cases).reduce((a,b)=>a+b,0),cases);
   });
