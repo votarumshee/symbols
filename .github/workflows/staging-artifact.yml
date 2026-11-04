@@ -1,5 +1,7 @@
 name: Staging artifact
 on:
+  push:
+    branches: [codex/task-staging-artifact]
   workflow_dispatch:
     inputs:
       source_sha:
@@ -12,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      SOURCE_SHA: ${{ inputs.source_sha }}
+      SOURCE_SHA: ${{ inputs.source_sha || '3222750fb0a5b24ce668603c13e3f6133a1a8a04' }}
     steps:
       - uses: actions/checkout@v4
         with:
