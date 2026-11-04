@@ -1,4 +1,5 @@
 export function parseMoney(value){const text=String(value??'').trim().replace(',','.');if(!/^\d+(?:\.\d{1,2})?$/.test(text))throw Error('Цена: укажи положительную сумму, не больше двух цифр после запятой');const [whole,fraction='']=text.split('.');const cents=BigInt(whole)*100n+BigInt(fraction.padEnd(2,'0'));if(cents<1n||cents>BigInt(Number.MAX_SAFE_INTEGER))throw Error('Цена вне точного числового диапазона');return Number(cents);}
 export function normalizeWallet(d){if(!Number.isSafeInteger(d.balanceCents))d.balanceCents=Math.round(d.balance*100);d.balance=d.balanceCents/100;return d;}
 export function addMoney(d,cents){normalizeWallet(d);if(!Number.isSafeInteger(d.balanceCents+cents))throw Error('Баланс вне точного числового диапазона');d.balanceCents+=cents;d.balance=d.balanceCents/100;}
-export function money(cents){return Math.trunc(cents/100).toLocaleString('ru-RU')+','+String(cents%100).padStart(2,'0');}
+export function walletTotal(d){return BigInt(d.balanceCents??0)+BigInt(d.rubyReserveCents??'0');}
+export function money(cents){const n=BigInt(cents);return (n/100n).toLocaleString('ru-RU')+','+(n%100n).toString().padStart(2,'0');}

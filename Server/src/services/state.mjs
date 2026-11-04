@@ -1,6 +1,7 @@
 import {one} from '../repositories/db.mjs';
 import {profileView,matchView,patch,matchPatch} from '../transport/projection.mjs';
 import {requireValue} from './errors.mjs';
+import {walletTotal} from '../domain/money.mjs';
 export function dueAt(s){if(s.status==='waiting')return s.deadline==null?null:new Date(s.deadline);if(['setup','play'].includes(s.status))return new Date(s.turnAt+(s.players[s.actor].bot?450:90001));return null;}
 export async function saveArena(c,s,previous){
  const r=await one(c,`INSERT INTO arenas(id,mode,status,data,revision,updated,due_at,code,size)
@@ -12,6 +13,7 @@ export async function saveArena(c,s,previous){
 export async function saveVaults(c,vs,game,commandId,now){
  for(const v of vs){
   requireValue(Number.isSafeInteger(v.d.balanceCents)&&v.d.balanceCents>=0,'Недопустимый баланс');
+  walletTotal(v.d);
   requireValue(Object.values(v.d.inventory).every(n=>Number.isSafeInteger(n)&&n>=0),'Недопустимый инвентарь');
   const pp=patch(profileView(v.before),profileView(v.d));
   const belongs=game?.s.players.some(p=>!p.bot&&p.id===v.profile_id);

@@ -11,6 +11,8 @@ import {snapshot} from '../src/services/sync.mjs';
 import {wishesPage} from '../src/services/wishes.mjs';
 import {step} from '../src/jobs/scheduler.mjs';
 import {PRICES} from '../src/domain/economy.mjs';
+import {walletTotal} from '../src/domain/money.mjs';
+import {PROMO_100_RUBIES} from '../src/domain/promo.mjs';
 
 const databaseUrl=process.env.TEST_DATABASE_URL;
 test('player wishes, promo and beginner matchmaking in PostgreSQL',{skip:!databaseUrl,timeout:90000},async t=>{
@@ -29,6 +31,32 @@ test('player wishes, promo and beginner matchmaking in PostgreSQL',{skip:!databa
    const s=await snapshot(pool,u.id);for(const symbol of Object.keys(PRICES))assert.equal(s.profile.inventory[symbol],25);
    assert.equal(s.profile.balanceCents,'100');assert.equal(s.profile.xp,0);
    assert.deepEqual((await one(pool,'SELECT data FROM vaults WHERE profile_id=$1',[u.id])).data.claims,['promo:10']);
+  });
+  await t.test('huge promo race and market/direct sales preserve every cent and replay once',async()=>{
+   const buyer=await user('Большой баланс'),seller=await user('Продавец'),keys=[randomUUID(),randomUUID()];
+   const attempts=await Promise.allSettled(keys.map(k=>run(buyer,'promo',{code:'100'},k)));
+   assert.equal(attempts.filter(r=>r.status==='fulfilled').length,1);
+   const receipt=await run(buyer,'promo',{code:'100'},keys[attempts.findIndex(r=>r.status==='fulfilled')]);assert.equal(receipt.rubies,PROMO_100_RUBIES);
+   const original=BigInt(PROMO_100_RUBIES)*100n+100n;
+   assert.equal(walletTotal({...((await snapshot(pool,buyer.id)).profile),balanceCents:Number.MAX_SAFE_INTEGER}),original);
+   await run(seller,'promo',{code:'10'});const lot=await run(seller,'sell',{symbol:'sword',price:'4.25'});
+   await run(buyer,'buy',{id:lot.listingIds[0]});
+   let data=(await one(pool,'SELECT data,balance_cents FROM vaults WHERE profile_id=$1',[buyer.id]));assert.equal(data.balance_cents,String(Number.MAX_SAFE_INTEGER));assert.equal(walletTotal(data.data),original-425n);
+   const key=randomUUID(),sale=await run(buyer,'sell-symbol',{symbol:'sword',quantity:1},key);assert.equal(sale.creditedCents,'37500');
+   assert.deepEqual(await run(buyer,'sell-symbol',{symbol:'sword',quantity:1},key),sale);
+   data=await one(pool,'SELECT data FROM vaults WHERE profile_id=$1',[buyer.id]);assert.equal(walletTotal(data.data),original-425n+37500n);assert.equal(data.data.inventory.sword,0);
+   const headers={authorization:'Bearer '+buyer.token};const res=await app.inject({url:'/api/v3/bootstrap',headers});assert.equal(res.statusCode,200);assert.equal(typeof res.json().profile.rubyReserveCents,'string');
+  });
+  await t.test('direct-sale concurrent requests cannot sell the same symbols twice; active games and free symbols rejected',async()=>{
+   const u=await user('Продажа');await run(u,'promo',{code:'10'});
+   for(const b of [{symbol:'arrow'},{symbol:'king'},{symbol:'fake'},{symbol:'sword',quantity:0},{symbol:'sword',quantity:1.5},{symbol:'sword',quantity:26}])await assert.rejects(run(u,'sell-symbol',b));
+   const game=await run(u,'start',{mode:'room',small:true});await assert.rejects(run(u,'sell-symbol',{symbol:'sword'}));await run(u,'leave',{matchId:game.matchId,revision:game.revision});
+   const results=await Promise.allSettled([run(u,'sell-symbol',{symbol:'sword',quantity:25}),run(u,'sell-symbol',{symbol:'sword',quantity:25})]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);
+   const d=(await one(pool,'SELECT data FROM vaults WHERE profile_id=$1',[u.id])).data;assert.equal(d.inventory.sword,0);assert.equal(walletTotal(d),937600n);
+   // Failure after the economic mutation must roll back both inventory and balance.
+   await pool.query("CREATE FUNCTION reject_sale_event() RETURNS trigger LANGUAGE plpgsql AS 'BEGIN RAISE EXCEPTION ''event failure''; END'");await pool.query('CREATE TRIGGER reject_sale_event BEFORE INSERT ON events FOR EACH ROW EXECUTE FUNCTION reject_sale_event()');
+   try{await assert.rejects(run(u,'sell-symbol',{symbol:'circle'}));assert.deepEqual((await one(pool,'SELECT data FROM vaults WHERE profile_id=$1',[u.id])).data,d);}
+   finally{await pool.query('DROP TRIGGER reject_sale_event ON events');await pool.query('DROP FUNCTION reject_sale_event()');}
   });
   await t.test('shared feed, desired-state like races, sorting, blocks and account deletion',async()=>{
    const a=await user('Автор'),b=await user('Читатель');const key=randomUUID(),idea=await run(a,'wish',{text:'Добавьте символ ★'},key);

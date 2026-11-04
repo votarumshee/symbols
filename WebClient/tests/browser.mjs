@@ -26,6 +26,13 @@ try {
  let granted=(await pool.query('SELECT data FROM vaults WHERE profile_id=$1',[account.id])).rows[0].data;
  assert.ok(Object.entries(granted.inventory).every(([t,n])=>n===(t==='teleport'?30:25)));
  await click('[data-promo]');await page.locator('#promo-code').fill('10');await click('#promo-form button');await page.locator('.dialog-error').filter({hasText:'уже использован'}).waitFor();await click('#next-dialog [data-close]');
+ await click('[data-promo]');await page.locator('#promo-code').fill('100');await click('#promo-form button');await page.locator('.v2-notice').filter({hasText:'рубинов'}).waitFor();
+ const huge=1000000000000000000000000000000000000n*100n+200000n;
+ const exact=async()=>{const d=(await pool.query('SELECT data FROM vaults WHERE profile_id=$1',[account.id])).rows[0].data;return BigInt(d.balanceCents)+BigInt(d.rubyReserveCents??'0');};
+ assert.equal(await exact(),huge);assert.ok((await page.locator('.wallet').first().innerText()).replace(/\s/g,'').includes('1000000000000000000000000000000002000,00'));
+ await click('[data-promo]');await page.locator('#promo-code').fill('100');await click('#promo-form button');await page.locator('.dialog-error').filter({hasText:'уже использован'}).waitFor();await click('#next-dialog [data-close]');assert.equal(await exact(),huge);
+ await click('[data-nav="inventory"]');await click('[data-item="sword"]');await click('#sell-item');await page.locator('#direct-sale-quantity').fill('2');await page.locator('#direct-sale-total').filter({hasText:'750,00'}).waitFor();await click('#direct-sale-form button');await page.locator('.v2-notice').filter({hasText:'Продано: 2'}).waitFor();assert.equal(await exact(),huge+75000n);
+ await page.reload();await page.locator('[data-nav="modes"]').waitFor();assert.equal(await exact(),huge+75000n);assert.ok((await page.locator('.wallet').first().innerText()).replace(/\s/g,'').includes('1000000000000000000000000000000002750,00'));await shot('browser-huge-balance');
  await click('[data-nav="wishes"]');await page.locator('#wish-text').fill('Добавьте символ ★ <script>test</script>');await click('#wish-form button');await page.locator('.wish-card').filter({hasText:'Добавьте символ ★'}).waitFor();
  const peerContext=await browser.newContext({viewport:{width:411,height:780}}),peer=await peerContext.newPage();
  try{
@@ -35,7 +42,7 @@ try {
   assert.ok((await page.locator('.wish-card').first().innerText()).includes('<script>test</script>'));assert.equal(await page.locator('.wish-card script').count(),0);await shot('browser-wishes');
  }finally{await peerContext.close();}
  await page.reload();await page.locator('[data-nav="wishes"]').waitFor();await click('[data-nav="wishes"]');assert.equal(await page.locator('.wish-like span').first().innerText(),'1');
- granted=(await pool.query('SELECT data FROM vaults WHERE profile_id=$1',[account.id])).rows[0].data;assert.equal(granted.inventory.sword,25);await click('[data-nav="home"]');
+ granted=(await pool.query('SELECT data FROM vaults WHERE profile_id=$1',[account.id])).rows[0].data;assert.equal(granted.inventory.sword,23);await click('[data-nav="home"]');
  for(const tab of ['inventory','upgrades','shop','market','quests']){await click(`[data-nav="${tab}"]`);await page.waitForTimeout(150);await shot('browser-'+tab);await click('[data-nav="home"]');}
  await click('[data-nav="modes"]');await click('[data-start="local"]');await page.locator(cell(0,65)).waitFor();
  await click(cell(0,65));await waitSymbol(0,65,'king');await click(cell(1,65));await waitSymbol(1,65,'king');
@@ -53,7 +60,7 @@ try {
  const nativeStorage=await page.evaluate(()=>Object.keys(localStorage));assert(!nativeStorage.some(k=>k.includes('session')));
  assert.equal(requests.filter(r=>/\/api\/(?:v2|register|recover)/.test(r.url)).length,0);
  assert.deepEqual(errors,[]);
- const report={passed:true,checks:['green change button','shared wishes and likes across two real browser accounts','escaped wish text','promo 10 exactly once and persists after reload','original screens','API v3 only','local match king placement','directed shot','teleport source cleared / destination verified in PostgreSQL','reload restores account and match','offline move never replayed','explicit move after reconnect'],browser:'Chrome',viewport:'411x780',requests:requests.length,errors};
+ const report={passed:true,checks:['green change button','shared wishes and likes across two real browser accounts','escaped wish text','promos 10 and 100 exactly once; huge balance persists after reload','instant symbol sale credits exact cents','original screens','API v3 only','local match king placement','directed shot','teleport source cleared / destination verified in PostgreSQL','reload restores account and match','offline move never replayed','explicit move after reconnect'],browser:'Chrome',viewport:'411x780',requests:requests.length,errors};
  await fs.writeFile(new URL('browser-report.json',out),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
 }catch(e){await shot('browser-failure');console.error(e);console.error('Page errors:',errors);console.error((await page.locator('body').innerText()).slice(-2500));process.exitCode=1;}
 finally{await context.close();await browser.close();await pool.end();}
