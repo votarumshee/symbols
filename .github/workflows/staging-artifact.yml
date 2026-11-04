@@ -1,7 +1,5 @@
 name: Staging artifact
 on:
-  push:
-    branches: [codex/task-staging-artifact]
   workflow_dispatch:
     inputs:
       source_sha:
@@ -14,13 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      SOURCE_SHA: ${{ inputs.source_sha || '54d5b78c1b7a7286e69a5a38d67792777721e750' }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.SOURCE_SHA }}
       - name: Verify exact source
-        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - uses: actions/setup-node@v4
         with:
           node-version: 24.19.0

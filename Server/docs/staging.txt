@@ -1,5 +1,22 @@
 Symbols staging on production VDS
 ================================
+Latest verified update: 2026-11-04 (staging only)
+Source: 54d5b78c1b7a7286e69a5a38d67792777721e750 (merged PR #5).
+Server image: sha256:379093b53532a43cdf10522ddbeb5c9b10cf819b1b2e7fe8e96a9bd1c0fbde2e
+Web asset: 91faf283ab01b1cd120884add0c852ef12f743d2d74f64caaa59e898b36cbbfb
+Content: 6ce99aba116be01d15816dccb4f85613ba314a8fb8c78ae1da70cb33d79f7c56
+Artifacts built outside VDS by GitHub Actions run 41786968822 from the exact SHA.
+Backup restore passed before update; migration 0005_player_wishes and grants applied.
+Checkpoint/rollback: /var/lib/symbols-staging/checkpoints/deploy-54d5b78.5xlt0SeA
+HTTPS/browser smoke passed: green Change button, shared wishes/likes after reload,
+promo 10 exactly once, novice human matching and beginner bot after ten seconds,
+secure cookies, Origin protection, hidden metrics, no JavaScript errors.
+Synthetic smoke accounts were deleted. Runtime privileges, resource limits,
+network isolation and Caddy DNS passed. Production API/DB/Caddy identities and
+start timestamps were unchanged. No production deploy or Caddy reload occurred.
+
+The dated installation snapshot and initial acceptance history follow below.
+
 Installed: 2026-10-09. Host: 135.106.172.96 (symbols-admin, sudo -n).
 Web: https://symbols-staging.votarumshee.com
 Native API: https://symbols-api-staging.votarumshee.com
