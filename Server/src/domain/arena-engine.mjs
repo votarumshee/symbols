@@ -17,4 +17,7 @@ export function arenaAction(s,a,seat,now){if(s.status==='done')throw Error('Па
  g.current=s.actor%2;return {...result,consumed};}
 export function arenaBotMove(s){const seat=s.actor,p=seat%2,g=s.g;
  if(s.status==='setup'){const free=[];for(let i=(g.rows-1)*g.width;i<g.rows*g.width;i++)if(!g.boards[p][i])free.push(i);return {type:'king',index:free[Math.floor(Math.random()*free.length)]};}
- g.current=p;g.stocks[p]=g.playerStocks[seat];g.allowed[p]=Object.keys(TYPES);const move=botAction(g,s.level??2);if(move.type==='erase'&&g.boards[p][move.index]?.seat!==seat){const own=g.boards[p].findIndex(t=>t&&t.type!=='king'&&t.seat===seat);if(own>=0)move.index=own;}return move;}
+ g.current=p;g.stocks[p]=g.playerStocks[seat];
+ // Persist the basic loadout so the planner cannot use rare symbols in beginner games.
+ if((s.level??2)<2)for(const type of Object.keys(TYPES))if(!BASE.includes(type))g.stocks[p][type]=0;
+ g.allowed[p]=(s.level??2)<2?BASE:Object.keys(TYPES);const move=botAction(g,s.level??2);if(move.type==='erase'&&g.boards[p][move.index]?.seat!==seat){const own=g.boards[p].findIndex(t=>t&&t.type!=='king'&&t.seat===seat);if(own>=0)move.index=own;}return move;}

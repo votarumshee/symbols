@@ -8,6 +8,7 @@ import {catalog,contentVersion} from '../domain/catalog.mjs';
 import {ApiError} from '../services/errors.mjs';
 import {commandSchemas,registerSchema,recoverSchema} from './schemas.mjs';
 import {moderation} from '../services/moderation.mjs';
+import {wishesPage,wishesQuery} from '../services/wishes.mjs';
 
 const cookieName='__Host-symbols-browser',lifetime=2592000;
 function cookie(req){const value=req.headers.cookie?.split(';').map(s=>s.trim()).find(s=>s.startsWith(cookieName+'='))?.slice(cookieName.length+1);return /^[a-f0-9]{64}$/.test(value??'')?hash(value):null;}
@@ -70,6 +71,7 @@ export async function browserRoutes(app,{pool,cfg,hub}){
  app.post('/account/recover',{schema:{body:recoverSchema}},async(req,reply)=>{await limit(pool,'recover:'+req.ip,5,900);return attach(req,reply,'recover',req.body.code);});
  app.get('/bootstrap',{preHandler:auth},req=>snapshot(pool,req.user.profile_id));
  app.get('/moderation',{preHandler:auth},req=>moderation(pool,req.user.profile_id));
+ app.get('/wishes',{preHandler:auth,schema:{querystring:wishesQuery}},req=>wishesPage(pool,req.user.profile_id,req.query));
  app.get('/profile',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);return {profile:s.profile,revision:s.revision};});
  app.get('/matches/:id',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);if(s.match?.id!==req.params.id)throw new ApiError(404,'NOT_FOUND','Партия недоступна');return {match:s.match,cursor:s.cursor};});
  app.get('/catalog',{preHandler:auth},async()=>({version:contentVersion,...catalog}));

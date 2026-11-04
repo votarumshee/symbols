@@ -16,6 +16,7 @@ import {eventHub,stream} from './transport/events.mjs';
 import {commandSchemas,registerSchema,recoverSchema} from './transport/schemas.mjs';
 import {browserRoutes} from './transport/browser.mjs';
 import {moderation} from './services/moderation.mjs';
+import {wishesPage,wishesQuery} from './services/wishes.mjs';
 export async function buildApp(cfg,{pool:externalPool}={}){
  const pool=externalPool??createPool(cfg),app=Fastify({logger:cfg.log===false?false:{level:cfg.log??'info',redact:['req.headers.authorization','req.headers.cookie','res.headers.set-cookie','body','token','code']},disableRequestLogging:true,bodyLimit:16384,requestTimeout:15000,connectionTimeout:30000,keepAliveTimeout:10000,trustProxy:cfg.trustProxy??false,ajv:{customOptions:{removeAdditional:false}}});
  app.decorate('pool',pool);const metrics={requests:0,errors:0,httpBytes:0,wsMessages:0,wsBytes:0,connections:0,latencyMs:0};app.decorate('metrics',metrics);
@@ -44,6 +45,7 @@ export async function buildApp(cfg,{pool:externalPool}={}){
  async function auth(req){req.user=await authenticate(pool,req.headers.authorization?.startsWith('Bearer ')?req.headers.authorization.slice(7):null);}
  app.get('/api/v3/bootstrap',{preHandler:auth},req=>snapshot(pool,req.user.profile_id));
  app.get('/api/v3/moderation',{preHandler:auth},req=>moderation(pool,req.user.profile_id));
+ app.get('/api/v3/wishes',{preHandler:auth,schema:{querystring:wishesQuery}},req=>wishesPage(pool,req.user.profile_id,req.query));
  app.get('/api/v3/profile',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);return {profile:s.profile,revision:s.revision};});
  app.get('/api/v3/matches/:id',{preHandler:auth},async req=>{const s=await snapshot(pool,req.user.profile_id);if(s.match?.id!==req.params.id)throw new ApiError(404,'NOT_FOUND','Партия недоступна');return {match:s.match,cursor:s.cursor};});
  app.get('/api/v3/catalog',{preHandler:auth},async(req,reply)=>{reply.header('Cache-Control','private,max-age=3600');reply.header('ETag','"'+contentVersion+'"');if(req.headers['if-none-match']==='"'+contentVersion+'"')return reply.code(304).send();return {version:contentVersion,...catalog};});

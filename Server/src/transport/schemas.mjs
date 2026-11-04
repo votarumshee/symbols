@@ -4,6 +4,9 @@ const str=(maxLength=128)=>({type:'string',minLength:1,maxLength});
 const obj=properties=>({type:'object',properties,additionalProperties:false});
 const revision={type:'string',pattern:'^[0-9]{1,19}$'};
 export const commandSchemas={
+ promo:{...obj({code:str(40)}),required:['code']},
+ wish:{...obj({text:{type:'string',minLength:3,maxLength:1000}}),required:['text']},
+ 'wish-like':{...obj({id:str(80),liked:{type:'boolean'}}),required:['id','liked']},
  start:obj({mode:{enum:['play','duel','team','trial','local','room']},small:{type:'boolean'},code:str(6)}),
  action:{...obj({matchId:str(),revision,action:{...obj({type:symbol,index:{type:'integer',minimum:0,maximum:279},dir:{type:'integer',minimum:0,maximum:7},source:{anyOf:[{type:'integer',minimum:0,maximum:279},{type:'null'}]},side:{type:'integer',minimum:0,maximum:1}}),required:['type']}}),required:['matchId','revision','action']},
  leave:{...obj({matchId:str(),revision}),required:['matchId','revision']},

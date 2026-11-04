@@ -7,8 +7,10 @@ import {start,move} from './game.mjs';
 import {marketCommand} from './market.mjs';
 import {saveVaults} from './state.mjs';
 import {requireValue,ApiError} from './errors.mjs';
+import {redeemPromo} from '../domain/promo.mjs';
+import {wishCommand} from './wishes.mjs';
 const cosmetics=['upgrade','frame','buy-case','open-case','skin','buy-skin','nickname','avatar','buy-avatar'];
-export const commandKinds=[...cosmetics,'start','action','leave','sell','buy','cancel','recovery-code','logout','delete-account','report','block','unblock'];
+export const commandKinds=[...cosmetics,'promo','wish','wish-like','start','action','leave','sell','buy','cancel','recovery-code','logout','delete-account','report','block','unblock'];
 function canonical(v){if(Array.isArray(v))return v.map(canonical);if(v&&typeof v==='object')return Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]));return v;}
 export async function command(pool,user,kind,b,key,now=Date.now()){
  requireValue(commandKinds.includes(kind),'Неизвестная команда',404);requireValue(typeof key==='string'&&/^[a-zA-Z0-9_-]{8,80}$/.test(key),'Нужен Idempotency-Key');
@@ -24,8 +26,9 @@ export async function command(pool,user,kind,b,key,now=Date.now()){
   if(kind==='start')result=await start(c,id,b,key,now);
   else if(['action','leave'].includes(kind))result=await move(c,id,kind,b,key,now);
   else if(['sell','buy','cancel'].includes(kind))result=await marketCommand(c,id,kind,b,key,now);
-  else if(cosmetics.includes(kind)){
-   const [v]=await lockVaults(c,[id]);syncEntitlements(v.d);result=cosmetic(v.d,kind,{...b,key:randomUUID()},now);await saveVaults(c,[v],null,key,now);
+  else if(['wish','wish-like'].includes(kind))result=await wishCommand(c,id,kind,b);
+  else if(cosmetics.includes(kind)||kind==='promo'){
+   const [v]=await lockVaults(c,[id]);syncEntitlements(v.d);result=kind==='promo'?redeemPromo(v.d,b.code):cosmetic(v.d,kind,{...b,key:randomUUID()},now);await saveVaults(c,[v],null,key,now);
   }else if(kind==='recovery-code')result=await recoveryCode(c,id);
   else if(kind==='logout'){await c.query('UPDATE account_sessions SET revoked=now() WHERE token_hash=$1',[user.token_hash]);await c.query("SELECT pg_notify('symbols_events',$1)",[id]);result={loggedOut:true};}
   else if(kind==='delete-account'){requireValue(b.confirm===true,'Подтверди удаление');return eraseAccount(c,id);}
