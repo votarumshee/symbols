@@ -21,6 +21,8 @@ jobs:
         with: {packages: platform-tools}
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - run: npm ci --ignore-scripts
+        working-directory: Server
       - run: npm ci && npm test && npm run build && npm run check:release && npx cap sync android
         working-directory: WebClient
       - run: chmod +x gradlew && ./gradlew :app:assembleStagingUnsignedQa :app:lintStagingUnsignedQa
