@@ -8,8 +8,8 @@ android {
   applicationId 'com.votarumshee.symbols'
   minSdkVersion rootProject.ext.minSdkVersion
   targetSdkVersion rootProject.ext.targetSdkVersion
-  versionCode 3
-  versionName '1.1.1'
+  versionCode 4
+  versionName '1.1.2'
   manifestPlaceholders = [cleartext:'false']
   testInstrumentationRunner 'com.votarumshee.symbols.webpreview.MigrationAcceptanceTest'
  }
@@ -25,6 +25,7 @@ android {
  flavorDimensions 'environment'
  productFlavors {
   prod {dimension 'environment'}
+  staging {dimension 'environment'}
   local {dimension 'environment'; applicationIdSuffix (setting('SYMBOLS_LOCAL_SUFFIX') ?: '.dev'); manifestPlaceholders = [cleartext:'true']}
   migration {dimension 'environment'; applicationIdSuffix '.migrationtest'; manifestPlaceholders = [cleartext:'true']}
  }
@@ -42,6 +43,13 @@ android {
    applicationIdSuffix '.qa'
    testProguardFiles 'test-proguard-rules.pro'
    signingConfig signingConfigs.qa
+   matchingFallbacks = ['release']
+  }
+  // Offline signing preparation when the original QA key is supplied separately.
+  unsignedQa {
+   initWith release
+   applicationIdSuffix '.qa'
+   signingConfig null
    matchingFallbacks = ['release']
   }
  }
